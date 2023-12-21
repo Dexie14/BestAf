@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,9 +14,17 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */
+
+html{
+  scroll-behavior: smooth;
 }
 
-body {
+body{
+  overflow-x: hidden;
+}
+
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -24,4 +32,31 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
+
+
+
+@font-face {
+  font-family: 'DMSans';
+  src: url('../public/assets/fonts//DM_Sans/sans/DMSans_36pt-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  }
+@font-face {
+  font-family: 'DMSansextra';
+  src: url('../public/assets/fonts//DM_Sans/sans/DMSans_36pt-ExtraBold.ttf');
+  font-weight: 900;
+  font-style: normal;
+  }
+@font-face {
+  font-family: 'DMSansMedium';
+  src: url('../public/assets/fonts//DM_Sans/sans/DMSans_36pt-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+  }
+@font-face {
+  font-family: 'DMSansReg';
+  src: url('../public/assets/fonts//DM_Sans/sans/DMSans_36pt-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  }
