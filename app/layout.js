@@ -14,6 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+       <head>
+        <link rel="icon" href="/assets/logo.svg" />
+      </head>
       <body className={DMSans.className} style={{ fontFamily: "DMSansMedium" }}>
       <div className="flex overflow-y-hidden max-h-[100vh]">
             <div className="w-[20%] sticky">
