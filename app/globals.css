@@ -22,6 +22,7 @@ html{
 
 body{
   overflow-x: hidden;
+  background-color: red;
 }
 
 /* body {
@@ -60,3 +61,18 @@ body{
   font-weight: 400;
   font-style: normal;
   }
+
+  
+.scrol::-webkit-scrollbar {
+  width: 2px;
+}
+
+
+.scrol::-webkit-scrollbar-thumb {
+  background: darkgrey;
+}
+
+.scrol::-webkit-scrollbar-thumb:hover {
+  background: #942838;
+  /* background:rgb(16 185 129); */
+}
