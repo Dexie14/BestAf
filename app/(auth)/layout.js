@@ -1,10 +1,5 @@
 import { DM_Sans } from "next/font/google";
-import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
-
-// import { Inter } from 'next/font/google'
-// const inter = Inter({ subsets: ['latin'] })
+import "../globals.css";
 
 const DMSans = DM_Sans({ subsets: ["latin"], display: "swap" });
 

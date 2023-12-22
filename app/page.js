@@ -2,8 +2,8 @@
 
 export default function Home() {
   return (
-    <main className="max-h-[100vh]">
-      BestAf
+    <main className="">
+      "Welcome to BestAf"
     </main>
   )
 }

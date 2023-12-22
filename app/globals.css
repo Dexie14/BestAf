@@ -22,7 +22,7 @@ html{
 
 body{
   overflow-x: hidden;
-  background-color: red;
+  /* background-color: red; */
 }
 
 /* body {
@@ -75,4 +75,13 @@ body{
 .scrol::-webkit-scrollbar-thumb:hover {
   background: #942838;
   /* background:rgb(16 185 129); */
+}
+
+.tabling{
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+
+.tabling tr{
+  box-shadow: 0px 2px 2px 0px rgba(34, 34, 34, 0.10);;
 }

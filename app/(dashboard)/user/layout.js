@@ -1,5 +1,5 @@
 import { DM_Sans } from "next/font/google";
-import "./globals.css";
+import "../../globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 
@@ -20,7 +20,19 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/assets/logo.svg" />
       </head>
       <body className={DMSans.className} style={{ fontFamily: "DMSansMedium" }}>
-        {children}
+        <div className="flex overflow-y-hidden max-h-[100vh]">
+          <div className="w-[20%] sticky">
+            <Sidebar />
+          </div>
+          <div className="w-full ">
+            <div className="">
+              <Navbar/>
+              <div className="px-8 py-6 h-full overflow-y-scroll bg-[#f8f8f8]">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );

@@ -1,10 +1,16 @@
+'use client'
 import React from "react";
 import avatar from "@/public/assets/dashboard/avatar.svg";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+
+  const pathname = usePathname();
+
+  const name = pathname.split("/")[1];
   return (
-    <div className="bg-white py-2 px-14">
+    <div className="bg-white py-2 px-14" style={{display: name === "auth" ? "none" : ""}}>
       <section className="flex justify-end">
         <div className="flex items-center gap-4 cursor-pointer ">
           <div className="cursor-pointer relative ">
