@@ -17,8 +17,8 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/assets/logo.svg" />
       </head>
-      <body className={DMSans.className} style={{ fontFamily: "DMSansMedium" }}>
-        <section className="py-10">
+      <body className={DMSans.className} style={{ fontFamily: "DMSansMedium", background:"#f8f8f8" }}>
+        <section className="py-10 bg-[#f8f8f8]">
         <div className="flex justify-center gap-3 items-center">
           <Image src={logo} height={28} width={24} alt="logo" />
           <h6 className="text-xl text-primary" style={{ fontFamily: "DMSans" }}>

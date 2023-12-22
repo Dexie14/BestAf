@@ -97,7 +97,7 @@ const Signin = () => {
             </label>
             <input
               className="rounded-lg px-3 py-3 border border-border placeholder:text-border"
-              type="email"
+              type="password"
               placeholder="Password"
               id="password"
             />
