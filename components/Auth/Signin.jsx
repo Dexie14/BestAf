@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
-import Image from "next/image";
-import logo from "@/public/assets/logo.svg";
+// import Image from "next/image";
+// import logo from "@/public/assets/logo.svg";
 
 import ReactModal from "react-modal";
 import OtpCongrats from "./OtpCongrats";
@@ -18,7 +18,7 @@ const Signin = () => {
       top: 0,
       right: 0,
       bottom: 0,
-      opacity: "1",
+      opacity: "10",
     },
     content: {
       height:"60vh",
@@ -34,13 +34,13 @@ const Signin = () => {
 
   return (
     <section>
-      <div className="py-10">
-        <div className="flex justify-center gap-3 items-center">
+      <div className="pt-10">
+        {/* <div className="flex justify-center gap-3 items-center">
           <Image src={logo} height={28} width={24} alt="logo" />
           <h6 className="text-xl text-primary" style={{ fontFamily: "DMSans" }}>
             Bestaf
           </h6>
-        </div>
+        </div> */}
         <h3 className="mt-5 flex justify-center text-2xl font-medium"    onClick={() => setIsOpen(true)}>
           Welcome, Fill in your details to register as Users
         </h3>
