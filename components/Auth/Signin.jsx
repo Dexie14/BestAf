@@ -1,16 +1,14 @@
-"use client"
+"use client";
 import { useState } from "react";
 // import Image from "next/image";
 // import logo from "@/public/assets/logo.svg";
 
 import ReactModal from "react-modal";
 import OtpCongrats from "./OtpCongrats";
+import Button from "../Comps/Button";
 
 const Signin = () => {
-
-  
   const [isOpen, setIsOpen] = useState(false);
-
 
   const customStyles = {
     overlay: {
@@ -21,7 +19,7 @@ const Signin = () => {
       opacity: "10",
     },
     content: {
-      height:"60vh",
+      height: "60vh",
       top: "0",
       left: "0",
       right: "0",
@@ -41,7 +39,10 @@ const Signin = () => {
             Bestaf
           </h6>
         </div> */}
-        <h3 className="mt-5 flex justify-center text-2xl font-medium"    onClick={() => setIsOpen(true)}>
+        <h3
+          className="mt-5 flex justify-center text-2xl font-medium"
+          onClick={() => setIsOpen(true)}
+        >
           Welcome, Fill in your details to register as Users
         </h3>
 
@@ -117,7 +118,7 @@ const Signin = () => {
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-        <OtpCongrats setModalIsOpen={setIsOpen} modalIsOpen={isOpen}/>
+        <OtpCongrats setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
       </ReactModal>
     </section>
   );

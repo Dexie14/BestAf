@@ -8,14 +8,13 @@ import { usePathname } from "next/navigation";
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const title = pathname.split("/")[1];
-  const name = pathname.split("/")[1];
+  const title = pathname.split("/")[2];
 
   const pathParts = pathname.split("/");
   const lastPathSegment = pathParts[pathParts.length - 1];
 
   return (
-    <aside className="bg-white min-h-[100vh] w-full relative scrol overflow-y-scroll overflow-hidden" style={{display: name === "auth" ? "none" : ""}}>
+    <aside className="bg-white min-h-[100vh] w-full relative scrol overflow-y-scroll overflow-hidden" >
       <div className="px-6 py-5">
         <section className="flex justify-between items-center">
           <div className="flex gap-3 items-center">
@@ -41,11 +40,11 @@ const Sidebar = () => {
           </svg>
         </section>
         <section className="py-20">
-          <Link href={`/`} className="">
+          <Link href={`/user`} className="">
             <div
               className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
               style={{
-                background: lastPathSegment === "" ? "#FFEAEF" : "",
+                background: lastPathSegment === "user" ? "#FFEAEF" : "",
               }}
             >
               <svg
@@ -64,7 +63,7 @@ const Sidebar = () => {
                   stroke-linejoin="round"
                   className="group-hover:stroke-primary"
                   style={{
-                    stroke: lastPathSegment === "" ? "#941D3A" : "",
+                    stroke: lastPathSegment === "user" ? "#941D3A" : "",
                   }}
                 />
                 <path
@@ -75,7 +74,7 @@ const Sidebar = () => {
                   stroke-linejoin="round"
                   className="group-hover:stroke-primary"
                   style={{
-                    stroke: lastPathSegment === "" ? "#941D3A" : "",
+                    stroke: lastPathSegment === "user" ? "#941D3A" : "",
                   }}
                 />
               </svg>
@@ -83,14 +82,14 @@ const Sidebar = () => {
               <h5
                 className="text-dark group-hover:text-primary text-sm"
                 style={{
-                  color: lastPathSegment === "" ? "#941D3A" : "",
+                  color: lastPathSegment === "user" ? "#941D3A" : "",
                 }}
               >
                 Dashboard
               </h5>
             </div>
           </Link>
-          <Link href={`/terminal`} className="">
+          <Link href={`/user/terminal`} className="">
             <div
               className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
               style={{
@@ -161,7 +160,7 @@ const Sidebar = () => {
               </h5>
             </div>
           </Link>
-          <Link href={`/transaction`} className="">
+          <Link href={`/user/transaction`} className="">
             <div
               className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
               style={{
@@ -232,7 +231,7 @@ const Sidebar = () => {
               </h5>
             </div>
           </Link>
-          <Link href={`/terminal`} className="">
+          <Link href={`/user/notification`} className="">
             <div
               className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
               style={{

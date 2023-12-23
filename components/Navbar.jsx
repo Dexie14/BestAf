@@ -8,9 +8,9 @@ const Navbar = () => {
 
   const pathname = usePathname();
 
-  const name = pathname.split("/")[1];
+  // const name = pathname.split("/")[1];
   return (
-    <div className="bg-white py-2 px-14" style={{display: name === "auth" ? "none" : ""}}>
+    <div className="bg-white py-2 px-14" >
       <section className="flex justify-end">
         <div className="flex items-center gap-4 cursor-pointer ">
           <div className="cursor-pointer relative ">
