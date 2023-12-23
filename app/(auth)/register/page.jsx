@@ -1,10 +1,11 @@
-import Signin from "@/components/Auth/Signin"
+import Register from "@/components/Auth/Register"
+
 
 
 const page = () => {
   return (
     <div>
-        <Signin/>
+        <Register/>
     </div>
   )
 }
