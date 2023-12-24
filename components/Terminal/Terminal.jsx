@@ -4,11 +4,41 @@ import { useState } from "react";
 import TermTable from "./TermTable";
 import Button from "../Comps/Button";
 
+import ReactModal from "react-modal";
+import UserInvite from "./UserInvite";
+import GenTermId from "./GenTermId";
+import Download from "./Download";
+
 const Terminal = () => {
   const [terminal, setTerminal] = useState(false);
   const [merchant, setMerchant] = useState(false);
   const [date, setDate] = useState(false);
   const [trans, setTrans] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [generate, setGenerate] = useState(false);
+  const [download, setDownload] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+  const customStyles = {
+      overlay: {
+        position: "fixed",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        opacity: "10",
+      },
+      content: {
+        height: "65vh",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        margin: "auto",
+        borderRadius: "30px",
+        width: "50%",
+      },
+    };
   return (
     <div className="h-[100%]">
       <section className="flex justify-between">
@@ -16,7 +46,7 @@ const Terminal = () => {
           Terminal Overview
         </h1>
         <div className="flex gap-3 items-center">
-          <button className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
+          <button onClick={() => setDownload(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -38,7 +68,7 @@ const Terminal = () => {
             </svg>
             Download
           </button>
-          <button className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg">
+          <button onClick={() => setIsOpen(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -60,7 +90,7 @@ const Terminal = () => {
             </svg>
             Invite Users
           </button>
-          <button className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg">
+          <button onClick={() => setGenerate(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -417,6 +447,36 @@ const Terminal = () => {
         </div>
       </section>
       <TermTable />
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <UserInvite setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
+      </ReactModal>
+      <ReactModal
+        isOpen={generate}
+        onRequestClose={() => setGenerate(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <GenTermId setModalIsOpen={setGenerate} modalIsOpen={generate} />
+      </ReactModal>
+      <ReactModal
+        isOpen={download}
+        onRequestClose={() => setDownload(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <Download setModalIsOpen={setDownload} modalIsOpen={download} setSelected={setSelected} selected={selected}/>
+      </ReactModal>
     </div>
   );
 };

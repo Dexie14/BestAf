@@ -56,7 +56,7 @@ const Register = () => {
       signUpUser(values, {
         onError: (error) => {
           if (error instanceof Error) {
-            console.log(error?.message);
+            console.log(error);
             toast.error(error?.message);
           }
         },

@@ -30,11 +30,12 @@ const Login = () => {
       loginWithEmail(values, {
         onError: (error) => {
           console.log(error.message);
+          // toast.error(error?.response?.data?.error);
           toast.error(error?.message);
         },
         onSuccess: (response) => {
           console.log(response?.data);
-          toast.success(response?.data?.message);
+          toast.success(response?.data?.status);
           router.push("/user");
         },
       });

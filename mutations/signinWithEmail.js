@@ -16,16 +16,18 @@ export const signinWithEmail = async ({
         password,
       }
     );
-
-    if (response?.data?.status !== error) {
-      localStorage.setItem("token", response?.data?.token);
+    console.log(response, "log");
+    if (response?.data?.status !== "error") {
+      localStorage.setItem("token", response?.data?.message?.accessToken);
       return { success: true, data: response?.data };
     } else {
       throw new Error(response?.data?.message);
-    }
+    } 
+  
   } catch (error) {
+    console.log(error, "logerror");
     if (error instanceof AxiosError) {
-      throw new Error(error?.response?.data?.error?.message);
+      throw new Error(error?.response?.data?.error || error?.response?.data?.message);
     } else if (error instanceof Error) {
       throw error;
     } else throw new Error("Error occurred while logging in");

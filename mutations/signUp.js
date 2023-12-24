@@ -10,6 +10,7 @@ export const signUp = async ({ name, email, password }) => {
     });
     console.log(response, "ressssss");
   } catch (error) {
+    console.log(error, "signuperror");
     if (error instanceof AxiosError) {
       throw new Error(error?.data?.message);
     } else if (error instanceof Error) {
