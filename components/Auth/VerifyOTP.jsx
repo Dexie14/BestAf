@@ -6,33 +6,32 @@ import classes from "./auth.module.css";
 import ReactModal from "react-modal";
 import OtpSuccess from "./OtpSuccess";
 
-
 const VerifyOTP = () => {
-
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [otpValues, setOtpValues] = useState("");
   const [countdown, setCountdown] = useState(120);
-  const [textColor, setTextColor] = useState('text-primary');
+  const [textColor, setTextColor] = useState("text-primary");
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown((prevCountdown) => (prevCountdown > 0 ? prevCountdown - 1 : 0));
+      setCountdown((prevCountdown) =>
+        prevCountdown > 0 ? prevCountdown - 1 : 0
+      );
     }, 1000);
 
-    return () => clearInterval(timer); 
-
-  }, []); 
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (countdown === 0) {
-      setTextColor('text-dark'); 
+      setTextColor("text-dark");
     }
-
   }, [countdown]);
 
-  const formattedTime = `${Math.floor(countdown / 60)}:${(countdown % 60).toLocaleString('en-US', { minimumIntegerDigits: 2 })}`;
+  const formattedTime = `${Math.floor(countdown / 60)}:${(
+    countdown % 60
+  ).toLocaleString("en-US", { minimumIntegerDigits: 2 })}`;
 
-  
   const customStyles = {
     overlay: {
       position: "fixed",
@@ -42,7 +41,7 @@ const VerifyOTP = () => {
       opacity: "10",
     },
     content: {
-      height:"60vh",
+      height: "60vh",
       top: "0",
       left: "0",
       right: "0",
@@ -77,7 +76,10 @@ const VerifyOTP = () => {
           <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
           <h6 className="text-[#828282] text-sm cursor-pointer"> RESEND </h6>
         </div>
-        <button onClick={() => setIsOpen(true)} className="bg-primary text-white flex justify-center items-center w-9/12  mx-auto rounded-lg px-3 py-3 my-7">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-primary text-white flex justify-center items-center w-9/12  mx-auto rounded-lg px-3 py-3 my-7"
+        >
           Verify
         </button>
       </section>
@@ -90,7 +92,7 @@ const VerifyOTP = () => {
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-        <OtpSuccess setModalIsOpen={setIsOpen} modalIsOpen={isOpen}/>
+        <OtpSuccess setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
       </ReactModal>
     </div>
   );

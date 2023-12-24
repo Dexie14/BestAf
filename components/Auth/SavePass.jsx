@@ -3,12 +3,10 @@
 import React, { useState } from "react";
 
 const SavePass = () => {
-    
-const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
@@ -51,7 +49,7 @@ const [password, setPassword] = useState("");
             placeholder="Password"
             id="newpassword"
             value={password}
-                  onChange={handlePasswordChange}
+            onChange={handlePasswordChange}
           />
         </div>
 
@@ -72,9 +70,8 @@ const [password, setPassword] = useState("");
           />
         </div>
         {passwordsMatch ? null : (
-              <p style={{ color: "red" }}>Passwords do not match.</p>
-            )}
-
+          <p style={{ color: "red" }}>Passwords do not match.</p>
+        )}
 
         <div className="mb-10 mt-5">
           <button className="bg-primary text-white flex justify-center items-center w-full rounded-lg px-3 py-3">
