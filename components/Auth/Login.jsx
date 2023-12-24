@@ -1,10 +1,52 @@
 "use client";
 
+import { useEmailSignin } from "@/hooks/auth/useEmailSignin";
+import { signInSchema } from "@/models/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { Spinner } from "../Spinner";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   const [active, setActive] = useState("super");
+
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "all",
+    resolver: yupResolver(signInSchema),
+  });
+
+  const { mutate: loginWithEmail, isPending } = useEmailSignin();
+
+  const handleSignin = useCallback(
+    (values) => {
+      loginWithEmail(values, {
+        onError: (error) => {
+          console.log(error.message);
+          toast.error(error?.message);
+        },
+        onSuccess: (response) => {
+          console.log(response?.data);
+          toast.success(response?.data?.message);
+          router.push("/user");
+        },
+      });
+    },
+    [loginWithEmail]
+  );
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = form;
 
   return (
     <div className="pt-10">
@@ -39,6 +81,7 @@ const Login = () => {
         <form
           className="bg-white rounded-3xl px-10 py-10 w-5/12 mx-auto my-10"
           style={{ boxShadow: "0px 2px 14px 0px rgba(51, 51, 51, 0.15);" }}
+          onSubmit={handleSubmit(handleSignin)}
         >
           <div className="mb-5 flex flex-col">
             <label
@@ -51,8 +94,16 @@ const Login = () => {
               className="rounded-lg px-3 py-3 border border-border placeholder:text-border"
               type="email"
               placeholder="Email"
-              id="email"
+              {...register("email")}
             />
+            {errors?.email && (
+              <div className="text-red-400 text-xs flex items-center gap-1 mt-1">
+                <div className="w-3 h-3 rounded-full text-white bg-red-500 flex items-center justify-center">
+                  !
+                </div>
+                <p>{errors?.email?.message}</p>
+              </div>
+            )}
           </div>
 
           <div className="mb-5 flex flex-col">
@@ -64,21 +115,27 @@ const Login = () => {
                 Password
               </label>
               <label className="font-semibold text-primary mb-1">
-              <Link href={`/resetpassword`}>
-                Forgot Password
-              </Link>
+                <Link href={`/resetpassword`}>Forgot Password</Link>
               </label>
             </div>
             <input
               className="rounded-lg px-3 py-3 border border-border placeholder:text-border"
               type="password"
               placeholder="Password"
-              id="password"
+              {...register("password")}
             />
+            {errors?.password && (
+              <div className="text-red-400 text-xs flex items-center gap-1 mt-1">
+                <div className="w-3 h-3 rounded-full text-white bg-red-500 flex items-center justify-center">
+                  !
+                </div>
+                <p>{errors?.password?.message}</p>
+              </div>
+            )}
           </div>
           <div>
             <button className="bg-primary text-white flex justify-center items-center w-full rounded-lg px-3 py-3">
-              Sign In
+              {isPending ? <Spinner /> : "Sign In"}
             </button>
           </div>
         </form>
@@ -86,6 +143,7 @@ const Login = () => {
         <form
           className="bg-white rounded-3xl px-10 py-10 w-5/12 mx-auto my-10"
           style={{ boxShadow: "0px 2px 14px 0px rgba(51, 51, 51, 0.15);" }}
+          onSubmit={handleSubmit(handleSignin)}
         >
           <div className="mb-5 flex flex-col">
             <label
@@ -98,27 +156,43 @@ const Login = () => {
               className="rounded-lg px-3 py-3 border border-border placeholder:text-border"
               type="email"
               placeholder="Email"
-              id="email"
+              {...register("email")}
             />
+            {errors?.email && (
+              <div className="text-red-400 text-xs flex items-center gap-1 mt-1">
+                <div className="w-3 h-3 rounded-full text-white bg-red-500 flex items-center justify-center">
+                  !
+                </div>
+                <p>{errors?.email?.message}</p>
+              </div>
+            )}
           </div>
 
           <div className="mb-5 flex flex-col">
-              <label
-                htmlFor="password"
-                className="font-semibold text-[#333333] mb-1"
-              >
-                Password
-              </label>
+            <label
+              htmlFor="password"
+              className="font-semibold text-[#333333] mb-1"
+            >
+              Password
+            </label>
             <input
               className="rounded-lg px-3 py-3 border border-border placeholder:text-border"
               type="password"
               placeholder="Password"
-              id="password"
+              {...register("password")}
             />
+            {errors?.password && (
+              <div className="text-red-400 text-xs flex items-center gap-1 mt-1">
+                <div className="w-3 h-3 rounded-full text-white bg-red-500 flex items-center justify-center">
+                  !
+                </div>
+                <p>{errors?.password?.message}</p>
+              </div>
+            )}
           </div>
           <div>
             <button className="bg-primary text-white flex justify-center items-center w-full rounded-lg px-3 py-3">
-              Sign In
+              {isPending ? <Spinner /> : "Sign In"}
             </button>
           </div>
         </form>
