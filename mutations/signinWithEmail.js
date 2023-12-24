@@ -18,8 +18,8 @@ export const signinWithEmail = async ({
     );
     console.log(response, "log");
     if (response?.data?.status !== "error") {
-      localStorage.setItem("token", response?.data?.message?.accessToken);
-      return { success: true, data: response?.data };
+      localStorage.setItem("token", response?.data?.data);
+      return { success: true, data: response?.data?.message };
     } else {
       throw new Error(response?.data?.message);
     } 

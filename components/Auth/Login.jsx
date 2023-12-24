@@ -35,7 +35,7 @@ const Login = () => {
         },
         onSuccess: (response) => {
           console.log(response?.data);
-          toast.success(response?.data?.status);
+          toast.success(response?.data);
           router.push("/user");
         },
       });
