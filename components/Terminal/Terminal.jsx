@@ -21,24 +21,24 @@ const Terminal = () => {
   const [selected, setSelected] = useState(false);
 
   const customStyles = {
-      overlay: {
-        position: "fixed",
-        top: 0,
-        right: 0,
-        bottom: 0,
-        opacity: "10",
-      },
-      content: {
-        height: "65vh",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        margin: "auto",
-        borderRadius: "30px",
-        width: "50%",
-      },
-    };
+    overlay: {
+      position: "fixed",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      opacity: "10",
+    },
+    content: {
+      height: "65vh",
+      top: "0",
+      left: "0",
+      right: "0",
+      bottom: "0",
+      margin: "auto",
+      borderRadius: "30px",
+      width: "50%",
+    },
+  };
   return (
     <div className="h-[100%]">
       <section className="flex justify-between">
@@ -46,7 +46,10 @@ const Terminal = () => {
           Terminal Overview
         </h1>
         <div className="flex gap-3 items-center">
-          <button onClick={() => setDownload(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
+          <button
+            onClick={() => setDownload(true)}
+            className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -68,7 +71,10 @@ const Terminal = () => {
             </svg>
             Download
           </button>
-          <button onClick={() => setIsOpen(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -90,7 +96,10 @@ const Terminal = () => {
             </svg>
             Invite Users
           </button>
-          <button onClick={() => setGenerate(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg">
+          <button
+            onClick={() => setGenerate(true)}
+            className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -440,7 +449,7 @@ const Terminal = () => {
             </defs>
           </svg>
           <input
-          className="border-0 bg-[#FBFBFB] outline-none w-full text-sm "
+            className="border-0 bg-[#FBFBFB] outline-none w-full text-sm "
             type="text"
             placeholder="Search by amount , payment method..."
           />
@@ -475,7 +484,12 @@ const Terminal = () => {
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-        <Download setModalIsOpen={setDownload} modalIsOpen={download} setSelected={setSelected} selected={selected}/>
+        <Download
+          setModalIsOpen={setDownload}
+          modalIsOpen={download}
+          setSelected={setSelected}
+          selected={selected}
+        />
       </ReactModal>
     </div>
   );

@@ -1,89 +1,21 @@
-'use client'
+"use client";
 import React from "react";
 import avatar from "@/public/assets/dashboard/avatar.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { useAdminProfile } from "@/hooks/useAdminProfile"; 
-// import { adminProfile } from "@/queries/getAdminProfile";
-import { useQuery } from '@tanstack/react-query'
-
-import { BASE_URL } from "@/utils/baseUrl";
-import axios, { AxiosError } from "axios";
-import { useToken } from "@/hooks/auth/useToken";
-
 import { toast } from "react-toastify";
-const { token } = useToken();
+import { useAdminProfile } from "@/hooks/useAdminProfile";
 
 const Navbar = () => {
-
   const pathname = usePathname();
 
-  // const { status, data, error } = useAdminProfile()
- 
+  const { data: user, isLoading, isError } = useAdminProfile();
 
+  console.log(user, "ferrsyursdyu");
 
-const adminProfile = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/admin/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(response, "adminprofile");
-  } catch (error) {
-    console.log(error, "adminprofileerror");
-    if (error instanceof AxiosError) {
-      throw new Error(error?.response?.data?.message);
-    } else if (error instanceof Error) {
-      throw error;
-    } else throw new Error("Error occurred while sending an admin invite");
-  }
-};
-
-const { isLoading, isError, data, error } = useQuery({
-  queryKey: ['profile'],
-  queryFn: adminProfile,
-})
-
-
-  const { data: adminfetch, status } = useAdminProfile();
-
-  console.log(adminfetch, "adminfetch")
-  console.log(data, "adminfetch2222")
-
-
-
-  // even this below that suppose work no work
-
-  const postQuery = useQuery({
-    queryKey: ['admin/profile'],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/admin/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(response, "adminprofile");
-      } catch (error) {
-        console.log(error, "adminprofileerror");
-        if (error instanceof AxiosError) {
-          throw new Error(error?.response?.data?.message);
-        } else if (error instanceof Error) {
-          throw error;
-        } else throw new Error("Error occurred while sending an admin invite");
-      }
-    }
-  })
-
-  console.log(postQuery, "postquery")
-  console.log(postQuery.data, "postquery")
-
-
-  // const name = pathname.split("/")[1];
   return (
-    <div className="bg-white py-2 px-14" >
+    <div className="bg-white py-2 px-14">
       <section className="flex justify-end">
         <div className="flex items-center gap-4 cursor-pointer ">
           <div className="cursor-pointer relative ">
@@ -127,8 +59,11 @@ const { isLoading, isError, data, error } = useQuery({
               >
                 Abayomi O.
               </p>
-              <span className="text-primary text-xs tracking-tight" style={{ fontFamily: "DMSans" }}>
-                Super Admin
+              <span
+                className="text-primary text-xs tracking-tight"
+                style={{ fontFamily: "DMSans" }}
+              >
+                {user?.name}
               </span>
             </div>
           </div>

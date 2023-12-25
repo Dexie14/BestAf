@@ -12,11 +12,15 @@ export const adminProfile = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response, "adminprofile");
+    if(response?.data?.status === "success") {
+      return response?.data?.data;
+    }else {
+      throw new Error(response.data?.data?.message);
+    }
   } catch (error) {
     console.log(error, "adminprofileerror");
     if (error instanceof AxiosError) {
-      throw new Error(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.error?.message);
     } else if (error instanceof Error) {
       throw error;
     } else throw new Error("Error occurred while sending an admin invite");
