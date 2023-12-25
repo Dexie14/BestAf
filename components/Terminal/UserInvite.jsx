@@ -1,9 +1,21 @@
+import { useState } from "react";
 import Button from "../Comps/Button";
+
+import { useAdminInvite } from "@/hooks/useAdminInvite";
 
 const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
+
+  const [email, setEmail] = useState("")
+  const { mutate: InviteAdmin, isPending } = useAdminInvite();
+
+  const createInvite = () => {
+    InviteAdmin({ email, handleCloseModal })
+  }
+
+  
 
   return (
     <div className="py-4 px-6 rounded-[40px] ">
@@ -33,17 +45,26 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
       </section>
       <section className="my-10">
         <div className="mb-5 flex flex-col">
-          <label htmlFor="email" className="text-sm  font-semibold text-[#333333] mb-1">
+          <label
+            htmlFor="email"
+            className="text-sm  font-semibold text-[#333333] mb-1"
+          >
             Email
           </label>
           <input
+         onChange={(e) => setEmail(e.target.value)}
             id="email"
             className="text-sm rounded-lg px-3 bg-[#f2f2f2] py-3 border border-border placeholder:text-border"
             type="email"
             placeholder="Enter Email to invite"
           />
         </div>
-        <Button className="w-full px-3 py-2">Send</Button>
+        <Button
+          onClick={createInvite}
+          className="w-full px-3 py-2"
+        >
+          {isPending ? "Sending" : "Send"}
+        </Button>
       </section>
     </div>
   );

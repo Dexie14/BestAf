@@ -4,9 +4,53 @@ import avatar from "@/public/assets/dashboard/avatar.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { useAdminProfile } from "@/hooks/useAdminProfile"; 
+// import { adminProfile } from "@/queries/getAdminProfile";
+import { useQuery } from '@tanstack/react-query'
+
+import { BASE_URL } from "@/utils/baseUrl";
+import axios, { AxiosError } from "axios";
+import { useToken } from "@/hooks/auth/useToken";
+
+import { toast } from "react-toastify";
+const { token } = useToken();
+
 const Navbar = () => {
 
   const pathname = usePathname();
+
+  // const { status, data, error } = useAdminProfile()
+ 
+
+
+const adminProfile = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/admin/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response, "adminprofile");
+  } catch (error) {
+    console.log(error, "adminprofileerror");
+    if (error instanceof AxiosError) {
+      throw new Error(error?.response?.data?.message);
+    } else if (error instanceof Error) {
+      throw error;
+    } else throw new Error("Error occurred while sending an admin invite");
+  }
+};
+
+const { isLoading, isError, data, error } = useQuery({
+  queryKey: ['profile'],
+  queryFn: adminProfile,
+})
+
+
+  const { data: adminfetch, status } = useAdminProfile();
+
+  console.log(adminfetch, "adminfetch")
+  console.log(data, "adminfetch2222")
 
   // const name = pathname.split("/")[1];
   return (
