@@ -1,13 +1,45 @@
+"use client";
+
+import { useState } from "react";
+
+import ReactModal from "react-modal";
+import UserInvite from "../Terminal/UserInvite";
 import Table from "./Table";
 
 const Dashboard = () => {
+
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  
+  const customStyles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      opacity: "10",
+    },
+    content: {
+      height: "65vh",
+      top: "0",
+      left: "0",
+      right: "0",
+      bottom: "0",
+      margin: "auto",
+      borderRadius: "30px",
+      width: "50%",
+    },
+  };
+
+
   return (
     <div>
       <section className="flex justify-between">
         <h1 className="text-2xl text-dark" style={{ fontFamily: "DMSans" }}>
           Dashboard Overview
         </h1>
-        <button className="flex items-center justify-center gap-2 py-2 px-3 w-1/6 bg-primary text-white rounded-lg">
+        <button    onClick={() => setIsOpen(true)} className="flex items-center justify-center gap-2 py-2 px-3 w-1/6 bg-primary text-white rounded-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -70,6 +102,16 @@ const Dashboard = () => {
         <Table/>
         <p className="text-xs text-[#4B5563] font-bold">7/50 <span className="font-normal">results</span></p>
       </section>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <UserInvite setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
+      </ReactModal>
     </div>
   );
 };

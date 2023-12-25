@@ -57,13 +57,14 @@ const Navbar = () => {
                 className="text-neutral-900 text-base font-bold tracking-wide"
                 style={{ fontFamily: "DMSans" }}
               >
-                Abayomi O.
+                {/* Abayomi O. */}
+                {user?.name.split(" ").map((word, index) => (index === 0 ? word : word.charAt(0))).join(" ")}
               </p>
               <span
                 className="text-primary text-xs tracking-tight"
                 style={{ fontFamily: "DMSans" }}
               >
-                {user?.name}
+                {user?.role === "superadmin" ? "Super Admin" : ""}
               </span>
             </div>
           </div>

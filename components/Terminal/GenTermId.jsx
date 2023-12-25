@@ -1,8 +1,21 @@
+import { useState } from "react";
 import Button from "../Comps/Button";
+
+import { useCreateTerm } from "@/hooks/useCreateTerm";
 
 const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
+  };
+
+  const [serialNumber, setSerialNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [supportNumber, setSupportNumber] = useState("");
+
+  const { mutate: createTerm, isPending } = useCreateTerm();
+
+  const createTermNow = () => {
+    createTerm({ serialNumber,address, supportNumber, handleCloseModal });
   };
 
   return (
@@ -33,10 +46,14 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
       </section>
       <section className="my-10">
         <div className="mb-5 flex flex-col">
-          <label htmlFor="IMEI" className=" text-sm font-semibold text-[#333333] mb-1">
+          <label
+            htmlFor="IMEI"
+            className=" text-sm font-semibold text-[#333333] mb-1"
+          >
             Serial Number/IMEI
           </label>
           <input
+            onChange={(e) => setSerialNumber(e.target.value)}
             id="IMEI"
             className="text-sm rounded-lg px-3 bg-[#f2f2f2] py-3 border border-border placeholder:text-border"
             type="text"
@@ -51,6 +68,7 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
             Address of location
           </label>
           <input
+            onChange={(e) => setAddress(e.target.value)}
             id="address"
             className="text-sm rounded-lg bg-[#f2f2f2] px-3 py-3 border border-border placeholder:text-border"
             type="text"
@@ -65,13 +83,14 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
             Merchant ID
           </label>
           <input
+            onChange={(e) => setSupportNumber(e.target.value)}
             id="merchant"
             className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border placeholder:text-border"
-            type="email"
+            type="number"
             placeholder="Enter MerchantID"
           />
         </div>
-        <Button className="w-full px-3 py-2">Generate</Button>
+        <Button    onClick={createTermNow} className="w-full px-3 py-2"> {isPending ? "Generating" : "Generate" } </Button>
       </section>
     </div>
   );

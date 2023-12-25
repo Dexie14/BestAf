@@ -1,4 +1,62 @@
+
+
+import { useGetTerminal } from "@/hooks/auth/useGetTerm";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "@/utils/baseUrl";
+import axios, { AxiosError } from "axios";
+import { useToken } from "@/hooks/auth/useToken";
+
+import { toast } from "react-toastify";
+const { token } = useToken();
+
 const TermTable = () => {
+
+
+const param = {
+  // terminalId : "2054vpo6",
+  serialNumber: "12345678dexie"
+}
+
+const termid = "2054vpo6"
+
+  // const { data: term, isLoading, isError } = useGetTerminal(termid);
+
+
+  // console.log(term, "ferrsyursdyu");
+
+ const postQuery = useQuery({
+    queryKey: ['term'],
+    queryFn: () => getTerminal()
+  })
+
+  
+  console.log(postQuery.data, "parraa");
+
+  const getTerminal = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/admin/terminals?terminalId=${termid}`, {
+        params: param,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.status === "success") {
+        console.log(response, "getTerm");
+        return response?.data?.data;
+      } else {
+        throw new Error(response.data?.data?.message);
+      }
+    } catch (error) {
+      console.log(error, "getTermerror");
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+
+
   return (
     <div>
       <table className=" w-full table-auto tabling">
