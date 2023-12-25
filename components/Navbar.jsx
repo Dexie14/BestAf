@@ -52,6 +52,35 @@ const { isLoading, isError, data, error } = useQuery({
   console.log(adminfetch, "adminfetch")
   console.log(data, "adminfetch2222")
 
+
+
+  // even this below that suppose work no work
+
+  const postQuery = useQuery({
+    queryKey: ['admin/profile'],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/admin/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response, "adminprofile");
+      } catch (error) {
+        console.log(error, "adminprofileerror");
+        if (error instanceof AxiosError) {
+          throw new Error(error?.response?.data?.message);
+        } else if (error instanceof Error) {
+          throw error;
+        } else throw new Error("Error occurred while sending an admin invite");
+      }
+    }
+  })
+
+  console.log(postQuery, "postquery")
+  console.log(postQuery.data, "postquery")
+
+
   // const name = pathname.split("/")[1];
   return (
     <div className="bg-white py-2 px-14" >
