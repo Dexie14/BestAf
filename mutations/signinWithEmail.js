@@ -1,6 +1,7 @@
 
 import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
+import Cookies from "js-cookie";
 
 
 
@@ -18,7 +19,8 @@ export const signinWithEmail = async ({
     );
     console.log(response, "log");
     if (response?.data?.status !== "error") {
-      localStorage.setItem("token", response?.data?.data);
+      // localStorage.setItem("token", response?.data?.data);
+      Cookies.set("token", response?.data?.data)
       return { success: true, data: response?.data?.message };
     } else {
       throw new Error(response?.data?.message);
