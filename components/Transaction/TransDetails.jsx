@@ -1,10 +1,12 @@
 import Image from "next/image";
 import success from "@/public/assets/auth/success.svg";
 
-const TransDetails = ({ setModalIsOpen, modalIsOpen }) => {
+const TransDetails = ({ setModalIsOpen, modalIsOpen, selectedTransactionId }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
+
+  // console.log(selectedTransactionId,"selectedTransactionId")
 
   return (
     <div className="py-4 px-6 rounded-[40px] ">
