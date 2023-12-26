@@ -31,7 +31,7 @@ const Login = () => {
         onError: (error) => {
           console.log(error.message);
           // toast.error(error?.response?.data?.error);
-          toast.error(error?.message);
+          toast.error(error?.message || "user not found");
         },
         onSuccess: (response) => {
           console.log(response?.data);

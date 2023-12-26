@@ -15,7 +15,9 @@ export const adminProfile = async () => {
     if(response?.data?.status === "success") {
       return response?.data?.data;
     }else {
+      
       throw new Error(response.data?.data?.message);
+      // window.location.reload();
     }
   } catch (error) {
     console.log(error, "adminprofileerror");

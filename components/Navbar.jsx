@@ -1,18 +1,21 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import avatar from "@/public/assets/dashboard/avatar.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { toast } from "react-toastify";
 import { useAdminProfile } from "@/hooks/useAdminProfile";
+import { Spinner } from "./Spinner";
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  const { data: user, isLoading, isError } = useAdminProfile();
+  const { data: user, isLoading, isError, refetch } = useAdminProfile();
 
   console.log(user, "ferrsyursdyu");
+
+ 
 
   return (
     <div className="bg-white py-2 px-14">
@@ -52,21 +55,28 @@ const Navbar = () => {
               alt="user"
               className="w-10 h-10 rounded-full object-cover"
             />
-            <div className="flex flex-col ">
-              <p
-                className="text-neutral-900 text-base font-bold tracking-wide"
-                style={{ fontFamily: "DMSans" }}
-              >
-                {/* Abayomi O. */}
-                {user?.name.split(" ").map((word, index) => (index === 0 ? word : word.charAt(0))).join(" ")}
-              </p>
-              <span
-                className="text-primary text-xs tracking-tight"
-                style={{ fontFamily: "DMSans" }}
-              >
-                {user?.role === "superadmin" ? "Super Admin" : ""}
-              </span>
-            </div>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <div className="flex flex-col ">
+                <p
+                  className="text-neutral-900 text-base font-bold tracking-wide"
+                  style={{ fontFamily: "DMSans" }}
+                >
+                  {/* Abayomi O. */}
+                  {user?.name
+                    .split(" ")
+                    .map((word, index) => (index === 0 ? word : word.charAt(0)))
+                    .join(" ")}
+                </p>
+                <span
+                  className="text-primary text-xs tracking-tight"
+                  style={{ fontFamily: "DMSans" }}
+                >
+                  {user?.role === "superadmin" ? "Super Admin" : ""}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </section>
