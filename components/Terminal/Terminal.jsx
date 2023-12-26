@@ -8,6 +8,9 @@ import ReactModal from "react-modal";
 import UserInvite from "./UserInvite";
 import GenTermId from "./GenTermId";
 import Download from "./Download";
+import { CSVLink, CSVDownload } from "react-csv";
+
+import { useGetTerminal } from "@/hooks/auth/useGetTerm";
 
 const Terminal = () => {
   const [terminal, setTerminal] = useState(false);
@@ -39,6 +42,23 @@ const Terminal = () => {
       width: "50%",
     },
   };
+
+  const { data: term, isLoading, isError } = useGetTerminal();
+
+  console.log(term, "geting term");
+
+  const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  const [dataToPass, setDataToPass] = useState("");
+
+  const handleTerminalClick = (id) => {
+    setSelectedTerminalId(id);
+    setTerminal(false);
+  };
+
+  const handleApplyClick = () => {
+    setDataToPass({ selectedTerminalId });
+  };
+
   return (
     <div className="h-[100%]">
       <section className="flex justify-between">
@@ -46,7 +66,34 @@ const Terminal = () => {
           Terminal Overview
         </h1>
         <div className="flex gap-3 items-center">
-          <button
+          {term && (
+            <CSVLink
+              className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
+              data={term?.items}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_1_1141)">
+                  <path
+                    d="M10.8332 10.8334V15.4876L12.3566 13.9642L13.5357 15.1434L9.99991 18.6784L6.46408 15.1434L7.64325 13.9642L9.16658 15.4876V10.8334H10.8332ZM9.99991 1.66675C11.4307 1.66682 12.8116 2.19268 13.8801 3.14435C14.9485 4.09602 15.63 5.40713 15.7949 6.82841C16.8318 7.11118 17.7363 7.74934 18.3505 8.63136C18.9646 9.51337 19.2492 10.5832 19.1546 11.6537C19.06 12.7243 18.5922 13.7276 17.8329 14.4883C17.0736 15.2489 16.0712 15.7185 15.0007 15.8151V14.1367C15.3842 14.082 15.7529 13.9514 16.0854 13.7526C16.4179 13.5537 16.7074 13.2907 16.937 12.9788C17.1667 12.6668 17.332 12.3123 17.4231 11.9358C17.5143 11.5593 17.5296 11.1684 17.468 10.786C17.4065 10.4035 17.2694 10.0372 17.0647 9.70829C16.86 9.37941 16.5919 9.0946 16.2759 8.87047C15.96 8.64635 15.6025 8.48741 15.2245 8.40292C14.8465 8.31844 14.4554 8.31011 14.0741 8.37841C14.2046 7.77082 14.1975 7.14172 14.0534 6.53721C13.9093 5.93269 13.6318 5.36807 13.2412 4.88469C12.8507 4.40131 12.3569 4.01142 11.7961 3.74358C11.2354 3.47573 10.6218 3.33672 10.0003 3.33672C9.37887 3.33672 8.76529 3.47573 8.20452 3.74358C7.64375 4.01142 7.14999 4.40131 6.75941 4.88469C6.36884 5.36807 6.09134 5.93269 5.94723 6.53721C5.80313 7.14172 5.79607 7.77082 5.92658 8.37841C5.16629 8.23564 4.38043 8.40074 3.74187 8.83738C3.1033 9.27403 2.66435 9.94646 2.52158 10.7067C2.3788 11.467 2.5439 12.2529 2.98055 12.8915C3.41719 13.53 4.08963 13.969 4.84991 14.1117L4.99991 14.1367V15.8151C3.92945 15.7187 2.92692 15.2492 2.16752 14.4886C1.40813 13.728 0.940184 12.7247 0.845474 11.6541C0.750763 10.5835 1.03531 9.51365 1.64939 8.63156C2.26346 7.74947 3.168 7.11124 4.20491 6.82841C4.36967 5.40706 5.05108 4.09584 6.11956 3.14414C7.18804 2.19243 8.56904 1.66663 9.99991 1.66675Z"
+                    fill="#4F4F4F"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_1141">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>{" "}
+              Download
+            </CSVLink>
+          )}
+          {/* <button
             onClick={() => setDownload(true)}
             className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
           >
@@ -70,7 +117,7 @@ const Terminal = () => {
               </defs>
             </svg>
             Download
-          </button>
+          </button> */}
           <button
             onClick={() => setIsOpen(true)}
             className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg"
@@ -169,7 +216,7 @@ const Terminal = () => {
                 </clipPath>
               </defs>
             </svg>
-            Terminal ID
+            {selectedTerminalId ? selectedTerminalId : "Terminal ID"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -192,15 +239,31 @@ const Terminal = () => {
           </div>
           {terminal && (
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-              <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
-              <p className="text-dark text-sm  mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
-              <p className=" text-dark text-sm  mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
+              {selectedTerminalId && (
+                <p
+                  onClick={() => handleTerminalClick("")}
+                  className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+                    !selectedTerminalId ? "bg-gray-300" : ""
+                  }`}
+                >
+                  Terminal ID
+                </p>
+              )}
+              {term ? (
+                term?.items?.map((termid) => (
+                  <p
+                    onClick={() => handleTerminalClick(termid?.terminalId)}
+                    key={termid?._id}
+                    className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
+                  >
+                    {termid?.terminalId}
+                  </p>
+                ))
+              ) : (
+                <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+                  NO ID
+                </p>
+              )}
             </div>
           )}
         </aside>
@@ -426,7 +489,9 @@ const Terminal = () => {
           )}
         </aside>
         <div className="w-1/12">
-          <Button className="py-2 px-2">APPLY</Button>
+          <Button onClick={handleApplyClick} className="py-2 px-2">
+            APPLY
+          </Button>
         </div>
         <div className="flex gap-3 rounded-lg border bg-[#FBFBFB] border-[#E0E0E0] px-2 py-2 w-[275px]">
           <svg
@@ -455,7 +520,7 @@ const Terminal = () => {
           />
         </div>
       </section>
-      <TermTable />
+      <TermTable paramlist={dataToPass} />
       <ReactModal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}

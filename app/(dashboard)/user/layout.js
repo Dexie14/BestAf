@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
           <div className="w-full ">
             <div className="">
               <Navbar/>
-              <div className="px-8 py-6 h-full overflow-y-scroll bg-[#f8f8f8]">
+              <div className="px-8 py-6 overflow-y-scroll bg-[#f8f8f8]">
                 {children}
               </div>
             </div>

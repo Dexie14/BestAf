@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Button from "../Comps/Button";
 import TransTable from "./TransTable";
-
+import { useGetTrans } from "@/hooks/auth/useGetTrans"; 
 
 const Transaction = () => {
 
@@ -15,6 +15,9 @@ const Transaction = () => {
   const [trans, setTrans] = useState(false);
 
 
+  const { data: transData, isLoading, isError } = useGetTrans();
+
+  console.log(transData, "geting transData");
 
 
   return (

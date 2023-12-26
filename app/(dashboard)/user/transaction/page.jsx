@@ -1,10 +1,12 @@
-import Transaction from '@/components/Transaction/Transaction'
-import React from 'react'
+import Transaction from "@/components/Transaction/Transaction";
+import React from "react";
 
 const page = () => {
   return (
-    <div><Transaction/></div>
-  )
-}
+    <div className="max-h-[calc(100vh-120px)]">
+      <Transaction />
+    </div>
+  );
+};
 
-export default page
+export default page;

@@ -2,16 +2,11 @@ import { getTerminal } from "@/queries/getAllTerm";
 import { useQuery } from "@tanstack/react-query";
 
 
-
-
-export const useGetTerminal = (termid) => {
+export const useGetTerminal = () => {
   return useQuery({
       queryKey: ["terminals"],
-      queryFn: () => getTerminal(termid),
+      queryFn: () => getTerminal(),
     staleTime: 1000 * 5 * 5,
   });
 };
 
-
-
-// ?terminalId=${"20dbzmfj"}&pageSize=${10}&page=${1}&enable=${false}
