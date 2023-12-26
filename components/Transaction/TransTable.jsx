@@ -4,6 +4,17 @@ import ReactModal from "react-modal";
 
 import TransDetails from "./TransDetails";
 
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "@/utils/baseUrl";
+import moment from "moment";
+import axios, { AxiosError } from "axios";
+import { useToken } from "@/hooks/auth/useToken";
+
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { Spinner } from "../Spinner";
+const { token } = useToken();
+
 const TransTable = () => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +38,59 @@ const TransTable = () => {
           width: "50%",
         },
       };
+
+
+      // const param = {
+      //   terminalId: "",
+      //   transactionId: "",
+      //   pageSize: "10",
+      //   page: "1",
+      //   enable: false,
+      // };
+
+      const getTransaction = async () => {
+        try {
+          const response = await axios.get(`${BASE_URL}/transaction`, {
+            params: param,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response?.data?.status === "success") {
+            console.log(response, "getTerm");
+            return response?.data?.data;
+          } else {
+            throw new Error(response.data?.data?.message);
+          }
+        } catch (error) {
+          console.log(error, "getTermerror");
+          if (error instanceof AxiosError) {
+            throw new Error(error?.response?.data?.error?.message);
+          } else if (error instanceof Error) {
+            throw error;
+          } else throw new Error("Error occurred");
+        }
+      };
+    
+      const {
+        data: table,
+        isLoading,
+        refetch,
+      } = useQuery({
+        queryKey: ["term"],
+        queryFn: () => getTerminal(),
+      });
+    
+      // console.log(transactions, "parraa");
+    
+      // useEffect(() => {
+      //   if (paramlist && Object.keys(paramlist).length !== 0) {
+      //     refetch();
+      //   }
+      // }, [paramlist, refetch]);
+
+
+
     return (
       <div>
         <table className=" w-full table-auto tabling">
