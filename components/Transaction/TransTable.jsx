@@ -15,11 +15,12 @@ import { useEffect } from "react";
 import { Spinner } from "../Spinner";
 const { token } = useToken();
 
-const TransTable = () => {
+const TransTable = (paramlist) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
 
+  console.log(paramlist, "list")
   const customStyles = {
     overlay: {
       position: "fixed",
@@ -41,11 +42,11 @@ const TransTable = () => {
   };
 
   const param = {
-    terminalId: "",
+    terminalId: paramlist?.paramlist?.selectedTerminalId,
     transactionId: "",
     responseCode: "00",
-    amount: "",
-    from: "",
+    amount: paramlist?.paramlist?.amount,
+    from: paramlist?.paramlist?.fromDate,
     to: "",
     pageSize: "10",
     page: "1",
@@ -87,11 +88,11 @@ const TransTable = () => {
 
   console.log(transactions, "parraa");
 
-  // useEffect(() => {
-  //   if (paramlist && Object.keys(paramlist).length !== 0) {
-  //     refetch();
-  //   }
-  // }, [paramlist, refetch]);
+  useEffect(() => {
+    if (paramlist && Object.keys(paramlist).length !== 0) {
+      refetch();
+    }
+  }, [paramlist, refetch]);
 
 
 
@@ -131,7 +132,7 @@ const TransTable = () => {
                   }}
                   key={index}
                   onClick={() => {
-                    setSelectedTransactionId(item?._id); // Assuming `id` is the property holding the transaction ID
+                    setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                     setIsOpen(true);
                   }}
                 >
