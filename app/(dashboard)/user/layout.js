@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/assets/logo.svg" />
       </head>
       <body className={DMSans.className} style={{ fontFamily: "DMSansMedium" }}>
-        <Protected>
+        {/* <Protected> */}
           <div className="flex overflow-y-hidden max-h-[100vh]">
             <div className="w-[20%] sticky">
               <Sidebar />
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
               </div>
             </div>
           </div>
-        </Protected>
+        {/* </Protected> */}
       </body>
     </html>
   );
