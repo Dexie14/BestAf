@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogoutIcon } from "./icons/LogoutIcon";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     toast.success("You have successfully Loggedout");
-    localStorage.removeItem("token");
+    Cookies.remove("token");
 
     setTimeout(() => {
       router.push("/login");
