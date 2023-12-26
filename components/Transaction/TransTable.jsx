@@ -93,6 +93,8 @@ const TransTable = () => {
   //   }
   // }, [paramlist, refetch]);
 
+
+
   return (
     <div>
       <table className=" w-full table-auto tabling">
@@ -129,8 +131,8 @@ const TransTable = () => {
                   }}
                   key={index}
                   onClick={() => {
-                    setIsOpen(true);
                     setSelectedTransactionId(item?._id); // Assuming `id` is the property holding the transaction ID
+                    setIsOpen(true);
                   }}
                 >
                   <td className="pl-2">
