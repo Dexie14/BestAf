@@ -19,7 +19,8 @@ const Transaction = () => {
 
   console.log(transData, "geting transData");
 
-  const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  // const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  const [inputTerminal, setInputTerminal] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [dataToPass, setDataToPass] = useState("");
@@ -31,12 +32,12 @@ const Transaction = () => {
 
   
   const handleTerminalClick = (id) => {
-    setSelectedTerminalId(id);
+    setInputTerminal("");
     setTerminal(false);
   };
 
   const handleApplyClick = () => {
-    setDataToPass({ selectedTerminalId, fromDate , toDate, amount});
+    setDataToPass({ inputTerminal, fromDate , toDate, amount});
   };
 
 
@@ -118,7 +119,7 @@ const Transaction = () => {
                 </clipPath>
               </defs>
             </svg>
-            {selectedTerminalId ? selectedTerminalId : "Terminal ID"}
+            Terminal ID
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -140,32 +141,52 @@ const Transaction = () => {
             </svg>
           </div>
           {terminal && (
+            // <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
+            //   {selectedTerminalId && (
+            //     <p
+            //       onClick={() => handleTerminalClick("")}
+            //       className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+            //         !selectedTerminalId ? "bg-gray-300" : ""
+            //       }`}
+            //     >
+            //       Terminal ID
+            //     </p>
+            //   )}
+            //   {transData ? (
+            //     transData?.items?.map((transId) => (
+            //       <p
+            //         onClick={() => handleTerminalClick(transId?.terminalId)}
+            //         key={transId?._id}
+            //         className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
+            //       >
+            //         {transId?.terminalId}
+            //       </p>
+            //     ))
+            //   ) : (
+            //     <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+            //       NO ID
+            //     </p>
+            //   )}
+            // </div>
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-              {selectedTerminalId && (
+              {inputTerminal && (
                 <p
                   onClick={() => handleTerminalClick("")}
                   className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
-                    !selectedTerminalId ? "bg-gray-300" : ""
+                    !inputTerminal ? "bg-gray-300" : ""
                   }`}
                 >
-                  Terminal ID
+                  Default
                 </p>
               )}
-              {transData ? (
-                transData?.items?.map((transId) => (
-                  <p
-                    onClick={() => handleTerminalClick(transId?.terminalId)}
-                    key={transId?._id}
-                    className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
-                  >
-                    {transId?.terminalId}
-                  </p>
-                ))
-              ) : (
-                <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                  NO ID
-                </p>
-              )}
+              <div className="flex justify-center items-center">
+                <input
+                  type="text"
+                  onChange={(e) => setInputTerminal(e.target.value)}
+                  value={inputTerminal}
+                  className=" text-dark text-center w-full text-xs mx-1 my-2 flex justify-center py-2 border border-border rounded outline-none"
+                />
+              </div>
             </div>
           )}
         </aside>

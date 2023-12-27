@@ -244,7 +244,7 @@ const Sidebar = () => {
               </h5>
             </div>
           </Link>
-          <Link href={`/user/notifications`} className="">
+          {/* <Link href={`/user/notifications`} className="">
             <div
               className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
               style={{
@@ -278,7 +278,7 @@ const Sidebar = () => {
                 Notification
               </h5>
             </div>
-          </Link>
+          </Link> */}
         </section>
         <section className="bottom-0 flex items-end">
           <div
