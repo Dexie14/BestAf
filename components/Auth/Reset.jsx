@@ -4,14 +4,39 @@ import { useRequestPasswordReset } from "@/hooks/auth/useRequestPasswordReset";
 import { resetPasswordSchema } from "@/models/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Spinner } from "../Spinner";
+import ReactModal from "react-modal";
+import ResetCongrats from "./resetCongrats";
 
 import { toast } from "react-toastify";
 
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    opacity: "10",
+  },
+  content: {
+    height: "60vh",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    margin: "auto",
+    borderRadius: "30px",
+    width: "40%",
+  },
+};
+
 const Reset = () => {
   const router = useRouter();
+
+  
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -33,7 +58,8 @@ const Reset = () => {
         onSuccess: (response) => {
           console.log(response);
           toast.success(response?.message);
-          router.push("/login");
+          setIsOpen(true)
+          // router.push("/login");
         },
       });
     },
@@ -82,6 +108,16 @@ const Reset = () => {
           </button>
         </div>
       </form>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <ResetCongrats setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
+      </ReactModal>
     </div>
   );
 };

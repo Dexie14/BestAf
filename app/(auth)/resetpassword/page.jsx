@@ -1,9 +1,9 @@
-import Reset from '@/components/Auth/Reset'
+import SavePass from '@/components/Auth/SavePass'
 import React from 'react'
 
 const page = () => {
   return (
-    <div><Reset/></div>
+    <div><SavePass/></div>
   )
 }
 

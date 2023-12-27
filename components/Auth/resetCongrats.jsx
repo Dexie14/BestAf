@@ -3,11 +3,7 @@ import success from "@/public/assets/auth/success.svg";
 
 import { useRouter } from "next/navigation";
 
-const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
-  // const handleButtonClick = () => {
-  //   router.push('/verify');
-  // };
-  const router = useRouter();
+const resetCongrats = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -42,8 +38,8 @@ const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
           <Image src={success} alt="success" />
         </div>
         <p className="text-dark text-sm text-center w-10/12 mx-auto my-3">
-          Great news! Your registration is complete. We've just sent an OTP to
-          your email. Please check and verify to get started.
+          Great news! Your forgot password is complete. We've just sent a link to
+          your email. Please check and change password.
         </p>
         <button
         onClick={handleCloseModal}
@@ -57,4 +53,4 @@ const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
   );
 };
 
-export default OtpCongrats;
+export default resetCongrats;

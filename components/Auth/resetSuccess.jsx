@@ -1,13 +1,13 @@
 import Image from "next/image";
 import success from "@/public/assets/auth/success.svg";
-
 import { useRouter } from "next/navigation";
 
-const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
-  // const handleButtonClick = () => {
-  //   router.push('/verify');
-  // };
-  const router = useRouter();
+const ResetSuccess = ({ setModalIsOpen, modalIsOpen }) => {
+
+
+    const router = useRouter();
+
+
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -42,14 +42,9 @@ const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
           <Image src={success} alt="success" />
         </div>
         <p className="text-dark text-sm text-center w-10/12 mx-auto my-3">
-          Great news! Your registration is complete. We've just sent an OTP to
-          your email. Please check and verify to get started.
+          Password changed Successfully Log in now to access your account.
         </p>
-        <button
-        onClick={handleCloseModal}
-          // onClick={() => router.push("/verify")}
-          className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3"
-        >
+        <button onClick={() => router.push('/login')} className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3">
           Continue
         </button>
       </section>
@@ -57,4 +52,4 @@ const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
   );
 };
 
-export default OtpCongrats;
+export default ResetSuccess;
