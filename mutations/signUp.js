@@ -12,7 +12,7 @@ export const signUp = async ({ name, email, password }) => {
   } catch (error) {
     console.log(error, "signuperror");
     if (error instanceof AxiosError) {
-      throw new Error(error?.data?.message);
+      throw new Error(error?.data?.message || error?.response?.data?.message);
     } else if (error instanceof Error) {
       throw error;
     } else throw new Error("Error occurred while creating account");

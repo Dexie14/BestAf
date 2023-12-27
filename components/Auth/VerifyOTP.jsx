@@ -5,12 +5,17 @@ import OtpInput from "react-otp-input";
 import classes from "./auth.module.css";
 import ReactModal from "react-modal";
 import OtpSuccess from "./OtpSuccess";
+import { useVerifyAccount } from "@/hooks/auth/useVerifyOtp";
+// import { usePathname } from "next/navigation";
+
+import { useSearchParams } from "next/navigation";
 
 const VerifyOTP = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [otpValues, setOtpValues] = useState("");
   const [countdown, setCountdown] = useState(120);
   const [textColor, setTextColor] = useState("text-primary");
+  const [showResendButton, setShowResendButton] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,6 +37,11 @@ const VerifyOTP = () => {
     countdown % 60
   ).toLocaleString("en-US", { minimumIntegerDigits: 2 })}`;
 
+  const handleResendClick = () => {
+    setCountdown(120);
+    setShowResendButton(false);
+  };
+
   const customStyles = {
     overlay: {
       position: "fixed",
@@ -50,6 +60,26 @@ const VerifyOTP = () => {
       borderRadius: "30px",
       width: "40%",
     },
+  };
+
+  const searchParams = useSearchParams();
+
+  const url = `${searchParams}`;
+  // console.log(url)
+
+  const email = url.split("=")[1];
+  // console.log(email)
+  const decodedEmail = decodeURIComponent(email);
+  // console.log(decodedEmail)
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const { mutate: VerifyAdmin, isPending } = useVerifyAccount();
+
+  const createVerification = () => {
+    VerifyAdmin({ otpValues, decodedEmail, handleOpenModal });
   };
 
   return (
@@ -73,23 +103,23 @@ const VerifyOTP = () => {
         </div>
         <div className="flex gap-2 my-2 items-center justify-center">
           <h6 className={`text-sm mr-2 ${textColor}`}>{formattedTime}</h6>
-          {countdown === 0 && (
+          {countdown === 0 && showResendButton && (
             <>
               <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
-              <h6 className="text-[#828282] text-sm cursor-pointer">
-                {" "}
-                RESEND{" "}
+              <h6
+                onClick={handleResendClick}
+                className="text-[#828282] text-sm cursor-pointer"
+              >
+                RESEND
               </h6>
             </>
           )}
-          {/* <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
-          <h6 className="text-[#828282] text-sm cursor-pointer"> RESEND </h6> */}
         </div>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={createVerification}
           className="bg-primary text-white flex justify-center items-center w-9/12  mx-auto rounded-lg px-3 py-3 my-7"
         >
-          Verify
+          {isPending ? "Verifying" : "Verify"}
         </button>
       </section>
 

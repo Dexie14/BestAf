@@ -1,7 +1,13 @@
 import Image from "next/image";
 import success from "@/public/assets/auth/success.svg";
+import { useRouter } from "next/navigation";
 
 const OtpSuccess = ({ setModalIsOpen, modalIsOpen }) => {
+
+
+    const router = useRouter();
+
+
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -38,7 +44,7 @@ const OtpSuccess = ({ setModalIsOpen, modalIsOpen }) => {
         <p className="text-dark text-sm text-center w-10/12 mx-auto my-3">
           OTP Successfully Verified! Log in now to access your account.
         </p>
-        <button className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3">
+        <button onClick={() => router.push('/login')} className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3">
           Continue
         </button>
       </section>
