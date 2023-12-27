@@ -12,11 +12,10 @@ export const adminProfile = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if(response?.data?.status === "success") {
+    if (response?.data?.status === "success") {
       console.log(response, "response");
       return response?.data?.data;
-    }else {
-      
+    } else {
       throw new Error(response.data?.data?.message);
       // window.location.reload();
     }
