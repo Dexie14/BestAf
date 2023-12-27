@@ -240,33 +240,6 @@ const Terminal = () => {
             </svg>
           </div>
           {terminal && (
-            // <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-            //   {selectedTerminalId && (
-            //     <p
-            //       onClick={() => handleTerminalClick("")}
-            //       className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
-            //         !selectedTerminalId ? "bg-gray-300" : ""
-            //       }`}
-            //     >
-            //       Terminal ID
-            //     </p>
-            //   )}
-            //   {term ? (
-            //     term?.items?.map((termid) => (
-            //       <p
-            //         onClick={() => handleTerminalClick(termid?.terminalId)}
-            //         key={termid?._id}
-            //         className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
-            //       >
-            //         {termid?.terminalId}
-            //       </p>
-            //     ))
-            //   ) : (
-            //     <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-            //       NO ID
-            //     </p>
-            //   )}
-            // </div>
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
               {inputTerminal && (
                 <p
