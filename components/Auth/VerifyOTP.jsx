@@ -73,8 +73,17 @@ const VerifyOTP = () => {
         </div>
         <div className="flex gap-2 my-2 items-center justify-center">
           <h6 className={`text-sm mr-2 ${textColor}`}>{formattedTime}</h6>
-          <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
-          <h6 className="text-[#828282] text-sm cursor-pointer"> RESEND </h6>
+          {countdown === 0 && (
+            <>
+              <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
+              <h6 className="text-[#828282] text-sm cursor-pointer">
+                {" "}
+                RESEND{" "}
+              </h6>
+            </>
+          )}
+          {/* <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
+          <h6 className="text-[#828282] text-sm cursor-pointer"> RESEND </h6> */}
         </div>
         <button
           onClick={() => setIsOpen(true)}
