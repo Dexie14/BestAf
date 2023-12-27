@@ -22,7 +22,7 @@ const Sidebar = () => {
     Cookies.remove("token");
 
     setTimeout(() => {
-      router.push("/register");
+      router.push("/login");
     }, 2000);
   };
 
