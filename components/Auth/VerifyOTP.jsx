@@ -6,7 +6,7 @@ import classes from "./auth.module.css";
 import ReactModal from "react-modal";
 import OtpSuccess from "./OtpSuccess";
 import { useVerifyAccount } from "@/hooks/auth/useVerifyOtp";
-// import { usePathname } from "next/navigation";
+import { useResendAccount } from "@/hooks/auth/useResendOtp";
 
 import { useSearchParams } from "next/navigation";
 
@@ -15,13 +15,16 @@ const VerifyOTP = () => {
   const [otpValues, setOtpValues] = useState("");
   const [countdown, setCountdown] = useState(120);
   const [textColor, setTextColor] = useState("text-primary");
-  const [showResendButton, setShowResendButton] = useState(true);
+  // const [showResendButton, setShowResendButton] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prevCountdown) =>
         prevCountdown > 0 ? prevCountdown - 1 : 0
       );
+      // if (countdown === 100) {
+      //   setShowResendButton(true); // Show the resend button when countdown reaches zero
+      // }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -36,11 +39,6 @@ const VerifyOTP = () => {
   const formattedTime = `${Math.floor(countdown / 60)}:${(
     countdown % 60
   ).toLocaleString("en-US", { minimumIntegerDigits: 2 })}`;
-
-  const handleResendClick = () => {
-    setCountdown(120);
-    setShowResendButton(false);
-  };
 
   const customStyles = {
     overlay: {
@@ -77,9 +75,19 @@ const VerifyOTP = () => {
   };
 
   const { mutate: VerifyAdmin, isPending } = useVerifyAccount();
+  const { mutate: ResendAdmin } = useResendAccount();
 
   const createVerification = () => {
     VerifyAdmin({ otpValues, decodedEmail, handleOpenModal });
+  };
+  const resendVerification = () => {
+    ResendAdmin({ decodedEmail, setCountdown });
+  };
+
+  const handleResendClick = () => {
+    resendVerification();
+    // setCountdown(120);
+    // setShowResendButton(false);
   };
 
   return (
@@ -103,7 +111,7 @@ const VerifyOTP = () => {
         </div>
         <div className="flex gap-2 my-2 items-center justify-center">
           <h6 className={`text-sm mr-2 ${textColor}`}>{formattedTime}</h6>
-          {countdown === 0 && showResendButton && (
+          {countdown === 0  && (
             <>
               <p className="text-xs text-[#333]">Didn’t receive the OTP?</p>
               <h6

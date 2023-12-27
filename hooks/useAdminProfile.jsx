@@ -1,10 +1,10 @@
-import { adminProfile } from "@/queries/getAdminProfile";
+import { getAdmin } from "@/queries/getAdminProfile"; 
 import { useQuery } from "@tanstack/react-query";
 
-export const useAdminProfile = () => {
+export const useGetAdmin = () => {
   return useQuery({
-    queryKey: ["profile"],
-    queryFn: () => adminProfile(),
+    queryKey: ["admin"],
+    queryFn: () => getAdmin(),
     staleTime: 1000 * 5 * 5,
   });
 };

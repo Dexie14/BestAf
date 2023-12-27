@@ -5,16 +5,32 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { toast } from "react-toastify";
-import { useAdminProfile } from "@/hooks/useAdminProfile";
+import { useGetAdmin } from "@/hooks/useAdminProfile";
 import { Spinner } from "./Spinner";
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  const { data: user, isLoading, isError, refetch } = useAdminProfile();
+  const { data: admin, isLoading, isError, refetch } = useGetAdmin();
 
-  console.log(user, "ferrsyursdyu");
+  console.log(admin, "admin");
 
+  useEffect(() => {
+    // Check if this is the first time the component is rendered
+    const isFirstRender = sessionStorage.getItem('isFirstRender') === null;
+  
+    if (isFirstRender) {
+      // Perform any actions you need to do only on the first render
+      console.log('First render. Refreshing the page...');
+  
+      // Trigger a page refresh
+      window.location.reload();
+      console.log('Page refreshed');
+    }
+  
+    // Set a flag in sessionStorage to indicate that the page has been refreshed
+    sessionStorage.setItem('isFirstRender', 'false');
+  }, []);
  
 
   return (
@@ -64,7 +80,7 @@ const Navbar = () => {
                   style={{ fontFamily: "DMSans" }}
                 >
                   {/* Abayomi O. */}
-                  {user?.name
+                  {admin?.name
                     .split(" ")
                     .map((word, index) => (index === 0 ? word : word.charAt(0)))
                     .join(" ")}
@@ -73,7 +89,8 @@ const Navbar = () => {
                   className="text-primary text-xs tracking-tight"
                   style={{ fontFamily: "DMSans" }}
                 >
-                  {user?.role === "superadmin" ? "Super Admin" : ""}
+                  {/* {admin?.role} */}
+                  {admin?.role === "superadmin" ? "Super Admin" : ""}
                 </span>
               </div>
             )}
