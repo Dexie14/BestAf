@@ -1,13 +1,16 @@
 import Image from "next/image";
 import success from "@/public/assets/auth/success.svg";
 
-const OtpCongrats = ({setModalIsOpen, modalIsOpen}) => {
+import { useRouter } from "next/navigation";
 
-    const handleCloseModal = () => {
-        setModalIsOpen(false);
-      };
-
-
+const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
+  // const handleButtonClick = () => {
+  //   router.push('/verify');
+  // };
+  const router = useRouter();
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div className="py-4 px-6 rounded-[40px] ">
@@ -42,7 +45,10 @@ const OtpCongrats = ({setModalIsOpen, modalIsOpen}) => {
           Great news! Your registration is complete. We've just sent an OTP to
           your email. Please check and verify to get started.
         </p>
-        <button className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3">
+        <button
+          onClick={() => router.push("/verify")}
+          className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3"
+        >
           Continue
         </button>
       </section>

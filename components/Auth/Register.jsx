@@ -63,7 +63,8 @@ const Register = () => {
         onSuccess: (response) => {
           console.log(response?.data);
           toast.success(response?.data?.message);
-          router.push("/login");
+          setIsOpen(true)
+          // router.push("/login");
         },
       });
     },
