@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useAdminProfile = () => {
   return useQuery({
-    queryFn: () => adminProfile(),
     queryKey: ["profile"],
+    queryFn: () => adminProfile(),
     staleTime: 1000 * 5 * 5,
   });
 };

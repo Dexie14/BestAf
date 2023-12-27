@@ -13,6 +13,7 @@ export const adminProfile = async () => {
       },
     });
     if(response?.data?.status === "success") {
+      console.log(response, "response");
       return response?.data?.data;
     }else {
       
