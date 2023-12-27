@@ -19,8 +19,15 @@ const TransTable = (paramlist) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
 
-  console.log(paramlist, "list")
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1) {
+      setPage(newPage);
+    }
+  };
+
   const customStyles = {
     overlay: {
       position: "fixed",
@@ -42,14 +49,14 @@ const TransTable = (paramlist) => {
   };
 
   const param = {
-    terminalId: paramlist?.paramlist?.selectedTerminalId,
+    terminalId: paramlist?.paramlist?.inputTerminal,
     transactionId: "",
     responseCode: "00",
     amount: paramlist?.paramlist?.amount,
     from: paramlist?.paramlist?.fromDate,
     to: "",
-    pageSize: "10",
-    page: "1",
+    pageSize: pageSize,
+    page: page,
     enable: false,
   };
 
@@ -92,9 +99,9 @@ const TransTable = (paramlist) => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
       refetch();
     }
-  }, [paramlist, refetch]);
+  }, [paramlist, pageSize, page, refetch]);
 
-
+  const totalPages = Math.ceil(transactions?.totalCount / pageSize);
 
   return (
     <div>
@@ -120,9 +127,7 @@ const TransTable = (paramlist) => {
           </tr>
         </thead>
         {transactions ? (
-          <tbody
-            className="bg-white cursor-pointer "
-          >
+          <tbody className="bg-white cursor-pointer ">
             {transactions && transactions?.items?.length > 0 ? (
               transactions?.items?.map((item, index) => (
                 <tr
@@ -140,18 +145,20 @@ const TransTable = (paramlist) => {
                     <input type="checkbox" />
                   </td>
                   <td className="text-sm font-normal text-[#333333] py-4">
-                  {item?.terminalId}
+                    {item?.terminalId}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                  {item?.host}
+                    {item?.host}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                  {item?.transactionId}
+                    {item?.transactionId}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
-                  <td className="text-sm font-normal text-[#333333]">₦{item?.amount}</td>
+                  <td className="text-sm font-normal text-[#333333]">
+                  ₦{item?.amount.toFixed(2)}
+                  </td>
                   <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +198,49 @@ const TransTable = (paramlist) => {
           <Spinner />
         )}
       </table>
-      <div className="flex justify-between items-center cursor-pointer">
+      <section className="flex gap-2 justify-end items-center cursor-pointer mb-20">
+        <p
+          onClick={() => handlePageChange(page - 1)}
+          className="cursor-pointer flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg"
+        >
+          Previous
+        </p>
+        {/* Render page numbers dynamically based on the total number of pages */}
+        {Array.from(
+          { length: Math.ceil(transactions?.totalCount / pageSize) },
+          (_, index) => (
+            <p
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0] bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl ${
+                page === index + 1 ? "bg-[#E0E0E0]" : ""
+              }`}
+            >
+              {index + 1}
+            </p>
+          )
+        )}
+        <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
+          {page}
+        </p>
+        <p
+          onClick={() => handlePageChange(page + 1)}
+          className="cursor-pointer flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg"
+        >
+          Next
+        </p>
+        {totalPages > 0 && (
+            <p
+              onClick={() => handlePageChange(totalPages)}
+              className={`flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg ${
+                page === totalPages ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+            >
+              Last
+            </p>
+          )}
+      </section>
+      {/* <div className="flex justify-between items-center cursor-pointer">
         <p className="text-xs text-[#4B5563] font-bold">
           10/50 <span className="font-normal">results</span>
         </p>
@@ -215,7 +264,7 @@ const TransTable = (paramlist) => {
             Next
           </p>
         </section>
-      </div>
+      </div> */}
       <ReactModal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
@@ -224,7 +273,11 @@ const TransTable = (paramlist) => {
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-        <TransDetails setModalIsOpen={setIsOpen} modalIsOpen={isOpen} selectedTransactionId={selectedTransactionId} />
+        <TransDetails
+          setModalIsOpen={setIsOpen}
+          modalIsOpen={isOpen}
+          selectedTransactionId={selectedTransactionId}
+        />
       </ReactModal>
     </div>
   );

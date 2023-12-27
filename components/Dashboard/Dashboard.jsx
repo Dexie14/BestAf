@@ -88,13 +88,6 @@ const Dashboard = () => {
           <p className="mb-5 font-semibold">Total User </p>
           <h5 className="text-primary text-3xl mb-3">{dashn?.users}</h5>
         </div>
-        <div
-          className="bg-white rounded-2xl py-4 px-6 w-1/5"
-          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
-        >
-          <p className="mb-5 font-semibold">Total Terminal ID</p>
-          <h5 className="text-primary text-3xl mb-3">200</h5>
-        </div>
       </section>
       <section className="mt-10">
         <div className="flex justify-between items-center">

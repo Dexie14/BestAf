@@ -6,19 +6,26 @@ import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
 const { token } = useToken();
 
 const TermTable = (paramlist) => {
-  // console.log(paramlist, "dd")
-  // console.log(paramlist?.paramlist?.selectedTerminalId, "dd")
+
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1) {
+      setPage(newPage);
+    }
+  };
 
   const param = {
-    terminalId: paramlist?.paramlist?.selectedTerminalId,
+    terminalId: paramlist?.paramlist?.inputTerminal,
     serialNumber: "",
-    pageSize: "10",
-    page: "1",
+    pageSize: pageSize,
+    page: page,
     enable: false,
   };
 
@@ -61,7 +68,9 @@ const TermTable = (paramlist) => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
       refetch();
     }
-  }, [paramlist, refetch]);
+  }, [paramlist, pageSize, page, refetch]);
+
+  const totalPages = Math.ceil(table?.totalCount / pageSize);
 
   return (
     <div className="">
@@ -148,7 +157,49 @@ const TermTable = (paramlist) => {
           <Spinner />
         )}
       </table>
-      <div className="flex justify-between items-center cursor-pointer mb-20">
+      <section className="flex gap-2 justify-end items-center cursor-pointer mb-20">
+        <p
+          onClick={() => handlePageChange(page - 1)}
+          className="cursor-pointer flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg"
+        >
+          Previous
+        </p>
+        {/* Render page numbers dynamically based on the total number of pages */}
+        {Array.from(
+          { length: Math.ceil(table?.totalCount / pageSize) },
+          (_, index) => (
+            <p
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0] bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl ${
+                page === index + 1 ? "bg-[#E0E0E0]" : ""
+              }`}
+            >
+              {index + 1}
+            </p>
+          )
+        )}
+        <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
+          {page}
+        </p>
+        <p
+          onClick={() => handlePageChange(page + 1)}
+          className="cursor-pointer flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg"
+        >
+          Next
+        </p>
+        {totalPages > 0 && (
+          <p
+            onClick={() => handlePageChange(totalPages)}
+            className={`flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4] bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg ${
+              page === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Last
+          </p>
+        )}
+      </section>
+      {/* <div className="flex justify-between items-center cursor-pointer mb-20">
         <p className="text-xs text-[#4B5563] font-bold">
           10/50 <span className="font-normal">results</span>
         </p>
@@ -172,7 +223,7 @@ const TermTable = (paramlist) => {
             Next
           </p>
         </section>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -90,78 +90,78 @@ const TransDetails = ({
       </section>
       <section className="my-6 ml-3">
         <div className="flex flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Response Code:
             <span className="text-[#828282] font-medium">{data?.responseCode}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Amount: <span className="text-[#828282] font-medium">#{data?.amount}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Expiry:
             <span className="text-[#828282] font-medium">{data?.expiry}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Host: <span className="text-[#828282] font-medium">{data?.host}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Pan:
             <span className="text-[#828282] font-medium">{data?.pan}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Refcode: <span className="text-[#828282] font-medium">{data?.refcode}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             RRN:
             <span className="text-[#828282] font-medium">{data?.rrn} </span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Stan: <span className="text-[#828282] font-medium">{data?.stan}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Transactingterminalid:
             <span className="text-[#828282] font-medium">{data?.transactingterminalid} </span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Route: <span className="text-[#828282] font-medium">{data?.route}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             TransactionId:
             <span className="text-[#828282] font-medium">{data?.transactionId}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             TerminalId:{" "}
             <span className="text-[#828282] font-medium">{data?.terminalId}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Source:
             <span className="text-[#828282] font-medium">{data?.source}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Responsemessage:{" "}
             <span className="text-[#828282] font-medium">{data?.responsemessage}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             CreatedAt:
             <span className="text-[#828282] font-medium">
              {data?.createdAt}
             </span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             UpdatedAt:{" "}
             <span className="text-[#828282] font-medium">
               {data?.updatedAt}
@@ -169,11 +169,11 @@ const TransDetails = ({
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             _V:
             <span className="text-[#828282] font-medium">{data?.__v}</span>
           </h3>
-          <h3 className="text-[#333] font-semibold text-xs w-1/2">
+          <h3 className="text-[#333] font-semibold text-sm w-1/2">
             dateCreated:{" "}
             <span className="text-[#828282] font-medium">
               {data?.dateCreated}
