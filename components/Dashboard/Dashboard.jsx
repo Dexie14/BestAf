@@ -104,7 +104,7 @@ const Dashboard = () => {
           </button>
         </div>
         <Table/>
-        <p className="text-xs text-[#4B5563] font-bold">7/50 <span className="font-normal">results</span></p>
+        {/* <p className="text-xs text-[#4B5563] font-bold">7/50 <span className="font-normal">results</span></p> */}
       </section>
       <ReactModal
         isOpen={isOpen}

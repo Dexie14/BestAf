@@ -10,7 +10,7 @@ export const requestPasswordReset = async ({
       email,
     });
 
-    if (response?.data?.success === 1) {
+    if (response?.data?.success !== "error") {
       return {
         success: true,
         data: response.data?.data,
