@@ -80,14 +80,14 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
             htmlFor="merchant"
             className="text-sm  font-semibold text-[#333333] mb-1"
           >
-            Merchant ID
+            Support Number
           </label>
           <input
             onChange={(e) => setSupportNumber(e.target.value)}
             id="merchant"
             className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border placeholder:text-border"
             type="number"
-            placeholder="Enter MerchantID"
+            placeholder="Enter Support Number"
           />
         </div>
         <Button    onClick={createTermNow} className="w-full px-3 py-2"> {isPending ? "Generating" : "Generate" } </Button>

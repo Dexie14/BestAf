@@ -48,16 +48,24 @@ const Terminal = () => {
   console.log(term, "geting term");
 
   // const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
   const [inputTerminal, setInputTerminal] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [dataToPass, setDataToPass] = useState("");
 
   const handleTerminalClick = (id) => {
     setInputTerminal("");
     setTerminal(false);
   };
+  const handleStatusCliick = (id) => {
+    setSelectedStatus(id);
+    setMerchant(false);
+  };
 
   const handleApplyClick = () => {
-    setDataToPass({ inputTerminal });
+    setDataToPass({ inputTerminal,  fromDate,
+      toDate,selectedStatus });
   };
 
   return (
@@ -374,12 +382,16 @@ const Terminal = () => {
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
               <div className="flex justify-center items-center">
                 <input
+                  onChange={(e) => setFromDate(e.target.value)}
                   type="date"
+                  value={fromDate}
                   className=" text-dark text-xs mx-1 my-2 flex justify-center py-2 border border-border rounded"
                 />
                 "to"
                 <input
+                  onChange={(e) => setToDate(e.target.value)}
                   type="date"
+                  value={toDate}
                   className=" text-dark text-xs mx-1 my-2 flex justify-center py-2  border border-border rounded"
                 />
               </div>
@@ -412,7 +424,7 @@ const Terminal = () => {
                 </clipPath>
               </defs>
             </svg>
-            Transaction Status
+            {selectedStatus ? selectedStatus : "Status"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -435,7 +447,21 @@ const Terminal = () => {
           </div>
           {trans && (
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-              <p className="flex gap-1 text-sm font-normal text-[#165E3D]  bg-[#EDFFEA] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded">
+              {selectedStatus && (
+                <p
+                  onClick={() => handleStatusCliick("")}
+                  className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+                    !selectedStatus ? "bg-gray-300" : ""
+                  }`}
+                >
+                  Default
+                </p>
+              )}
+
+              <p
+                onClick={() => handleStatusCliick("success")}
+                className="flex gap-1 text-sm font-normal text-[#165E3D]  bg-[#EDFFEA] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="17"
@@ -450,7 +476,10 @@ const Terminal = () => {
                 </svg>
                 Succeeded
               </p>
-              <p className="flex gap-1 text-sm font-normal text-[#B5850B]  bg-[#FFF6E9] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded">
+              <p
+                onClick={() => handleStatusCliick("pending")}
+                className="flex gap-1 text-sm font-normal text-[#B5850B]  bg-[#FFF6E9] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="17"
@@ -465,7 +494,10 @@ const Terminal = () => {
                 </svg>
                 Pending
               </p>
-              <p className="flex gap-1 text-sm font-normal text-[#B83131]  bg-[#FFEAEA] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded">
+              <p
+                onClick={() => handleStatusCliick("failed")}
+                className="flex gap-1 text-sm font-normal text-[#B83131]  bg-[#FFEAEA] w-fit mx-4 my-2 py-2 px-3  justify-center items-center rounded"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -478,7 +510,7 @@ const Terminal = () => {
                     fill="#B83131"
                   />
                 </svg>
-                Declined
+                Failed
               </p>
             </div>
           )}

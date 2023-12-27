@@ -6,6 +6,7 @@ import ReactModal from "react-modal";
 import UserInvite from "../Terminal/UserInvite";
 import Table from "./Table";
 import { useGetDash } from "@/hooks/useGetDash";
+import Link from "next/link";
 
 const Dashboard = () => {
 
@@ -93,7 +94,9 @@ const Dashboard = () => {
         <div className="flex justify-between items-center">
           <h5 className="text-xl font-semibold text-dark">Transaction</h5>
           <button className="bg-white font-semibold text-sm border-[#828282] px-1 py-1 w-1/12 border text-primary rounded-lg">
+          <Link href={"/user/transaction"}>
             View all
+          </Link>
           </button>
         </div>
         <Table/>
