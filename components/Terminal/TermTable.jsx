@@ -11,7 +11,6 @@ import { Spinner } from "../Spinner";
 const { token } = useToken();
 
 const TermTable = (paramlist) => {
-
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
 
@@ -24,6 +23,8 @@ const TermTable = (paramlist) => {
   const param = {
     terminalId: paramlist?.paramlist?.inputTerminal,
     serialNumber: "",
+    from: paramlist?.paramlist?.fromDate,
+    to: paramlist?.paramlist?.toDate,
     pageSize: pageSize,
     page: page,
     enable: false,
@@ -62,7 +63,7 @@ const TermTable = (paramlist) => {
     queryFn: () => getTerminal(),
   });
 
-  // console.log(table, "parraa");
+  console.log(table, "parraa");
 
   useEffect(() => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
@@ -77,10 +78,10 @@ const TermTable = (paramlist) => {
       <table className=" w-full table-auto tabling">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            <th className="py-4 pl-2">
+            {/* <th className="py-4 pl-2">
               <input type="checkbox" />
-            </th>
-            <th className=" text-sm font-semibold text-[#333333]">
+            </th> */}
+            <th className="py-4 pl-2 text-sm font-semibold text-[#333333]">
               Terminal ID
             </th>
             <th className=" text-sm font-semibold text-[#333333]">
@@ -89,9 +90,9 @@ const TermTable = (paramlist) => {
             <th className=" text-sm font-semibold text-[#333333]">
               Created Date
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">
+            {/* <th className=" text-sm font-semibold text-[#333333]">
               Transaction
-            </th>
+            </th> */}
             <th className=" text-sm font-semibold text-[#333333]">Action</th>
           </tr>
         </thead>
@@ -106,10 +107,10 @@ const TermTable = (paramlist) => {
                     boxShadow: "0px 2px 2px 0px rgba(34, 34, 34, 0.10);",
                   }}
                 >
-                  <td className="pl-2">
+                  {/* <td className="pl-2">
                     <input type="checkbox" />
-                  </td>
-                  <td className="text-sm font-normal text-[#333333] py-4">
+                  </td> */}
+                  <td className="pl-2 text-sm font-normal text-[#333333] py-4">
                     {item?.terminalId}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
@@ -118,21 +119,7 @@ const TermTable = (paramlist) => {
                   <td className="text-sm font-normal text-[#333333]">
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
-                  <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="16"
-                      viewBox="0 0 17 16"
-                      fill="none"
-                    >
-                      <path
-                        d="M8.53312 14.6667C4.85122 14.6667 1.86646 11.6819 1.86646 8.00004C1.86646 4.31814 4.85122 1.33337 8.53312 1.33337C12.215 1.33337 15.1998 4.31814 15.1998 8.00004C15.1998 11.6819 12.215 14.6667 8.53312 14.6667ZM7.86819 10.6667L12.5823 5.95266L11.6395 5.00985L7.86819 8.78111L5.98259 6.89544L5.03978 7.83831L7.86819 10.6667Z"
-                        fill="#165E3D"
-                      />
-                    </svg>
-                    Succeeded
-                  </td>
+
                   <td className="text-sm font-normal text-[#333333] ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
