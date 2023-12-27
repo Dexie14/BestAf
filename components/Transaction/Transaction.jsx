@@ -19,6 +19,27 @@ const Transaction = () => {
 
   console.log(transData, "geting transData");
 
+  const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [dataToPass, setDataToPass] = useState("");
+
+  const amount = "6000"
+
+  console.log(toDate, "todate")
+
+
+  
+  const handleTerminalClick = (id) => {
+    setSelectedTerminalId(id);
+    setTerminal(false);
+  };
+
+  const handleApplyClick = () => {
+    setDataToPass({ selectedTerminalId, fromDate , toDate, amount});
+  };
+
+
 
   return (
     <div className="h-[100%]">
@@ -97,7 +118,7 @@ const Transaction = () => {
                 </clipPath>
               </defs>
             </svg>
-            Terminal ID
+            {selectedTerminalId ? selectedTerminalId : "Terminal ID"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -120,15 +141,31 @@ const Transaction = () => {
           </div>
           {terminal && (
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-              <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
-              <p className="text-dark text-sm  mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
-              <p className=" text-dark text-sm  mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                AB134567
-              </p>
+              {selectedTerminalId && (
+                <p
+                  onClick={() => handleTerminalClick("")}
+                  className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+                    !selectedTerminalId ? "bg-gray-300" : ""
+                  }`}
+                >
+                  Terminal ID
+                </p>
+              )}
+              {transData ? (
+                transData?.items?.map((transId) => (
+                  <p
+                    onClick={() => handleTerminalClick(transId?.terminalId)}
+                    key={transId?._id}
+                    className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
+                  >
+                    {transId?.terminalId}
+                  </p>
+                ))
+              ) : (
+                <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+                  NO ID
+                </p>
+              )}
             </div>
           )}
         </aside>
@@ -244,12 +281,16 @@ const Transaction = () => {
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
               <div className="flex justify-center items-center">
                 <input
+                onChange={(e) => setFromDate(e.target.value)}
                   type="date"
+                  value={fromDate}
                   className=" text-dark text-xs mx-1 my-2 flex justify-center py-2 border border-border rounded"
                 />
                 "to"
                 <input
+                   onChange={(e) => setToDate(e.target.value)}
                   type="date"
+                  value={toDate}
                   className=" text-dark text-xs mx-1 my-2 flex justify-center py-2  border border-border rounded"
                 />
               </div>
@@ -354,7 +395,7 @@ const Transaction = () => {
           )}
         </aside>
         <div className="w-1/12">
-          <Button className="py-2 px-2">APPLY</Button>
+          <Button onClick={handleApplyClick} className="py-2 px-2">APPLY</Button>
         </div>
         <div className="flex gap-3 rounded-lg border bg-[#FBFBFB] border-[#E0E0E0] px-2 py-2 w-[275px]">
           <svg
@@ -383,7 +424,7 @@ const Transaction = () => {
           />
         </div>
       </section>
-      <TransTable />
+      <TransTable paramlist={dataToPass} />
 
       
     </div>
