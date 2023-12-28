@@ -2,18 +2,15 @@
 
 import { CSVLink } from "react-csv";
 
-const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
+const SelectDownload = ({ setModalIsOpen, modalIsOpen, selected }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
 
-
- 
-
   return (
     <div className="py-4 px-6 rounded-[40px] ">
       <section className="flex justify-between pb-3 border-b-2 border-[#828282]">
-        <h3 className="text-xl font-semibold">Download File</h3>
+        <h3 className="text-xl font-semibold">Download selected File</h3>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
@@ -37,10 +34,10 @@ const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
         </svg>
       </section>
       <section className="my-14 ">
-        {fullData && (
+        {selected && (
           <CSVLink
             className="mb-10 flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border border-primary bg-[#F2F2F2] text-primary rounded-lg"
-            data={fullData?.items}
+            data={selected}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +63,7 @@ const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
                 </clipPath>
               </defs>
             </svg>
-            Download as CSV
+            Download as  CSV
           </CSVLink>
         )}
         {/* <button className="mb-10 flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border border-primary bg-[#F2F2F2] text-primary rounded-lg">
@@ -96,10 +93,10 @@ const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
           </svg>
           Download as CSV
         </button> */}
-        {fullData && (
+         {selected && (
           <CSVLink
             className="mb-10 flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border border-primary bg-[#F2F2F2] text-primary rounded-lg"
-            data={fullData?.items}
+            data={selected}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -133,4 +130,4 @@ const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
   );
 };
 
-export default NextDownload;
+export default SelectDownload;

@@ -51,6 +51,11 @@ const Transaction = () => {
     });
   };
 
+ 
+  
+  const [download, setDownload] = useState(false);
+
+
   return (
     <div className="h-[100%]">
       <section className="flex justify-between">
@@ -58,7 +63,7 @@ const Transaction = () => {
           Transaction Overview
         </h1>
         <div className="flex gap-3 items-center">
-          {transData && (
+          {/* {transData && (
             <CSVLink
               className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
               data={transData?.items}
@@ -84,8 +89,8 @@ const Transaction = () => {
               </svg>{" "}
               Download
             </CSVLink>
-          )}
-          {/* <button className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
+          )} */}
+          <button   onClick={() => setDownload(true)} className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -106,7 +111,7 @@ const Transaction = () => {
               </defs>
             </svg>
             Download
-          </button> */}
+          </button>
         </div>
       </section>
       <section className="flex flex-wrap gap-3 items-center mt-10 mb-5">
@@ -515,7 +520,7 @@ const Transaction = () => {
           />
         </div>
       </section>
-      <TransTable paramlist={dataToPass} />
+      <TransTable paramlist={dataToPass} download={download} setDownload={setDownload}/>
     </div>
   );
 };

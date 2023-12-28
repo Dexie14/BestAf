@@ -13,13 +13,14 @@ import { useToken } from "@/hooks/auth/useToken";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { Spinner } from "../Spinner";
+import Download from "../Terminal/Download";
 const { token } = useToken();
 
-const TransTable = (paramlist) => {
+const TransTable = ({ paramlist, download, setDownload }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
-  console.log(paramlist,"list")
+  console.log(paramlist, "list");
 
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
@@ -51,12 +52,12 @@ const TransTable = (paramlist) => {
   };
 
   const param = {
-    terminalId: paramlist?.paramlist?.inputTerminal,
-    transactionId: paramlist?.paramlist?.inputTrans,
-    responsemessage: paramlist?.paramlist?.selectedStatus,
-    amount: paramlist?.paramlist?.amount,
-    from: paramlist?.paramlist?.fromDate,
-    to: paramlist?.paramlist?.toDate,
+    terminalId: paramlist?.inputTerminal,
+    transactionId: paramlist?.inputTrans,
+    responsemessage: paramlist?.selectedStatus,
+    amount: paramlist?.amount,
+    from: paramlist?.fromDate,
+    to: paramlist?.toDate,
     pageSize: pageSize,
     page: page,
     enable: false,
@@ -105,14 +106,35 @@ const TransTable = (paramlist) => {
 
   const totalPages = Math.ceil(transactions?.totalCount / pageSize);
 
+  const [selected, setSelected] = useState([]);
+
+  // Function to handle the click event on the checkbox
+  const handleCheckboxClick = (item) => {
+    // Check if the item is already in the selected array
+    const isSelected = selected.some(
+      (selectedItem) => selectedItem.transactionId === item.transactionId
+    );
+
+    // If it's selected, remove it; otherwise, add it to the array
+    setSelected((prevSelected) =>
+      isSelected
+        ? prevSelected.filter(
+            (selectedItem) => selectedItem.transactionId !== item.transactionId
+          )
+        : [...prevSelected, item]
+    );
+  };
+
+  // console.log(selected, "tableselected");
+
   return (
     <div>
       <table className=" w-full table-auto tabling">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            {/* <th className="py-4 pl-2">
-              <input type="checkbox" />
-            </th> */}
+            <th className="py-4 pl-2 ">
+              {/* <input type="checkbox" /> */}
+            </th>
             <th className="py-4 text-sm font-semibold text-[#333333] pl-2">
               Terminal ID
             </th>
@@ -138,32 +160,71 @@ const TransTable = (paramlist) => {
                     boxShadow: "0px 2px 2px 0px rgba(34, 34, 34, 0.10);",
                   }}
                   key={index}
-                  onClick={() => {
-                    setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                    setIsOpen(true);
-                  }}
                 >
-                  {/* <td className="pl-2">
-                    <input type="checkbox" />
-                  </td> */}
-                  <td className="text-sm font-normal text-[#333333] py-4 pl-2">
+                  <td className="pl-2">
+                    <input
+                      type="checkbox"
+                      checked={selected.some(
+                        (selectedItem) =>
+                          selectedItem.transactionId === item.transactionId
+                      )}
+                      onChange={() => handleCheckboxClick(item)}
+                    />
+                  </td>
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal text-[#333333] py-4 pl-2"
+                  >
                     {item?.terminalId}
                   </td>
-                  <td className="text-sm font-normal text-[#333333]">
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal text-[#333333]"
+                  >
                     {item?.host}
                   </td>
-                  <td className="text-sm font-normal text-[#333333]">
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal text-[#333333]"
+                  >
                     {item?.transactionId}
                   </td>
-                  <td className="text-sm font-normal text-[#333333]">
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal text-[#333333]"
+                  >
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
-                  <td className="text-sm font-normal text-[#333333]">
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal text-[#333333]"
+                  >
                     ₦{item?.amount.toFixed(2)}
                   </td>
 
                   {item?.responsemessage === "success" && (
-                    <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded">
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -180,7 +241,13 @@ const TransTable = (paramlist) => {
                     </td>
                   )}
                   {item?.responsemessage === "failed" && (
-                    <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#FFEAEA] w-fit px-1 mt-3 justify-center items-center rounded">
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#FFEAEA] w-fit px-1 mt-3 justify-center items-center rounded"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -300,6 +367,22 @@ const TransTable = (paramlist) => {
           setModalIsOpen={setIsOpen}
           modalIsOpen={isOpen}
           selectedTransactionId={selectedTransactionId}
+        />
+      </ReactModal>
+      <ReactModal
+        isOpen={download}
+        onRequestClose={() => setDownload(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <Download
+          setModalIsOpen={setDownload}
+          modalIsOpen={download}
+          setSelected={setSelected}
+          selected={selected}
+          fullData={transactions}
         />
       </ReactModal>
     </div>
