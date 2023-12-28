@@ -4,13 +4,17 @@ import { useState } from "react";
 
 import ReactModal from "react-modal";
 import NextDownload from "./NextDownload";
+import SelectDownload from "./selectDownload";
 
-const Download = ({ setModalIsOpen, modalIsOpen, setSelected, selected }) => {
+const Download = ({ setModalIsOpen, modalIsOpen, setSelected, selected , fullData}) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
 
+
+  const picked = selected.length > 0
   const [next, setNext] = useState(false);
+  const [choice, setChoice ] = useState(false);
 
   const customStyles = {
     overlay: {
@@ -86,7 +90,7 @@ const Download = ({ setModalIsOpen, modalIsOpen, setSelected, selected }) => {
           </svg>
           Download All Records
         </button>
-        <button className={`flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border ${selected ? "border-[#941D3A]" : "border-[#bdbdbd]"} bg-[#F2F2F2] ${selected ? "text-[#941D3A]" : "text-[#bdbdbd]"}  rounded-lg`}>
+        <button onClick={() => picked && setChoice(true)} className={`flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border ${picked ? "border-[#941D3A]" : "border-[#bdbdbd]"} bg-[#F2F2F2] ${picked ? "text-[#941D3A]" : "text-[#bdbdbd]"}  rounded-lg`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -97,7 +101,7 @@ const Download = ({ setModalIsOpen, modalIsOpen, setSelected, selected }) => {
             <g clip-path="url(#clip0_1_2711)">
               <path
                 d="M13.5 10H18.5L12.5 16L6.5 10H11.5V3H13.5V10ZM4.5 19H20.5V12H22.5V20C22.5 20.2652 22.3946 20.5196 22.2071 20.7071C22.0196 20.8946 21.7652 21 21.5 21H3.5C3.23478 21 2.98043 20.8946 2.79289 20.7071C2.60536 20.5196 2.5 20.2652 2.5 20V12H4.5V19Z"
-                fill={`${selected ? "#941D3A" : "#bdbdbd"}`}
+                fill={`${picked ? "#941D3A" : "#bdbdbd"}`}
               />
             </g>
             <defs>
@@ -122,7 +126,17 @@ const Download = ({ setModalIsOpen, modalIsOpen, setSelected, selected }) => {
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-       <NextDownload setModalIsOpen={setNext} modalIsOpen={next}/>
+       <NextDownload setModalIsOpen={setNext} modalIsOpen={next} fullData={fullData} />
+      </ReactModal >
+      <ReactModal
+        isOpen={choice}
+        onRequestClose={() => setChoice(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+       <SelectDownload setModalIsOpen={setChoice} modalIsOpen={setChoice}  selected={selected}/>
       </ReactModal >
     </div>
   );

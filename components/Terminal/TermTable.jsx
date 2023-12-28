@@ -5,12 +5,35 @@ import moment from "moment";
 import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
+import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
+import Download from "./Download";
 const { token } = useToken();
 
-const TermTable = (paramlist) => {
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    opacity: "10",
+  },
+  content: {
+    height: "65vh",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    margin: "auto",
+    borderRadius: "30px",
+    width: "50%",
+  },
+};
+
+const TermTable = ({ paramlist, setDownload, download }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
 
@@ -21,10 +44,10 @@ const TermTable = (paramlist) => {
   };
 
   const param = {
-    terminalId: paramlist?.paramlist?.inputTerminal,
+    terminalId: paramlist?.inputTerminal,
     serialNumber: "",
-    from: paramlist?.paramlist?.fromDate,
-    to: paramlist?.paramlist?.toDate,
+    from: paramlist?.fromDate,
+    to: paramlist?.toDate,
     pageSize: pageSize,
     page: page,
     enable: false,
@@ -73,14 +96,33 @@ const TermTable = (paramlist) => {
 
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
+  const [selected, setSelected] = useState([]);
+
+  // Function to handle the click event on the checkbox
+  const handleCheckboxClick = (item) => {
+    // Check if the item is already in the selected array
+    const isSelected = selected.some(
+      (selectedItem) => selectedItem._id === item._id
+    );
+
+    // If it's selected, remove it; otherwise, add it to the array
+    setSelected((prevSelected) =>
+      isSelected
+        ? prevSelected.filter(
+            (selectedItem) => selectedItem._id !== item._id
+          )
+        : [...prevSelected, item]
+    );
+  };
+
   return (
     <div className="">
       <table className=" w-full table-auto tabling">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            {/* <th className="py-4 pl-2">
-              <input type="checkbox" />
-            </th> */}
+            <th className="py-4 pl-2 ">
+              {/* <input type="checkbox" /> */}
+            </th>
             <th className="py-4 pl-2 text-sm font-semibold text-[#333333]">
               Terminal ID
             </th>
@@ -107,9 +149,16 @@ const TermTable = (paramlist) => {
                     boxShadow: "0px 2px 2px 0px rgba(34, 34, 34, 0.10);",
                   }}
                 >
-                  {/* <td className="pl-2">
-                    <input type="checkbox" />
-                  </td> */}
+                  <td className="pl-2">
+                    <input
+                      type="checkbox"
+                      checked={selected.some(
+                        (selectedItem) =>
+                          selectedItem._id === item._id
+                      )}
+                      onChange={() => handleCheckboxClick(item)}
+                    />
+                  </td>
                   <td className="pl-2 text-sm font-normal text-[#333333] py-4">
                     {item?.terminalId}
                   </td>
@@ -211,6 +260,22 @@ const TermTable = (paramlist) => {
           </p>
         </section>
       </div> */}
+      <ReactModal
+        isOpen={download}
+        onRequestClose={() => setDownload(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <Download
+          setModalIsOpen={setDownload}
+          modalIsOpen={download}
+          setSelected={setSelected}
+          selected={selected}
+          fullData={table}
+        />
+      </ReactModal>
     </div>
   );
 };
