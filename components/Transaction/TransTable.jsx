@@ -30,6 +30,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1) {
       setPage(newPage);
+      refetch();
     }
   };
 
@@ -105,6 +106,13 @@ const TransTable = ({ paramlist, download, setDownload }) => {
       refetch();
     }
   }, [paramlist, pageSize, page, refetch]);
+
+  useEffect(() => {
+    if (page >= 1) {
+      setPage(page);
+      refetch();
+    }
+  }, [pageSize, page, refetch]);
 
   const totalPages = Math.ceil(transactions?.totalCount / pageSize);
 

@@ -9,10 +9,34 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Spinner } from "../Spinner";
 import { useRouter } from "next/navigation";
+import Button from "../Comps/Button";
+
+import ReactModal from "react-modal";
+import CreateMerch from "./createMerch";
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    opacity: "10",
+  },
+  content: {
+    height: "65vh",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    margin: "auto",
+    borderRadius: "30px",
+    width: "50%",
+  },
+};
 
 const Login = () => {
   const router = useRouter();
   const [active, setActive] = useState("super");
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -51,7 +75,7 @@ const Login = () => {
 
   return (
     <div className="pt-10">
-      <h3 className="mt-5 flex justify-center text-2xl font-medium">
+      <h3 className="mt-2 flex justify-center text-2xl font-medium">
         Welcome Admin, Log in now
       </h3>
 
@@ -77,10 +101,13 @@ const Login = () => {
           Users
         </h5>
       </section>
+      <Button    onClick={() => setIsOpen(true)} className="text-white bg-primary flex justify-center px-3 py-1 w-[15%] mx-auto cursor-pointer text-sm">
+        Create Merchant
+      </Button>
 
       {active === "user" ? (
         <form
-          className="bg-white rounded-3xl px-10 py-10 w-5/12 mx-auto my-10"
+          className="bg-white rounded-3xl px-10 py-5 w-5/12 mx-auto my-10"
           style={{ boxShadow: "0px 2px 14px 0px rgba(51, 51, 51, 0.15);" }}
           onSubmit={handleSubmit(handleSignin)}
         >
@@ -142,7 +169,7 @@ const Login = () => {
         </form>
       ) : (
         <form
-          className="bg-white rounded-3xl px-10 py-10 w-5/12 mx-auto my-10"
+          className="bg-white rounded-3xl px-10 py-5 w-5/12 mx-auto my-10"
           style={{ boxShadow: "0px 2px 14px 0px rgba(51, 51, 51, 0.15);" }}
           onSubmit={handleSubmit(handleSignin)}
         >
@@ -198,6 +225,16 @@ const Login = () => {
           </div>
         </form>
       )}
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <CreateMerch setModalIsOpen={setIsOpen} modalIsOpen={isOpen} />
+      </ReactModal>
     </div>
   );
 };
