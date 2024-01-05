@@ -125,7 +125,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
     );
   };
 
-  const [option, setOption] = useState("Enable");
+  // const [option, setOption] = useState("Enable");
 
   const enabling = async (TID) => {
     try {
@@ -141,10 +141,10 @@ const TermTable = ({ paramlist, setDownload, download }) => {
       if (response?.data?.message.includes("enable")) {
         console.log(response, "enable");
         toast.success(response?.data?.message);
-        setOption("Disable");
+        // setOption("Disable");
       } else {
         toast.success(response?.data?.message);
-        setOption("Enable");
+        // setOption("Enable");
       }
     } catch (error) {
       console.log(error, "optionerror");
@@ -263,7 +263,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                           className="w-full"
                           onClick={() => enabling(item?.terminalId)}
                         >
-                          {option}
+                          {item?.isEnabled === true ? "Disable" : "Enable"}
                         </Button>
                       </div>
                     )}
