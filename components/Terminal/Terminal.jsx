@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import TermTable from "./TermTable";
 import Button from "../Comps/Button";
 
@@ -11,6 +11,7 @@ import Download from "./Download";
 import { CSVLink, CSVDownload } from "react-csv";
 
 import { useGetTerminal } from "@/hooks/auth/useGetTerm";
+import Upload from "./Upload";
 
 const Terminal = () => {
   const [terminal, setTerminal] = useState(false);
@@ -67,6 +68,33 @@ const Terminal = () => {
     setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus });
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  // const handleUpload = () => {
+  //   // Handle file upload logic using the selectedFile state
+  //   if (selectedFile) {
+  //     console.log('Uploading file:', selectedFile);
+  //     // Add your file upload logic here
+  //   } else {
+  //     console.error('No file selected');
+  //   }
+  // };
+
+  const handleDelete = () => {
+    setSelectedFile(null);
+  };
+
+  const handleClickUpload = () => {
+    fileInputRef.current.click();
+  };
+
+ 
   return (
     <div className="h-[100%]">
       <section className="flex justify-between">
@@ -74,7 +102,10 @@ const Terminal = () => {
           Terminal Overview
         </h1>
         <div className="flex gap-3 items-center">
-          <button className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
+          <button
+            className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
+            onClick={handleClickUpload}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -164,6 +195,28 @@ const Terminal = () => {
             Generate New TID
           </button>
         </div>
+      </section>
+      <section className="my-3 flex gap-2 items-center">
+         
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          {
+            selectedFile && <ReactModal
+            isOpen={selectedFile}
+            onRequestClose={() => setSelectedFile(false)}
+            ariaHideApp={false}
+            shouldCloseOnOverlayClick={true}
+            overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+            style={customStyles}
+          >
+            <Upload setModalIsOpen={setSelectedFile} selectedFile={selectedFile} handleDelete={handleDelete} />
+          </ReactModal>
+          }
+          
       </section>
       <section className="flex flex-wrap gap-3 items-center mt-10 mb-5">
         <svg
