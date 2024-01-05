@@ -138,7 +138,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
             <th className="py-4 text-sm font-semibold text-[#333333] pl-2">
               Terminal ID
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">User Name</th>
             <th className=" text-sm font-semibold text-[#333333]">
               Transaction ID
             </th>
@@ -187,15 +186,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     }}
                     className="text-sm font-normal text-[#333333]"
                   >
-                    {item?.host}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal text-[#333333]"
-                  >
                     {item?.transactionId}
                   </td>
                   <td
@@ -217,7 +207,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     ₦{item?.amount.toFixed(2)}
                   </td>
 
-                  {item?.responsemessage === "success" && (
+                  {item?.responsemessage === "success" ? (
                     <td
                       onClick={() => {
                         setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
@@ -239,7 +229,15 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       </svg>
                       {item?.responsemessage}
                     </td>
-                  )}
+                  ) :  <td
+                  onClick={() => {
+                    setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                    setIsOpen(true);
+                  }}
+                  className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded"
+                >
+                  {" "}
+                </td>}
                   {item?.responsemessage === "failed" && (
                     <td
                       onClick={() => {
