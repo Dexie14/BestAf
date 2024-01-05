@@ -14,13 +14,22 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { Spinner } from "../Spinner";
 import Download from "../Terminal/Download";
+import Button from "../Comps/Button";
 const { token } = useToken();
 
 const TransTable = ({ paramlist, download, setDownload }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [popups, setPopups] = useState({});
+
+  const handleTogglePopup = (id) => {
+    setPopups((prevPopups) => ({
+      ...prevPopups,
+      [id]: !prevPopups[id],
+    }));
+  };
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
-  console.log(paramlist, "list");
+  // console.log(paramlist, "list");
 
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
@@ -118,9 +127,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
     // If it's selected, remove it; otherwise, add it to the array
     setSelected((prevSelected) =>
       isSelected
-        ? prevSelected.filter(
-            (selectedItem) => selectedItem._id !== item._id
-          )
+        ? prevSelected.filter((selectedItem) => selectedItem._id !== item._id)
         : [...prevSelected, item]
     );
   };
@@ -129,24 +136,36 @@ const TransTable = ({ paramlist, download, setDownload }) => {
 
   return (
     <div>
-      <table className=" w-full table-auto tabling">
+      <table className=" w-full table-auto tabling overflow-x-scroll">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            <th className="py-4 pl-2 ">
-              {/* <input type="checkbox" /> */}
-            </th>
+            <th className="py-4 pl-2 ">{/* <input type="checkbox" /> */}</th>
             <th className="py-4 text-sm font-semibold text-[#333333] pl-2">
               Terminal ID
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
               Transaction ID
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
+              RspCode
+            </th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">RRN</th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
+              Status
+            </th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">Stan</th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
               Created Date
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">Amount</th>
-            <th className=" text-sm font-semibold text-[#333333]">Status</th>
-            <th className=" text-sm font-semibold text-[#333333]">Action</th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
+              Amount
+            </th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
+              RspMsg
+            </th>
+            <th className=" text-sm font-semibold px-2 text-[#333333]">
+              Action
+            </th>
           </tr>
         </thead>
         {transactions ? (
@@ -164,8 +183,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     <input
                       type="checkbox"
                       checked={selected.some(
-                        (selectedItem) =>
-                          selectedItem._id === item._id
+                        (selectedItem) => selectedItem._id === item._id
                       )}
                       onChange={() => handleCheckboxClick(item)}
                     />
@@ -184,16 +202,98 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                       setIsOpen(true);
                     }}
-                    className="text-sm font-normal text-[#333333]"
+                    className="text-sm font-normal px-2 text-[#333333]"
                   >
-                    {item?.transactionId}
+                    {item?.transactionId.substring(0, 7)}...
                   </td>
                   <td
                     onClick={() => {
                       setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                       setIsOpen(true);
                     }}
-                    className="text-sm font-normal text-[#333333]"
+                    className="text-sm font-normal px-2 text-[#333333]"
+                  >
+                    {item?.responseCode}
+                  </td>
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal px-2 text-[#333333]"
+                  >
+                    {item?.rrn.substring(0, 5)}...
+                  </td>
+                  {item?.status === "approved" ? (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="17"
+                        height="16"
+                        viewBox="0 0 17 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M8.53312 14.6667C4.85122 14.6667 1.86646 11.6819 1.86646 8.00004C1.86646 4.31814 4.85122 1.33337 8.53312 1.33337C12.215 1.33337 15.1998 4.31814 15.1998 8.00004C15.1998 11.6819 12.215 14.6667 8.53312 14.6667ZM7.86819 10.6667L12.5823 5.95266L11.6395 5.00985L7.86819 8.78111L5.98259 6.89544L5.03978 7.83831L7.86819 10.6667Z"
+                          fill="#165E3D"
+                        />
+                      </svg>
+                      {item?.status}
+                    </td>
+                  ) : item?.status === "failed" ? (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit mt-3 justify-center items-center rounded"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="17"
+                        height="16"
+                        viewBox="0 0 17 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M8.53312 14.6667C4.85122 14.6667 1.86646 11.6819 1.86646 8.00004C1.86646 4.31814 4.85122 1.33337 8.53312 1.33337C12.215 1.33337 15.1998 4.31814 15.1998 8.00004C15.1998 11.6819 12.215 14.6667 8.53312 14.6667ZM5.19979 7.33337V8.66671H11.8665V7.33337H5.19979Z"
+                          fill="#B83131"
+                        />
+                      </svg>
+                      {item?.status} 
+                    </td>
+                  ) : (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333] w-fit  mt-3 justify-center items-center rounded"
+                    >
+                      {item?.status}
+                    </td>
+                  )}
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal px-2 text-[#333333]"
+                  >
+                    {item?.stan}
+                  </td>
+                  <td
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                      setIsOpen(true);
+                    }}
+                    className="text-sm font-normal px-2 text-[#333333]"
                   >
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
@@ -202,7 +302,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                       setIsOpen(true);
                     }}
-                    className="text-sm font-normal text-[#333333]"
+                    className="text-sm font-normal px-2 text-[#333333]"
                   >
                     ₦{item?.amount.toFixed(2)}
                   </td>
@@ -213,7 +313,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                         setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                         setIsOpen(true);
                       }}
-                      className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded"
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -229,22 +329,13 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       </svg>
                       {item?.responsemessage}
                     </td>
-                  ) :  <td
-                  onClick={() => {
-                    setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                    setIsOpen(true);
-                  }}
-                  className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded"
-                >
-                  {" "}
-                </td>}
-                  {item?.responsemessage === "failed" && (
+                  ) : item?.responsemessage === "failed" ? (
                     <td
                       onClick={() => {
                         setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
                         setIsOpen(true);
                       }}
-                      className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#FFEAEA] w-fit px-1 mt-3 justify-center items-center rounded"
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit  mt-3 justify-center items-center rounded"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -260,9 +351,22 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       </svg>
                       {item?.responsemessage}
                     </td>
+                  ) : (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  w-fit  mt-3 justify-center items-center rounded"
+                    >
+                      {item?.responsemessage}
+                    </td>
                   )}
 
-                  <td className="text-sm font-normal text-[#333333] ">
+                  <td
+                    className="relative text-sm font-normal px-2 text-[#333333] "
+                    onClick={() => handleTogglePopup(item._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -275,6 +379,13 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                         fill="#4F4F4F"
                       />
                     </svg>
+
+                    {popups[item._id] && (
+                      <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
+                        <Button className="w-full mb-2">Edit</Button>
+                        <Button className="w-full">Enable</Button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))

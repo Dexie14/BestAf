@@ -55,7 +55,13 @@ const Table = () => {
                     ₦{item?.amount.toFixed(2)}
                   </td>
                   {item?.responsemessage === "success" ? (
-                    <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded">
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -70,13 +76,14 @@ const Table = () => {
                       </svg>
                       {item?.responsemessage}
                     </td>
-                  ) : (
-                    <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#EDFFEA] w-fit px-1 mt-3 justify-center items-center rounded">
-                      {" "}
-                    </td>
-                  )}
-                  {item?.responsemessage === "failed" && (
-                    <td className="flex gap-1 text-sm font-normal text-[#333333]  bg-[#FFEAEA] w-fit px-1 mt-3 justify-center items-center rounded">
+                  ) : item?.responsemessage === "failed" ? (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit  mt-3 justify-center items-center rounded"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -89,6 +96,16 @@ const Table = () => {
                           fill="#B83131"
                         />
                       </svg>
+                      {item?.responsemessage}
+                    </td>
+                  ) : (
+                    <td
+                      onClick={() => {
+                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
+                        setIsOpen(true);
+                      }}
+                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  w-fit  mt-3 justify-center items-center rounded"
+                    >
                       {item?.responsemessage}
                     </td>
                   )}
