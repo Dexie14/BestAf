@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
 import Download from "./Download";
+import Button from "../Comps/Button";
 const { token } = useToken();
 
 const customStyles = {
@@ -34,6 +35,15 @@ const customStyles = {
 
 const TermTable = ({ paramlist, setDownload, download }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [popups, setPopups] = useState({});
+
+  const handleTogglePopup = (id) => {
+    setPopups((prevPopups) => ({
+      ...prevPopups,
+      [id]: !prevPopups[id],
+    }));
+  };
+
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
 
@@ -115,6 +125,36 @@ const TermTable = ({ paramlist, setDownload, download }) => {
     );
   };
 
+
+  const [option, setOption] = useState("Enable");
+
+  const enabling = async (TID) => {
+    try {
+      const response = await axios.put(`${BASE_URL}/admin/terminal/disable/${TID}`, "",  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.message.includes("enable")) {
+        console.log(response, "enable");
+    toast.success(response?.data?.message);
+        setOption("Disable")
+      } else {
+        toast.success(response?.data?.message);
+          setOption("Enable")
+      }
+    } catch (error) {
+      console.log(error, "optionerror");
+    toast.error(error?.response?.data?.error || error?.response?.data?.message);
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+
+
   return (
     <div className="">
       <table className=" w-full table-auto tabling">
@@ -139,7 +179,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
           </tr>
         </thead>
         {table ? (
-          <tbody className="bg-white  ">
+          <tbody className="bg-white cursor-pointer  ">
             {table && table?.items?.length > 0 ? (
               table?.items?.map((item, index) => (
                 <tr
@@ -169,7 +209,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
 
-                  <td className="text-sm font-normal text-[#333333] ">
+                  <td className="relative text-sm font-normal text-[#333333] " onClick={() => handleTogglePopup(item?._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -182,6 +222,13 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                         fill="#4F4F4F"
                       />
                     </svg>
+                    
+                    {popups[item?._id] && (
+                      <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
+                        <Button className="w-full mb-2">Edit</Button>
+                        <Button className="w-full" onClick={() => enabling(item?.terminalId)}>{option}</Button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))

@@ -19,14 +19,7 @@ const { token } = useToken();
 
 const TransTable = ({ paramlist, download, setDownload }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [popups, setPopups] = useState({});
 
-  const handleTogglePopup = (id) => {
-    setPopups((prevPopups) => ({
-      ...prevPopups,
-      [id]: !prevPopups[id],
-    }));
-  };
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
   // console.log(paramlist, "list");
@@ -134,35 +127,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
 
   // console.log(selected, "tableselected");
 
-  const [option, setOption] = useState("Enable");
-
-  const enabling = async (TID) => {
-    try {
-      const response = await axios.put(`${BASE_URL}/admin/terminal/disable/${TID}`, "",  {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response?.data?.message.includes("enable")) {
-        console.log(response, "enable");
-    toast.success(response?.data?.message);
-        setOption("Disable")
-      } else {
-        toast.success(response?.data?.message);
-          setOption("Enable")
-      }
-    } catch (error) {
-      console.log(error, "optionerror");
-    toast.error(error?.response?.data?.error || error?.response?.data?.message);
-      if (error instanceof AxiosError) {
-        throw new Error(error?.response?.data?.error?.message);
-      } else if (error instanceof Error) {
-        throw error;
-      } else throw new Error("Error occurred");
-    }
-  };
-
-
   return (
     <div>
       <table className=" w-full table-auto tabling overflow-x-scroll">
@@ -217,50 +181,20 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       onChange={() => handleCheckboxClick(item)}
                     />
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal text-[#333333] py-4 pl-2"
-                  >
+                  <td className="text-sm font-normal text-[#333333] py-4 pl-2">
                     {item?.terminalId}
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     {item?.transactionId.substring(0, 7)}...
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     {item?.responseCode}
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     {item?.rrn.substring(0, 5)}...
                   </td>
                   {item?.status === "approved" ? (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -276,13 +210,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       {item?.status}
                     </td>
                   ) : item?.status === "failed" ? (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit mt-3 justify-center items-center rounded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -295,55 +223,25 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                           fill="#B83131"
                         />
                       </svg>
-                      {item?.status} 
+                      {item?.status}
                     </td>
                   ) : (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333] w-fit  mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333] w-fit  mt-3 justify-center items-center rounded">
                       {item?.status}
                     </td>
                   )}
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     {item?.stan}
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
-                  <td
-                    onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                      setIsOpen(true);
-                    }}
-                    className="text-sm font-normal px-2 text-[#333333]"
-                  >
+                  <td className="text-sm font-normal px-2 text-[#333333]">
                     ₦{item?.amount.toFixed(2)}
                   </td>
 
                   {item?.responsemessage === "success" ? (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#EDFFEA] w-fit mt-3 justify-center items-center rounded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -359,13 +257,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       {item?.responsemessage}
                     </td>
                   ) : item?.responsemessage === "failed" ? (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit  mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333]  bg-[#FFEAEA] w-fit  mt-3 justify-center items-center rounded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="17"
@@ -381,40 +273,19 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       {item?.responsemessage}
                     </td>
                   ) : (
-                    <td
-                      onClick={() => {
-                        setSelectedTransactionId(item?.transactionId); // Assuming `id` is the property holding the transaction ID
-                        setIsOpen(true);
-                      }}
-                      className="flex gap-1 text-sm font-normal px-2 text-[#333333]  w-fit  mt-3 justify-center items-center rounded"
-                    >
+                    <td className="flex gap-1 text-sm font-normal px-2 text-[#333333]  w-fit  mt-3 justify-center items-center rounded">
                       {item?.responsemessage}
                     </td>
                   )}
 
                   <td
-                    className="relative text-sm font-normal px-2 text-[#333333] "
-                    onClick={() => handleTogglePopup(item._id)}
+                    className="relative text-sm font-normal px-2 text-[#333333] cursor-pointer "
+                    onClick={() => {
+                      setSelectedTransactionId(item?.transactionId); 
+                      setIsOpen(true);
+                    }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M4.5 10.5C3.675 10.5 3 11.175 3 12C3 12.825 3.675 13.5 4.5 13.5C5.325 13.5 6 12.825 6 12C6 11.175 5.325 10.5 4.5 10.5ZM19.5 10.5C18.675 10.5 18 11.175 18 12C18 12.825 18.675 13.5 19.5 13.5C20.325 13.5 21 12.825 21 12C21 11.175 20.325 10.5 19.5 10.5ZM12 10.5C11.175 10.5 10.5 11.175 10.5 12C10.5 12.825 11.175 13.5 12 13.5C12.825 13.5 13.5 12.825 13.5 12C13.5 11.175 12.825 10.5 12 10.5Z"
-                        fill="#4F4F4F"
-                      />
-                    </svg>
-
-                    {popups[item._id] && (
-                      <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
-                        <Button className="w-full mb-2">Edit</Button>
-                        <Button className="w-full" onClick={() => enabling(item?.terminalId)}>{option}</Button>
-                      </div>
-                    )}
+                    <Button className="px-1 py-1">View</Button>
                   </td>
                 </tr>
               ))
