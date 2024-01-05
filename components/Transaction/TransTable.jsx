@@ -134,6 +134,35 @@ const TransTable = ({ paramlist, download, setDownload }) => {
 
   // console.log(selected, "tableselected");
 
+  const [option, setOption] = useState("Enable");
+
+  const enabling = async (TID) => {
+    try {
+      const response = await axios.put(`${BASE_URL}/admin/terminal/disable/${TID}`, "",  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.message.includes("enable")) {
+        console.log(response, "enable");
+    toast.success(response?.data?.message);
+        setOption("Disable")
+      } else {
+        toast.success(response?.data?.message);
+          setOption("Enable")
+      }
+    } catch (error) {
+      console.log(error, "optionerror");
+    toast.error(error?.response?.data?.error || error?.response?.data?.message);
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+
+
   return (
     <div>
       <table className=" w-full table-auto tabling overflow-x-scroll">
@@ -383,7 +412,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     {popups[item._id] && (
                       <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
                         <Button className="w-full mb-2">Edit</Button>
-                        <Button className="w-full">Enable</Button>
+                        <Button className="w-full" onClick={() => enabling(item?.terminalId)}>{option}</Button>
                       </div>
                     )}
                   </td>
