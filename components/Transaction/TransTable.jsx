@@ -112,14 +112,14 @@ const TransTable = ({ paramlist, download, setDownload }) => {
   const handleCheckboxClick = (item) => {
     // Check if the item is already in the selected array
     const isSelected = selected.some(
-      (selectedItem) => selectedItem.transactionId === item.transactionId
+      (selectedItem) => selectedItem._id === item._id
     );
 
     // If it's selected, remove it; otherwise, add it to the array
     setSelected((prevSelected) =>
       isSelected
         ? prevSelected.filter(
-            (selectedItem) => selectedItem.transactionId !== item.transactionId
+            (selectedItem) => selectedItem._id !== item._id
           )
         : [...prevSelected, item]
     );
@@ -165,7 +165,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                       type="checkbox"
                       checked={selected.some(
                         (selectedItem) =>
-                          selectedItem.transactionId === item.transactionId
+                          selectedItem._id === item._id
                       )}
                       onChange={() => handleCheckboxClick(item)}
                     />
