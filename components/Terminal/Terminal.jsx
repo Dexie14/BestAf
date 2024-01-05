@@ -74,6 +74,20 @@ const Terminal = () => {
           Terminal Overview
         </h1>
         <div className="flex gap-3 items-center">
+          <button className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"
+              />
+            </svg>
+            Upload
+          </button>
           <button
             onClick={() => setDownload(true)}
             className="flex items-center justify-center gap-2 py-2 px-3 border border-border bg-white text-dark rounded-lg"
@@ -519,7 +533,11 @@ const Terminal = () => {
           />
         </div>
       </section>
-      <TermTable paramlist={dataToPass} setDownload={setDownload} download={download}/>
+      <TermTable
+        paramlist={dataToPass}
+        setDownload={setDownload}
+        download={download}
+      />
       <ReactModal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}

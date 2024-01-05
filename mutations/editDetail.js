@@ -15,6 +15,7 @@ export const editingDetails = async ({
   enabling,
   handleCloseModal,
   value,
+  refetch
 }) => {
   try {
     const response = await axios.put(
@@ -25,8 +26,8 @@ export const editingDetails = async ({
         address: address,
         accountSelection: acc,
         isEnabled: enabling,
-        numberOfReciepts: receiptNum,
-        printReciept: print,
+        // numberOfReciepts: receiptNum,
+        // printReciept: print,
       },
       {
         headers: {
@@ -47,4 +48,5 @@ export const editingDetails = async ({
       throw error;
     } else throw new Error("Error occurred while editing merch");
   }
+  refetch()
 };
