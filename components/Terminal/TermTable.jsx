@@ -157,6 +157,8 @@ const TermTable = ({ paramlist, setDownload, download }) => {
         throw error;
       } else throw new Error("Error occurred");
     }
+
+    refetch();
   };
 
   return (
@@ -371,6 +373,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
           setModalIsOpen={setIsOpen}
           modalIsOpen={isOpen}
           prevData={prevData}
+          refetch={refetch}
         />
       </ReactModal>
     </div>

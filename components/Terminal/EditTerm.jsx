@@ -4,7 +4,7 @@ import Button from "../Comps/Button";
 import { useEditDetails } from "@/hooks/useEditDetails";
 
 
-const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
+const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData, refetch }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -15,7 +15,7 @@ const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
   const [receiptNum, setReceiptNum] = useState(prevData?.NumberOfReciepts);
   const [print, setPrint] = useState("");
   const [acc, setAcc] = useState("");
-  const [enabling, setEnabling] = useState("");
+  const [enabling, setEnabling] = useState(false);
 
   const value = prevData?.terminalId
 
@@ -23,7 +23,7 @@ const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
   const { mutate: update, isPending } = useEditDetails();
 
   const createUpdate = () => {
-    update({ name, address, supportNumber,receiptNum,print, acc,enabling, handleCloseModal,value });
+    update({ name, address, supportNumber,receiptNum,print, acc,enabling, handleCloseModal,value , refetch});
   };
 
   return (
@@ -127,7 +127,7 @@ const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
           >
             Print Receipt
           </label>
-          <select onChange={(e) => setPrint(e.target.value)} className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
+          <select onChange={(e) => setPrint(e.target.value.toLowerCase() === 'true')} className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
             <option selected disabled>
               Select Action 
             </option>
@@ -141,7 +141,7 @@ const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
           >
             Account Selection
           </label>
-          <select onChange={(e) => setAcc(e.target.value)} className=" text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
+          <select onChange={(e) => setAcc(e.target.value.toLowerCase() === 'true')} className=" text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
             <option selected disabled>
               Select Action 
             </option>
@@ -155,7 +155,7 @@ const EditTerm = ({ setModalIsOpen, modalIsOpen, prevData }) => {
           >
             isEnabled?
           </label>
-          <select onChange={(e) => setEnabling(e.target.value)} className=" text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
+          <select onChange={(e) =>  setEnabling(e.target.value.toLowerCase() === 'true')} className=" text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
             <option selected disabled>
               Select Action 
             </option>
