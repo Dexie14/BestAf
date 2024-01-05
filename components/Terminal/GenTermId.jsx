@@ -3,6 +3,8 @@ import Button from "../Comps/Button";
 
 import { useCreateTerm } from "@/hooks/useCreateTerm";
 
+import { useGetMerch } from "@/hooks/useGetMerch";
+
 const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -11,11 +13,16 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
   const [serialNumber, setSerialNumber] = useState("");
   const [address, setAddress] = useState("");
   const [supportNumber, setSupportNumber] = useState("");
+  const [merchName, setMerchName] = useState("");
+
+  const { data: merch, isLoading, isError } = useGetMerch();
+
+  console.log(merch, "geting merchData");
 
   const { mutate: createTerm, isPending } = useCreateTerm();
 
   const createTermNow = () => {
-    createTerm({ serialNumber,address, supportNumber, handleCloseModal });
+    createTerm({ serialNumber, address, supportNumber, handleCloseModal, merchName });
   };
 
   return (
@@ -90,7 +97,26 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
             placeholder="Enter Support Number"
           />
         </div>
-        <Button    onClick={createTermNow} className="w-full px-3 py-2"> {isPending ? "Generating" : "Generate" } </Button>
+        <div className="mb-5 flex flex-col">
+          <label
+            htmlFor="merchant"
+            className="text-sm  font-semibold text-[#333333] mb-1"
+          >
+            Merchant Name
+          </label>
+          <select onChange={(e) => setMerchName(e.target.value)} className="mb-5 text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
+            <option selected disabled>
+              Select Merchant Name
+            </option>
+            {merch?.map((item) => {
+              return <option>{item?.name}</option>;
+            })}
+          </select>
+        </div>
+        <Button onClick={createTermNow} className="w-full px-3 py-2">
+          {" "}
+          {isPending ? "Generating" : "Generate"}{" "}
+        </Button>
       </section>
     </div>
   );

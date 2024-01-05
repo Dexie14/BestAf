@@ -5,7 +5,13 @@ import { useToken } from "@/hooks/auth/useToken";
 import { toast } from "react-toastify";
 const { token } = useToken();
 
-export const createNewTerminal = async ({ serialNumber, address, supportNumber, handleCloseModal }) => {
+export const createNewTerminal = async ({
+  serialNumber,
+  address,
+  supportNumber,
+  handleCloseModal,
+  merchName,
+}) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/admin/terminal`,
@@ -13,6 +19,7 @@ export const createNewTerminal = async ({ serialNumber, address, supportNumber, 
         serialNumber: serialNumber,
         address: address,
         supportNumber: supportNumber,
+        merchantName: merchName,
       },
       {
         headers: {
