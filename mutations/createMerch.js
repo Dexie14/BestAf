@@ -1,43 +1,36 @@
 import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
-import { useToken } from "@/hooks/auth/useToken";
+// import { useToken } from "@/hooks/auth/useToken";
 
 import { toast } from "react-toastify";
-const { token } = useToken();
+// const { token } = useToken();
 
-export const createNewTerminal = async ({
-  serialNumber,
+export const createNewMerch = async ({
+  name,
+  email,
   address,
-  supportNumber,
   handleCloseModal,
-  merchName,
 }) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/admin/terminal`,
+      `${BASE_URL}/merchant/create`,
       {
-        serialNumber: serialNumber,
+        name: name,
+        email: email,
         address: address,
-        supportNumber: supportNumber,
-        merchantName: merchName,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
     );
     toast.success(response?.data?.message);
-    console.log(response, "newterm");
+    console.log(response, "newmerch");
     handleCloseModal();
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "createtermerror");
+    console.log(error, "createmercherror");
     handleCloseModal();
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);
     } else if (error instanceof Error) {
       throw error;
-    } else throw new Error("Error occurred while sending an admin invite");
+    } else throw new Error("Error occurred while creating merch");
   }
 };

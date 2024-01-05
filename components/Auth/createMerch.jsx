@@ -1,34 +1,29 @@
 import { useState } from "react";
 import Button from "../Comps/Button";
 
-import { useCreateTerm } from "@/hooks/useCreateTerm";
+import { useCreateMerch } from "@/hooks/useCreateMerch";
 
-import { useGetMerch } from "@/hooks/useGetMerch";
 
-const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
+const CreateMerch = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
 
-  const [serialNumber, setSerialNumber] = useState("");
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [supportNumber, setSupportNumber] = useState("");
-  const [merchName, setMerchName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const { data: merch, isLoading, isError } = useGetMerch();
 
-  console.log(merch, "geting merchData");
+  const { mutate: createMerch, isPending } = useCreateMerch();
 
-  const { mutate: createTerm, isPending } = useCreateTerm();
-
-  const createTermNow = () => {
-    createTerm({ serialNumber, address, supportNumber, handleCloseModal, merchName });
+  const createMerchNow = () => {
+    createMerch({ name, email, address, handleCloseModal });
   };
 
   return (
     <div className="py-4 px-6 rounded-[40px] ">
       <section className="flex justify-between pb-3 border-b-2 border-[#828282]">
-        <h3 className="text-xl font-semibold">Generate Terminal ID</h3>
+        <h3 className="text-xl font-semibold">Generate Merchant's Detail</h3>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
@@ -54,17 +49,32 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
       <section className="my-10">
         <div className="mb-5 flex flex-col">
           <label
-            htmlFor="IMEI"
+            htmlFor="name"
             className=" text-sm font-semibold text-[#333333] mb-1"
           >
-            Serial Number/IMEI
+            Merchant Name
           </label>
           <input
-            onChange={(e) => setSerialNumber(e.target.value)}
-            id="IMEI"
+            onChange={(e) => setName(e.target.value)}
+            id="name"
             className="text-sm rounded-lg px-3 bg-[#f2f2f2] py-3 border border-border placeholder:text-border"
             type="text"
-            placeholder="Enter Serial Number/IMEI"
+            placeholder="Enter Merchant Name"
+          />
+        </div>
+        <div className="mb-5 flex flex-col">
+          <label
+            htmlFor="email"
+            className="text-sm  font-semibold text-[#333333] mb-1"
+          >
+            Email
+          </label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            id="email"
+            className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border placeholder:text-border"
+            type="email"
+            placeholder="Enter Email"
           />
         </div>
         <div className="mb-5 flex flex-col">
@@ -82,38 +92,8 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
             placeholder="Enter Address"
           />
         </div>
-        <div className="mb-5 flex flex-col">
-          <label
-            htmlFor="merchant"
-            className="text-sm  font-semibold text-[#333333] mb-1"
-          >
-            Support Number
-          </label>
-          <input
-            onChange={(e) => setSupportNumber(e.target.value)}
-            id="merchant"
-            className="text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border placeholder:text-border"
-            type="number"
-            placeholder="Enter Support Number"
-          />
-        </div>
-        <div className="mb-5 flex flex-col">
-          <label
-            htmlFor="merchant"
-            className="text-sm  font-semibold text-[#333333] mb-1"
-          >
-            Merchant Name
-          </label>
-          <select onChange={(e) => setMerchName(e.target.value)} className="mb-5 text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
-            <option selected disabled>
-              Select Merchant Name
-            </option>
-            {merch?.map((item) => {
-              return <option>{item?.name}</option>;
-            })}
-          </select>
-        </div>
-        <Button onClick={createTermNow} className="w-full px-3 py-2">
+       
+        <Button onClick={createMerchNow} className="w-full px-3 py-2">
           {" "}
           {isPending ? "Generating" : "Generate"}{" "}
         </Button>
@@ -122,4 +102,4 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
   );
 };
 
-export default GenTermId;
+export default CreateMerch;

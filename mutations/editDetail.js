@@ -5,21 +5,28 @@ import { useToken } from "@/hooks/auth/useToken";
 import { toast } from "react-toastify";
 const { token } = useToken();
 
-export const createNewTerminal = async ({
-  serialNumber,
+export const editingDetails = async ({
+  name,
   address,
   supportNumber,
+  receiptNum,
+  print,
+  acc,
+  enabling,
   handleCloseModal,
-  merchName,
+  value,
 }) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/admin/terminal`,
+    const response = await axios.put(
+      `${BASE_URL}/admin/terminal/update/${value}`,
       {
-        serialNumber: serialNumber,
-        address: address,
+        merchantName: name,
         supportNumber: supportNumber,
-        merchantName: merchName,
+        address: address,
+        accountSelection: acc,
+        isEnabled: enabling,
+        numberOfReciepts: receiptNum,
+        printReciept: print,
       },
       {
         headers: {
@@ -28,16 +35,16 @@ export const createNewTerminal = async ({
       }
     );
     toast.success(response?.data?.message);
-    console.log(response, "newterm");
+    console.log(response, "editt");
     handleCloseModal();
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "createtermerror");
+    console.log(error, "createediterror");
     handleCloseModal();
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);
     } else if (error instanceof Error) {
       throw error;
-    } else throw new Error("Error occurred while sending an admin invite");
+    } else throw new Error("Error occurred while editing merch");
   }
 };
