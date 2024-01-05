@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
 import Download from "./Download";
 import Button from "../Comps/Button";
+import EditTerm from "./EditTerm";
 const { token } = useToken();
 
 const customStyles = {
@@ -35,6 +36,7 @@ const customStyles = {
 
 const TermTable = ({ paramlist, setDownload, download }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [prevData, setPrevData] = useState();
   const [popups, setPopups] = useState({});
 
   const handleTogglePopup = (id) => {
@@ -118,34 +120,37 @@ const TermTable = ({ paramlist, setDownload, download }) => {
     // If it's selected, remove it; otherwise, add it to the array
     setSelected((prevSelected) =>
       isSelected
-        ? prevSelected.filter(
-            (selectedItem) => selectedItem._id !== item._id
-          )
+        ? prevSelected.filter((selectedItem) => selectedItem._id !== item._id)
         : [...prevSelected, item]
     );
   };
-
 
   const [option, setOption] = useState("Enable");
 
   const enabling = async (TID) => {
     try {
-      const response = await axios.put(`${BASE_URL}/admin/terminal/disable/${TID}`, "",  {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.put(
+        `${BASE_URL}/admin/terminal/disable/${TID}`,
+        "",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response?.data?.message.includes("enable")) {
         console.log(response, "enable");
-    toast.success(response?.data?.message);
-        setOption("Disable")
+        toast.success(response?.data?.message);
+        setOption("Disable");
       } else {
         toast.success(response?.data?.message);
-          setOption("Enable")
+        setOption("Enable");
       }
     } catch (error) {
       console.log(error, "optionerror");
-    toast.error(error?.response?.data?.error || error?.response?.data?.message);
+      toast.error(
+        error?.response?.data?.error || error?.response?.data?.message
+      );
       if (error instanceof AxiosError) {
         throw new Error(error?.response?.data?.error?.message);
       } else if (error instanceof Error) {
@@ -154,27 +159,28 @@ const TermTable = ({ paramlist, setDownload, download }) => {
     }
   };
 
-
   return (
     <div className="">
       <table className=" w-full table-auto tabling">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            <th className="py-4 pl-2 ">
-              {/* <input type="checkbox" /> */}
-            </th>
+            <th className="py-4 pl-2 ">{/* <input type="checkbox" /> */}</th>
             <th className="py-4 pl-2 text-sm font-semibold text-[#333333]">
               Terminal ID
+            </th>
+            <th className=" text-sm font-semibold text-[#333333]">
+              Merchant ID
             </th>
             <th className=" text-sm font-semibold text-[#333333]">
               Merchant Name
             </th>
             <th className=" text-sm font-semibold text-[#333333]">
+              Support Number
+            </th>
+            <th className=" text-sm font-semibold text-[#333333]">
               Created Date
             </th>
-            {/* <th className=" text-sm font-semibold text-[#333333]">
-              Transaction
-            </th> */}
+            <th className=" text-sm font-semibold text-[#333333]">isEnabled</th>
             <th className=" text-sm font-semibold text-[#333333]">Action</th>
           </tr>
         </thead>
@@ -193,8 +199,7 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                     <input
                       type="checkbox"
                       checked={selected.some(
-                        (selectedItem) =>
-                          selectedItem._id === item._id
+                        (selectedItem) => selectedItem._id === item._id
                       )}
                       onChange={() => handleCheckboxClick(item)}
                     />
@@ -203,13 +208,31 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                     {item?.terminalId}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    Segun Adebayo
+                    {item?.merchantId}
+                  </td>
+                  <td className="text-sm font-normal text-[#333333]">
+                    {item?.merchantName}
+                  </td>
+                  <td className="text-sm font-normal text-[#333333]">
+                    {item?.supportNumber}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
+                  <td
+                    className={`text-sm font-normal text-[#333333] flex gap-1 px-2  w-fit  mt-3 justify-center items-center rounded ${
+                      item?.isEnabled === true
+                        ? " bg-[#EDFFEA]"
+                        : "bg-[#FFEAEA]"
+                    }`}
+                  >
+                    {item?.isEnabled === true ? "True" : "False"}
+                  </td>
 
-                  <td className="relative text-sm font-normal text-[#333333] " onClick={() => handleTogglePopup(item?._id)}>
+                  <td
+                    className="relative text-sm font-normal text-[#333333] "
+                    onClick={() => handleTogglePopup(item?._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -222,11 +245,24 @@ const TermTable = ({ paramlist, setDownload, download }) => {
                         fill="#4F4F4F"
                       />
                     </svg>
-                    
+
                     {popups[item?._id] && (
                       <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
-                        <Button className="w-full mb-2">Edit</Button>
-                        <Button className="w-full" onClick={() => enabling(item?.terminalId)}>{option}</Button>
+                        <Button
+                          onClick={() => {
+                            setIsOpen(!isOpen);
+                            setPrevData(item);
+                          }}
+                          className="w-full mb-2"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          className="w-full"
+                          onClick={() => enabling(item?.terminalId)}
+                        >
+                          {option}
+                        </Button>
                       </div>
                     )}
                   </td>
@@ -321,6 +357,20 @@ const TermTable = ({ paramlist, setDownload, download }) => {
           setSelected={setSelected}
           selected={selected}
           fullData={table}
+        />
+      </ReactModal>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <EditTerm
+          setModalIsOpen={setIsOpen}
+          modalIsOpen={isOpen}
+          prevData={prevData}
         />
       </ReactModal>
     </div>
