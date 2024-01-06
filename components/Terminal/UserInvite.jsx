@@ -9,10 +9,12 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
   };
 
   const [email, setEmail] = useState("")
+  
+  const [merchName, setMerchName] = useState("");
   const { mutate: InviteAdmin, isPending } = useAdminInvite();
 
   const createInvite = () => {
-    InviteAdmin({ email, handleCloseModal })
+    InviteAdmin({ email, handleCloseModal, merchName })
   }
 
   
@@ -58,6 +60,22 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
             type="email"
             placeholder="Enter Email to invite"
           />
+        </div>
+        <div className="mb-5 flex flex-col">
+          <label
+            htmlFor="merchant"
+            className="text-sm  font-semibold text-[#333333] mb-1"
+          >
+            Merchant Name
+          </label>
+          <select onChange={(e) => setMerchName(e.target.value)} className="mb-5 text-sm rounded-lg px-3 py-3 bg-[#f2f2f2] border border-border outline-none">
+            <option selected disabled>
+              Select Merchant Name
+            </option>
+            {/* {merch?.map((item) => {
+              return <option>{item?.name}</option>;
+            })} */}
+          </select>
         </div>
         <Button
           onClick={createInvite}

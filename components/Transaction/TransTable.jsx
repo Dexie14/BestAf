@@ -56,6 +56,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
 
   const param = {
     terminalId: paramlist?.inputTerminal,
+    merchantId: paramlist?.inputMerchId,
     transactionId: paramlist?.inputTrans,
     responsemessage: paramlist?.selectedStatus,
     amount: paramlist?.amount,
