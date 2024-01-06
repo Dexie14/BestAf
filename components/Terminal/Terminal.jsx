@@ -77,6 +77,22 @@ const Terminal = () => {
   const handleApplyClick = () => {
     setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId, selectedName });
   };
+  const handleResetClick = () => {
+    setInputTerminal("");
+    setFromDate("");
+    setToDate("");
+    setSelectedStatus("");
+    setInputMerchId("");
+    setSelectedName("");
+    setDataToPass({
+      inputTerminal: "",
+      fromDate: "",
+      toDate: "",
+      selectedStatus: "",
+      inputMerchId: "",
+      selectedName: "",
+    });
+  };
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -526,7 +542,7 @@ const Terminal = () => {
             </div>
           )}
         </aside>
-        <aside className="bg-white w-[165px] flex gap-2 flex-col relative cursor-pointer">
+        {/* <aside className="bg-white w-[165px] flex gap-2 flex-col relative cursor-pointer">
           <div
             className={`flex justify-center text-dark border-border px-1 py-2 border text-sm ${
               trans ? "rounded-t-lg" : "rounded-lg"
@@ -642,10 +658,15 @@ const Terminal = () => {
               </p>
             </div>
           )}
-        </aside>
-        <div className="w-1/12">
+        </aside> */}
+        <div className="w-fit">
           <Button onClick={handleApplyClick} className="py-2 px-2">
             APPLY
+          </Button>
+        </div>
+        <div className="w-fit">
+          <Button onClick={handleResetClick} className="py-2 px-2">
+            RESET
           </Button>
         </div>
       </section>
