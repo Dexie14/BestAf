@@ -53,6 +53,23 @@ const Merchant = () => {
     const handleApplyClick = () => {
       setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId, selectedName });
     };
+    const handleResetClick = () => {
+        setInputTerminal("");
+        setFromDate("");
+        setToDate("");
+        setSelectedStatus("");
+        setInputMerchId("");
+        setSelectedName("");
+        setDataToPass({
+          inputTerminal: "",
+          fromDate: "",
+          toDate: "",
+          selectedStatus: "",
+          inputMerchId: "",
+          selectedName: "",
+        });
+      };
+      
   
    
 
@@ -479,9 +496,14 @@ const Merchant = () => {
             </div>
           )}
         </aside> */}
-        <div className="w-1/12">
+        <div className="w-fit">
           <Button onClick={handleApplyClick} className="py-2 px-2">
             APPLY
+          </Button>
+        </div>
+        <div className="w-fit">
+          <Button onClick={handleResetClick} className="py-2 px-2">
+            RESET
           </Button>
         </div>
       </section>

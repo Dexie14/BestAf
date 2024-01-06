@@ -62,6 +62,25 @@ const Transaction = () => {
     });
   };
 
+  const handleResetClick = () => {
+    setInputTerminal("");
+    setInputTrans("");
+    setFromDate("");
+    setToDate("");
+    setAmount("");
+    setSelectedStatus("");
+    setInputMerchId("");
+    setDataToPass({
+      inputTerminal: "",
+      inputTrans: "",
+      fromDate: "",
+      toDate: "",
+      amount: "",
+      selectedStatus: "",
+      inputMerchId: "",
+    });
+  };
+
  
   
   const [download, setDownload] = useState(false);
@@ -570,6 +589,11 @@ const Transaction = () => {
         <div className="w-1/12">
           <Button onClick={handleApplyClick} className="py-2 px-2">
             APPLY
+          </Button>
+        </div>
+        <div className="w-fit">
+          <Button onClick={handleResetClick} className="py-2 px-2">
+            RESET
           </Button>
         </div>
         {/* <div className="flex gap-3 rounded-lg border bg-[#FBFBFB] border-[#E0E0E0] px-2 py-2 w-[275px]">
