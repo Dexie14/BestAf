@@ -73,29 +73,29 @@ const Dashboard = () => {
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold">Total Terminal</p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.terminals}</h5>
+          <p className="mb-5 text-sm font-semibold">Total Terminal</p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.terminals}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold">Total Transaction </p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.transactions}</h5>
+          <p className="mb-5 text-sm font-semibold">Total Transaction </p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.transactions}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold">Total User </p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.users}</h5>
+          <p className="mb-5 text-sm  font-semibold">Total User </p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.users}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold">Total Transaction Amount/Day </p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.transactionAmountForTheDay}</h5>
+          <p className="mb-5 text-sm font-semibold">Total Transaction Amount/Day </p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.transactionAmountForTheDay}</h5>
         </div>
         </section>
         <section className="flex gap-5 mt-5">
@@ -103,29 +103,29 @@ const Dashboard = () => {
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold"> Approved Transaction Amount/Day</p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.approvedTransactionAmountForTheDay}</h5>
+          <p className="mb-5 text-sm font-semibold"> Approved Transaction Amount/Day</p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.approvedTransactionAmountForTheDay}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold"> Declined Transaction Amount/Day</p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.declinedTransactionAmountForTheDay}</h5>
+          <p className="mb-5 text-sm font-semibold"> Declined Transaction Amount/Day</p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.declinedTransactionAmountForTheDay}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold"> Approved Transaction Count/Day </p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.approvedTransactionCountForTheDay}</h5>
+          <p className="mb-5 text-sm font-semibold"> Approved Transaction Count/Day </p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.approvedTransactionCountForTheDay}</h5>
         </div>
         <div
           className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
-          <p className="mb-5 font-semibold"> Declined Transaction Count/Day </p>
-          <h5 className="text-primary text-3xl mb-3">{dashn?.declinedTransactionCountForTheDay}</h5>
+          <p className="mb-5 text-sm font-semibold"> Declined Transaction Count/Day </p>
+          <h5 className="text-primary text-xl mb-3">{dashn?.declinedTransactionCountForTheDay}</h5>
         </div>
         </section>
       </section>
