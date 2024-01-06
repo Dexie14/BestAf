@@ -246,7 +246,11 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
                   <td className="text-sm font-normal px-2 text-[#333333]">
-                    ₦{item?.amount.toFixed(2)}
+                    {/* ₦{item?.amount.toFixed(2)} */}₦
+                    {item?.amount?.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
 
                   {item?.responsemessage === "success" ? (
@@ -290,7 +294,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                   <td
                     className="relative text-sm font-normal px-2 text-[#333333] cursor-pointer "
                     onClick={() => {
-                      setSelectedTransactionId(item?.transactionId); 
+                      setSelectedTransactionId(item?.transactionId);
                       setIsOpen(true);
                     }}
                   >

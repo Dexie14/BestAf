@@ -52,7 +52,7 @@ const Table = () => {
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    ₦{item?.amount.toFixed(2)}
+                  ₦{item?.amount?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                   {item?.responsemessage === "success" ? (
                     <td
