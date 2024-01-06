@@ -11,6 +11,7 @@ export const createNewTerminal = async ({
   supportNumber,
   handleCloseModal,
   merchName,
+  refetch
 }) => {
   try {
     const response = await axios.post(
@@ -40,4 +41,5 @@ export const createNewTerminal = async ({
       throw error;
     } else throw new Error("Error occurred while sending an admin invite");
   }
+  refetch()
 };

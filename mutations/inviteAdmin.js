@@ -7,12 +7,13 @@ const { token } = useToken();
 
 
 
-export const sendAdminInvite = async ({ email, handleCloseModal }) => {
+export const sendAdminInvite = async ({ email, handleCloseModal, merchName }) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/admin/invite`,
       {
-        email: email
+        email: email,
+        merchantName: merchName,
       },
       {
         headers: {

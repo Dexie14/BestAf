@@ -5,7 +5,7 @@ import { useCreateTerm } from "@/hooks/useCreateTerm";
 
 import { useGetMerch } from "@/hooks/useGetMerch";
 
-const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
+const GenTermId = ({ setModalIsOpen, modalIsOpen, refetch}) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -22,7 +22,7 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen }) => {
   const { mutate: createTerm, isPending } = useCreateTerm();
 
   const createTermNow = () => {
-    createTerm({ serialNumber, address, supportNumber, handleCloseModal, merchName });
+    createTerm({ serialNumber, address, supportNumber, handleCloseModal, merchName, refetch});
   };
 
   return (

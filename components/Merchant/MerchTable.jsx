@@ -1,43 +1,19 @@
-import { useGetTerminal } from "@/hooks/auth/useGetTerm";
+
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseUrl";
 import moment from "moment";
 import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
-import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
-import Download from "./Download";
 import Button from "../Comps/Button";
-import EditTerm from "./EditTerm";
-import GenTermId from "./GenTermId";
 const { token } = useToken();
 
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    opacity: "10",
-  },
-  content: {
-    height: "65vh",
-    top: "0",
-    left: "0",
-    right: "0",
-    bottom: "0",
-    margin: "auto",
-    borderRadius: "30px",
-    width: "50%",
-  },
-};
 
-const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [prevData, setPrevData] = useState();
+
+const MerchTable = ({ paramlist }) => {
   const [popups, setPopups] = useState({});
 
   const handleTogglePopup = (id) => {
@@ -57,10 +33,9 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
   };
 
   const param = {
-    terminalId: paramlist?.inputTerminal,
+    email: paramlist?.inputTerminal,
     merchantId: paramlist?.inputMerchId,
-    merchantName: paramlist?.selectedName,
-    serialNumber: "",
+    name: paramlist?.selectedName,
     from: paramlist?.fromDate,
     to: paramlist?.toDate,
     pageSize: pageSize,
@@ -70,7 +45,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
 
   const getTerminal = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/terminals`, {
+      const response = await axios.get(`${BASE_URL}/admin/merchants`, {
         params: param,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -109,9 +84,6 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
     }
   }, [paramlist, pageSize, page, refetch]);
 
- 
-
-
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
   const [selected, setSelected] = useState([]);
@@ -136,7 +108,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
   const enabling = async (TID) => {
     try {
       const response = await axios.put(
-        `${BASE_URL}/admin/terminal/disable/${TID}`,
+        `${BASE_URL}/admin/merchant/disable/${TID}`,
         "",
         {
           headers: {
@@ -172,19 +144,19 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
       <table className=" w-full table-auto tabling">
         <thead className="text-left mb-3 border-b-4">
           <tr className="bg-secondary px-3">
-            <th className="py-4 pl-2 ">{/* <input type="checkbox" /> */}</th>
-            <th className="py-4 pl-2 text-sm font-semibold text-[#333333]">
-              Terminal ID
-            </th>
-            <th className=" text-sm font-semibold text-[#333333]">
+            <th className=" text-sm font-semibold text-[#333333] py-4 pl-2 ">
               Merchant ID
             </th>
             <th className=" text-sm font-semibold text-[#333333]">
               Merchant Name
             </th>
             <th className=" text-sm font-semibold text-[#333333]">
-              Support Number
+              Address
             </th>
+            <th className=" text-sm font-semibold text-[#333333]">
+              Email
+            </th>
+            <th className=" text-sm font-semibold text-[#333333]">AccountLocked</th>
             <th className=" text-sm font-semibold text-[#333333]">
               Created Date
             </th>
@@ -203,26 +175,26 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
                     boxShadow: "0px 2px 2px 0px rgba(34, 34, 34, 0.10);",
                   }}
                 >
-                  <td className="pl-2">
-                    <input
-                      type="checkbox"
-                      checked={selected.some(
-                        (selectedItem) => selectedItem._id === item._id
-                      )}
-                      onChange={() => handleCheckboxClick(item)}
-                    />
-                  </td>
-                  <td className="pl-2 text-sm font-normal text-[#333333] py-4">
-                    {item?.terminalId}
-                  </td>
-                  <td className="text-sm font-normal text-[#333333]">
+                  <td className="text-sm font-normal text-[#333333] pl-2 py-4">
                     {item?.merchantId}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {item?.merchantName}
+                    {item?.name}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {item?.supportNumber}
+                    {item?.address}
+                  </td>
+                  <td className="text-sm font-normal text-[#333333]">
+                    {item?.email}
+                  </td>
+                  <td
+                    className={`text-sm font-normal text-[#333333] flex gap-1 px-2  w-fit  mt-4 justify-center items-center rounded ${
+                      item?.accountLocked === true
+                        ? " bg-[#EDFFEA]"
+                        : "bg-[#FFEAEA]"
+                    }`}
+                  >
+                    {item?.accountLocked === true ? "True" : "False"}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
@@ -236,6 +208,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
                   >
                     {item?.isEnabled === true ? "True" : "False"}
                   </td>
+                  
 
                   <td
                     className="relative text-sm font-normal text-[#333333] "
@@ -257,17 +230,8 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
                     {popups[item?._id] && (
                       <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
                         <Button
-                          onClick={() => {
-                            setIsOpen(!isOpen);
-                            setPrevData(item);
-                          }}
-                          className="w-full mb-2"
-                        >
-                          Edit
-                        </Button>
-                        <Button
                           className="w-full"
-                          onClick={() => enabling(item?.terminalId)}
+                          onClick={() => enabling(item?.merchantId)}
                         >
                           {item?.isEnabled === true ? "Disable" : "Enable"}
                         </Button>
@@ -326,74 +290,8 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
           </p>
         )}
       </section>
-      {/* <div className="flex justify-between items-center cursor-pointer mb-20">
-        <p className="text-xs text-[#4B5563] font-bold">
-          10/50 <span className="font-normal">results</span>
-        </p>
-        <section className="flex gap-2 items-center">
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4]  bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg">
-            Previous
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            1
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            2
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            3
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            4
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4]  bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg">
-            Next
-          </p>
-        </section>
-      </div> */}
-      <ReactModal
-        isOpen={download}
-        onRequestClose={() => setDownload(false)}
-        ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
-        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
-        style={customStyles}
-      >
-        <Download
-          setModalIsOpen={setDownload}
-          modalIsOpen={download}
-          setSelected={setSelected}
-          selected={selected}
-          fullData={table}
-        />
-      </ReactModal>
-      <ReactModal
-        isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
-        ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
-        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
-        style={customStyles}
-      >
-        <EditTerm
-          setModalIsOpen={setIsOpen}
-          modalIsOpen={isOpen}
-          prevData={prevData}
-          refetch={refetch}
-        />
-      </ReactModal>
-      <ReactModal
-        isOpen={generate}
-        onRequestClose={() => setGenerate(false)}
-        ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
-        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
-        style={customStyles}
-      >
-        <GenTermId setModalIsOpen={setGenerate} modalIsOpen={generate} refetch={refetch} />
-      </ReactModal>
     </div>
   );
 };
 
-export default TermTable;
+export default MerchTable;
