@@ -98,7 +98,10 @@ const TransDetails = ({
           </h3>
           <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Amount:{" "}
-            <span className="text-[#828282] font-medium">₦{data?.amount}</span>
+            <span className="text-[#828282] font-medium">₦{data?.amount?.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}</span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
