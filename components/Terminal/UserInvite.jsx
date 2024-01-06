@@ -3,6 +3,8 @@ import Button from "../Comps/Button";
 
 import { useAdminInvite } from "@/hooks/useAdminInvite";
 
+import { useGetAdminMerch } from "@/hooks/useAdminMerch";
+
 const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -16,6 +18,10 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
   const createInvite = () => {
     InviteAdmin({ email, handleCloseModal, merchName })
   }
+
+  const { data: name,  } = useGetAdminMerch();
+  
+  // console.log(name, "geting name");
 
   
 
@@ -72,9 +78,9 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
             <option selected disabled>
               Select Merchant Name
             </option>
-            {/* {merch?.map((item) => {
+            {name?.items?.map((item) => {
               return <option>{item?.name}</option>;
-            })} */}
+            })}
           </select>
         </div>
         <Button

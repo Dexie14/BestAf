@@ -33,9 +33,9 @@ const MerchTable = ({ paramlist }) => {
   };
 
   const param = {
-    terminalId: paramlist?.inputTerminal,
+    email: paramlist?.inputTerminal,
     merchantId: paramlist?.inputMerchId,
-    serialNumber: "",
+    name: paramlist?.selectedName,
     from: paramlist?.fromDate,
     to: paramlist?.toDate,
     pageSize: pageSize,
@@ -45,8 +45,8 @@ const MerchTable = ({ paramlist }) => {
 
   const getTerminal = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/terminals`, {
-        // params: param,
+      const response = await axios.get(`${BASE_URL}/admin/merchants`, {
+        params: param,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -108,7 +108,7 @@ const MerchTable = ({ paramlist }) => {
   const enabling = async (TID) => {
     try {
       const response = await axios.put(
-        `${BASE_URL}/admin/terminal/disable/${TID}`,
+        `${BASE_URL}/admin/merchant/disable/${TID}`,
         "",
         {
           headers: {
@@ -182,10 +182,10 @@ const MerchTable = ({ paramlist }) => {
                     {item?.name}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {item?.email}
+                    {item?.address}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {item?.address}
+                    {item?.email}
                   </td>
                   <td
                     className={`text-sm font-normal text-[#333333] flex gap-1 px-2  w-fit  mt-4 justify-center items-center rounded ${
@@ -231,7 +231,7 @@ const MerchTable = ({ paramlist }) => {
                       <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
                         <Button
                           className="w-full"
-                          onClick={() => enabling(item?.terminalId)}
+                          onClick={() => enabling(item?.merchantId)}
                         >
                           {item?.isEnabled === true ? "Disable" : "Enable"}
                         </Button>

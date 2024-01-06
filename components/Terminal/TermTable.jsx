@@ -59,6 +59,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
   const param = {
     terminalId: paramlist?.inputTerminal,
     merchantId: paramlist?.inputMerchId,
+    merchantName: paramlist?.selectedName,
     serialNumber: "",
     from: paramlist?.fromDate,
     to: paramlist?.toDate,

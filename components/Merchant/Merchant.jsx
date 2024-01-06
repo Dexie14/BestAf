@@ -6,7 +6,7 @@ import Button from "../Comps/Button";
 import MerchTable from "./MerchTable";
 
 
-// import { useGetTerminal } from "@/hooks/auth/useGetTerm";
+import { useGetAdminMerch } from "@/hooks/useAdminMerch";
 
 
 const Merchant = () => {
@@ -20,14 +20,16 @@ const Merchant = () => {
   
 
   
-    // const { data: term, isLoading, isError, refetch } = useGetTerminal();
+    const { data: term, isLoading, isError, refetch } = useGetAdminMerch();
   
-    // console.log(term, "geting term");
+    console.log(term, "geting term");
   
     const [selectedStatus, setSelectedStatus] = useState("");
     const [inputTerminal, setInputTerminal] = useState("");
     const [inputMerchId, setInputMerchId] = useState("");
     const [fromDate, setFromDate] = useState("");
+    
+  const [selectedName, setSelectedName] = useState("");
     const [toDate, setToDate] = useState("");
     const [dataToPass, setDataToPass] = useState("");
   
@@ -43,9 +45,13 @@ const Merchant = () => {
       setSelectedStatus(id);
       setMerchant(false);
     };
+
+    const handleNameCliick = (id) => {
+        setSelectedName(id);
+      };
   
     const handleApplyClick = () => {
-      setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId });
+      setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId, selectedName });
     };
   
    
@@ -106,7 +112,7 @@ const Merchant = () => {
               </defs>
             </svg>
             {/* {selectedTerminalId ? selectedTerminalId : "Terminal ID"} */}
-            Terminal ID
+            Email
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -246,7 +252,7 @@ const Merchant = () => {
                 </clipPath>
               </defs>
             </svg>
-            Merchant Name
+            {selectedName ? selectedName : "Merchant Name"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -269,10 +275,20 @@ const Merchant = () => {
           </div>
           {merchant && (
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
+              {selectedName && (
+                <p
+                  onClick={() => handleNameCliick("")}
+                  className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+                    !selectedStatus ? "bg-gray-300" : ""
+                  }`}
+                >
+                  Default
+                </p>
+              )}
               {term?.items?.map((item) => {
                 return (
-                  <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-                    {item?.merchantName}
+                  <p  onClick={() => handleNameCliick(item?.name)} className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+                    {item?.name}
                   </p>
                 );
               })}
@@ -346,7 +362,7 @@ const Merchant = () => {
             </div>
           )}
         </aside>
-        <aside className="bg-white w-[165px] flex gap-2 flex-col relative cursor-pointer">
+        {/* <aside className="bg-white w-[165px] flex gap-2 flex-col relative cursor-pointer">
           <div
             className={`flex justify-center text-dark border-border px-1 py-2 border text-sm ${
               trans ? "rounded-t-lg" : "rounded-lg"
@@ -462,7 +478,7 @@ const Merchant = () => {
               </p>
             </div>
           )}
-        </aside>
+        </aside> */}
         <div className="w-1/12">
           <Button onClick={handleApplyClick} className="py-2 px-2">
             APPLY

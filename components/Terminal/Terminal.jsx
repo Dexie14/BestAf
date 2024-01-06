@@ -51,6 +51,7 @@ const Terminal = () => {
 
   // const [selectedTerminalId, setSelectedTerminalId] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedName, setSelectedName] = useState("");
   const [inputTerminal, setInputTerminal] = useState("");
   const [inputMerchId, setInputMerchId] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -69,9 +70,12 @@ const Terminal = () => {
     setSelectedStatus(id);
     setMerchant(false);
   };
+  const handleNameCliick = (id) => {
+    setSelectedName(id);
+  };
 
   const handleApplyClick = () => {
-    setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId });
+    setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId, selectedName });
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -412,7 +416,7 @@ const Terminal = () => {
                 </clipPath>
               </defs>
             </svg>
-            Merchant Name
+            {selectedName ? selectedName : "Merchant Name"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -435,9 +439,19 @@ const Terminal = () => {
           </div>
           {merchant && (
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
+              {selectedName && (
+                <p
+                  onClick={() => handleNameCliick("")}
+                  className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
+                    !selectedStatus ? "bg-gray-300" : ""
+                  }`}
+                >
+                  Default
+                </p>
+              )}
               {term?.items?.map((item) => {
                 return (
-                  <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+                  <p  onClick={() => handleNameCliick(item?.merchantName)} className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
                     {item?.merchantName}
                   </p>
                 );
