@@ -5,21 +5,24 @@ import { useState } from "react";
 import { useCreateUploading } from "@/hooks/useUpload";
 
 const Upload = ({ setModalIsOpen, selectedFile, handleDelete }) => {
-  //   const handleCloseModal = () => {
-  //     setModalIsOpen(false);
-  //   };
+    const handleCloseModal = () => {
+      setModalIsOpen(false);
+    };
 
   console.log(selectedFile, "fikee")
   const formData = new FormData();
   formData.append('file', selectedFile);
+  // formData.append('fileName', selectedFile?.name);
 
-  console.log('FormData:', formData);
+  // console.log(URL.createObjectURL(selectedFile), "ll")
+
+  // console.log('FormData:', formData);
 
 
   const { mutate: upload, isPending } = useCreateUploading();
 
   const createUpload = () => {
-    upload({ selectedFile });
+    upload({formData, handleCloseModal});
   };
 
   return (

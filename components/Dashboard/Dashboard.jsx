@@ -67,28 +67,67 @@ const Dashboard = () => {
           Invite Users
         </button>
       </section>
-      <section className=" flex gap-5 mt-5">
+      <section className=" ">
+        <section className="flex gap-5 mt-5">
         <div
-          className="bg-white rounded-2xl py-4 px-6 w-1/5"
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
           <p className="mb-5 font-semibold">Total Terminal</p>
           <h5 className="text-primary text-3xl mb-3">{dashn?.terminals}</h5>
         </div>
         <div
-          className="bg-white rounded-2xl py-4 px-6 w-1/5"
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
           <p className="mb-5 font-semibold">Total Transaction </p>
           <h5 className="text-primary text-3xl mb-3">{dashn?.transactions}</h5>
         </div>
         <div
-          className="bg-white rounded-2xl py-4 px-6 w-1/5"
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
           style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
         >
           <p className="mb-5 font-semibold">Total User </p>
           <h5 className="text-primary text-3xl mb-3">{dashn?.users}</h5>
         </div>
+        <div
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
+          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
+        >
+          <p className="mb-5 font-semibold">Total Transaction Amount </p>
+          <h5 className="text-primary text-3xl mb-3">{dashn?.totalTransactionsAmountTotal}</h5>
+        </div>
+        </section>
+        <section className="flex gap-5 mt-5">
+        <div
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
+          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
+        >
+          <p className="mb-5 font-semibold">Total Approved Transaction Amount</p>
+          <h5 className="text-primary text-3xl mb-3">{dashn?.approvedTransactionsAmountTotal}</h5>
+        </div>
+        <div
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
+          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
+        >
+          <p className="mb-5 font-semibold">Total Declined Transaction Amount</p>
+          <h5 className="text-primary text-3xl mb-3">{dashn?.declinedTransactionsAmountTotal}</h5>
+        </div>
+        <div
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
+          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
+        >
+          <p className="mb-5 font-semibold">Total Approved Transaction Count </p>
+          <h5 className="text-primary text-3xl mb-3">{dashn?.approvedTransactionsCountTotal}</h5>
+        </div>
+        <div
+          className="bg-white rounded-2xl py-2 px-6 w-1/5"
+          style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
+        >
+          <p className="mb-5 font-semibold">Total Declined Transaction Count </p>
+          <h5 className="text-primary text-3xl mb-3">{dashn?.declinedTransactionsCountTotal}</h5>
+        </div>
+        </section>
       </section>
       <section className="mt-10">
         <div className="flex justify-between items-center">

@@ -5,16 +5,16 @@ import { useToken } from "@/hooks/auth/useToken";
 import { toast } from "react-toastify";
 const { token } = useToken();
 
-export const createUpload = async ({selectedFile}) => {
+export const createUpload = async ({formData, handleCloseModal}) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/admin/upload/bulk`,
-      {
-        file: selectedFile,
-      },
+      `${BASE_URL}/admin/upload/bulk`,formData,
+      // {
+      //   file: selectedFile,
+      // },
       {
         headers: {
-         'Content-Type': 'multipart/form-data',
+         'content-type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       }
