@@ -30,7 +30,7 @@ const Table = () => {
         </thead>
         {transactions ? (
           <tbody className="bg-white cursor-pointer ">
-            {transactions && transactions?.items?.length >= 0 ? (
+            {Array.isArray(transactions?.items) && transactions?.items?.length > 0 ? (
               transactions?.items?.map((item, index) => (
                 <tr
                   className="bg-white border-b-4"

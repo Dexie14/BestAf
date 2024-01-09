@@ -90,7 +90,7 @@ const Navbar = () => {
                   style={{ fontFamily: "DMSans" }}
                 >
                   {/* {admin?.role} */}
-                  {admin?.role === "superadmin" ? "Super Admin" : ""}
+                  {admin?.role === "superadmin" ? "Super Admin" : "User"}
                 </span>
               </div>
             )}

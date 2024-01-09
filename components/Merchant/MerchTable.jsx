@@ -166,7 +166,7 @@ const MerchTable = ({ paramlist }) => {
         </thead>
         {table ? (
           <tbody className="bg-white cursor-pointer  ">
-            {table && table?.items?.length >= 0 ? (
+            {Array.isArray(table?.items) && table?.items?.length > 0 ? (
               table?.items?.map((item, index) => (
                 <tr
                   key={index}
