@@ -194,7 +194,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
         </thead>
         {table ? (
           <tbody className="bg-white cursor-pointer  ">
-            {table && table?.items?.length > 0 ? (
+            {table && table?.items?.length >= 0 ? (
               table?.items?.map((item, index) => (
                 <tr
                   key={index}

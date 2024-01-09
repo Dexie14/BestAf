@@ -1,8 +1,8 @@
 import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
-
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
+// import { toast } from "react-toastify";
 const { token } = useToken();
 
 
@@ -20,9 +20,9 @@ export const sendAdminInvite = async ({ email, handleCloseModal, merchName }) =>
           Authorization: `Bearer ${token }`,
         },
       }
-    );
-    console.log(response, "inviteResponse");
+      );
     toast.success(response?.data?.message);
+    console.log(response, "inviteResponse");
     handleCloseModal()
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message || "Admin already exist");
