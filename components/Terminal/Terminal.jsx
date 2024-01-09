@@ -12,6 +12,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 
 import { useGetTerminal } from "@/hooks/auth/useGetTerm";
 import Upload from "./Upload";
+import { useGetAdmin } from "@/hooks/useAdminProfile";
 
 const Terminal = () => {
   const [terminal, setTerminal] = useState(false);
@@ -75,7 +76,14 @@ const Terminal = () => {
   };
 
   const handleApplyClick = () => {
-    setDataToPass({ inputTerminal, fromDate, toDate, selectedStatus, inputMerchId, selectedName });
+    setDataToPass({
+      inputTerminal,
+      fromDate,
+      toDate,
+      selectedStatus,
+      inputMerchId,
+      selectedName,
+    });
   };
   const handleResetClick = () => {
     setInputTerminal("");
@@ -119,6 +127,8 @@ const Terminal = () => {
   const handleClickUpload = () => {
     fileInputRef.current.click();
   };
+
+  const { data: admin } = useGetAdmin();
 
   return (
     <div className="h-[100%]">
@@ -169,56 +179,60 @@ const Terminal = () => {
             </svg>
             Download
           </button>
-          <button
-            onClick={() => setIsOpen(true)}
-            className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
+          {admin?.role === "superadmin" && (
+            <button
+              onClick={() => setIsOpen(true)}
+              className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-white text-dark rounded-lg"
             >
-              <g clip-path="url(#clip0_1_1147)">
-                <path
-                  d="M1.60252 7.80845C1.17752 7.63761 1.18252 7.38345 1.63085 7.23428L17.5358 1.93261C17.9767 1.78595 18.2292 2.03262 18.1059 2.46428L13.5608 18.3693C13.4358 18.8101 13.165 18.8301 12.9633 18.4276L9.16668 10.8334L1.60252 7.80845ZM5.67752 7.64178L10.3742 9.52095L12.9075 14.5893L15.8625 4.24762L5.67668 7.64178H5.67752Z"
-                  fill="#4F4F4F"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1_1147">
-                  <rect width="20" height="20" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            Invite Users
-          </button>
-          <button
-            onClick={() => setGenerate(true)}
-            className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_1_1147)">
+                  <path
+                    d="M1.60252 7.80845C1.17752 7.63761 1.18252 7.38345 1.63085 7.23428L17.5358 1.93261C17.9767 1.78595 18.2292 2.03262 18.1059 2.46428L13.5608 18.3693C13.4358 18.8101 13.165 18.8301 12.9633 18.4276L9.16668 10.8334L1.60252 7.80845ZM5.67752 7.64178L10.3742 9.52095L12.9075 14.5893L15.8625 4.24762L5.67668 7.64178H5.67752Z"
+                    fill="#4F4F4F"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_1147">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Invite Users
+            </button>
+          )}
+          {admin?.role === "superadmin" && (
+            <button
+              onClick={() => setGenerate(true)}
+              className="flex items-center justify-center gap-2 py-2 px-3 border border-primary bg-primary text-white rounded-lg"
             >
-              <g clip-path="url(#clip0_1_1153)">
-                <path
-                  d="M9.1665 9.16675V4.16675H10.8332V9.16675H15.8332V10.8334H10.8332V15.8334H9.1665V10.8334H4.1665V9.16675H9.1665Z"
-                  fill="#F2F2F2"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1_1153">
-                  <rect width="20" height="20" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            Generate New TID
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_1_1153)">
+                  <path
+                    d="M9.1665 9.16675V4.16675H10.8332V9.16675H15.8332V10.8334H10.8332V15.8334H9.1665V10.8334H4.1665V9.16675H9.1665Z"
+                    fill="#F2F2F2"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_1153">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Generate New TID
+            </button>
+          )}
         </div>
       </section>
       <section className="my-3 flex gap-2 items-center">
@@ -467,7 +481,10 @@ const Terminal = () => {
               )}
               {term?.items?.map((item) => {
                 return (
-                  <p  onClick={() => handleNameCliick(item?.merchantName)} className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
+                  <p
+                    onClick={() => handleNameCliick(item?.merchantName)}
+                    className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
+                  >
                     {item?.merchantName}
                   </p>
                 );
