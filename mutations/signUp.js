@@ -11,6 +11,7 @@ export const signUp = async ({ name, email, password }) => {
     console.log(response, "ressssss");
   } catch (error) {
     console.log(error, "signuperror");
+    toast.error(error?.response?.data?.error || error?.response?.data?.message );
     if (error instanceof AxiosError) {
       throw new Error(error?.data?.message || error?.response?.data?.message);
     } else if (error instanceof Error) {
