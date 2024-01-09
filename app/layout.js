@@ -3,6 +3,7 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 import "react-toastify/dist/ReactToastify.css";
 import QueryProviders from "@/context/query-provider";
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
             pauseOnFocusLoss
             theme="light"
           />
+          <Toaster/>
           {children}
         </QueryProviders>
       </body>
