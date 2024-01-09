@@ -3,6 +3,7 @@ import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
+import { toast } from "react-toastify";
 
 
 export const signinWithEmail = async ({
@@ -28,6 +29,7 @@ export const signinWithEmail = async ({
   
   } catch (error) {
     console.log(error, "logerror");
+    toast.error(error?.response?.data?.error || error?.response?.data?.message );
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.error || error?.response?.data?.message);
     } else if (error instanceof Error) {

@@ -35,7 +35,13 @@ const customStyles = {
   },
 };
 
-const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) => {
+const TermTable = ({
+  paramlist,
+  setDownload,
+  download,
+  setGenerate,
+  generate,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevData, setPrevData] = useState();
   const [popups, setPopups] = useState({});
@@ -108,9 +114,6 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
       refetch();
     }
   }, [paramlist, pageSize, page, refetch]);
-
- 
-
 
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
@@ -194,7 +197,7 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
         </thead>
         {table ? (
           <tbody className="bg-white cursor-pointer  ">
-            {table && table?.items?.length >= 0 ? (
+            {Array.isArray(table?.items) && table?.items?.length > 0 ? (
               table?.items?.map((item, index) => (
                 <tr
                   key={index}
@@ -390,7 +393,11 @@ const TermTable = ({ paramlist, setDownload, download, setGenerate, generate }) 
         overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
         style={customStyles}
       >
-        <GenTermId setModalIsOpen={setGenerate} modalIsOpen={generate} refetch={refetch} />
+        <GenTermId
+          setModalIsOpen={setGenerate}
+          modalIsOpen={generate}
+          refetch={refetch}
+        />
       </ReactModal>
     </div>
   );
