@@ -1,12 +1,12 @@
 "use client";
-
+import toast from 'react-hot-toast';
 import { useEmailSignin } from "@/hooks/auth/useEmailSignin";
 import { signInSchema } from "@/models/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { Spinner } from "../Spinner";
 import { useRouter } from "next/navigation";
 import Button from "../Comps/Button";
