@@ -28,9 +28,12 @@ const Table = () => {
             <th className=" text-sm font-semibold text-[#333333]">Status</th>
           </tr>
         </thead>
-        {transactions ? (
+        {isLoading ? (
+          <Spinner />
+        ) : transactions ? (
           <tbody className="bg-white cursor-pointer ">
-            {Array.isArray(transactions?.items) && transactions?.items?.length > 0 ? (
+            {Array.isArray(transactions?.items) &&
+            transactions?.items?.length >= 0 ? (
               transactions?.items?.map((item, index) => (
                 <tr
                   className="bg-white border-b-4"
@@ -40,8 +43,8 @@ const Table = () => {
                   key={index}
                 >
                   {/* <td className="pl-2">
-                    <input type="checkbox" />
-                  </td> */}
+                      <input type="checkbox" />
+                    </td> */}
                   <td className="pl-2 text-sm font-normal text-[#333333] py-4">
                     {item?.terminalId}
                   </td>
@@ -52,7 +55,11 @@ const Table = () => {
                     {moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                  ₦{item?.amount?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    ₦
+                    {item?.amount?.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   {item?.responsemessage === "success" ? (
                     <td
@@ -116,7 +123,7 @@ const Table = () => {
             )}
           </tbody>
         ) : (
-          <Spinner />
+          <p>no data available</p>
         )}
         {/* <tbody className="bg-white  " >
           <tr lassName="bg-white  border-b-4" style={{boxShadow:"0px 2px 2px 0px rgba(34, 34, 34, 0.10);"}}>

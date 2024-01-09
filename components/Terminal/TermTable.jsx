@@ -195,7 +195,9 @@ const TermTable = ({
             <th className=" text-sm font-semibold text-[#333333]">Action</th>
           </tr>
         </thead>
-        {table ? (
+        {isLoading ? (
+          <Spinner />
+        ) : table ? (
           <tbody className="bg-white cursor-pointer  ">
             {Array.isArray(table?.items) && table?.items?.length > 0 ? (
               table?.items?.map((item, index) => (
@@ -284,7 +286,7 @@ const TermTable = ({
             )}
           </tbody>
         ) : (
-          <Spinner />
+          <p>no data available</p>
         )}
       </table>
       <section className="flex gap-2 justify-end items-center cursor-pointer mb-20">

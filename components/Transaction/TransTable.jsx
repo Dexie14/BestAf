@@ -170,7 +170,9 @@ const TransTable = ({ paramlist, download, setDownload }) => {
             </th>
           </tr>
         </thead>
-        {transactions ? (
+        {isLoading ? (
+          <Spinner />
+        ) : transactions ? (
           <tbody className="bg-white cursor-pointer ">
             {Array.isArray(transactions?.items) && transactions?.items?.length > 0 ? (
               transactions?.items?.map((item, index) => (
@@ -307,7 +309,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
             )}
           </tbody>
         ) : (
-          <Spinner />
+          <p>no data available</p>
         )}
       </table>
       <section className="flex gap-2 justify-end items-center cursor-pointer mb-20">

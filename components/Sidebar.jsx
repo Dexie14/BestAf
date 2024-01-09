@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     toast.success("You have successfully Loggedout");
-    Cookies.remove("token");
+    Cookies.remove("token", " ");
 
     setTimeout(() => {
       router.push("/login");
