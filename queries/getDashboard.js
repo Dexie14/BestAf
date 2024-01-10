@@ -3,14 +3,14 @@ import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
 import { toast } from "react-toastify";
-// const { token } = useToken();
+const { token } = useToken();
 
 
 
 export const getDash = async () => {
   try {
 
-    const { token } = await useToken();
+    // const { token } = await useToken();
 
     const response = await axios.get(`${BASE_URL}/admin/dashboard`, {
       headers: {

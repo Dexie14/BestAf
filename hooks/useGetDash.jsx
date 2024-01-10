@@ -5,8 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetDash = () => {
   return useQuery({
       queryKey: ["dash"],
+      refetchInterval: 1000,
       queryFn: () => getDash(),
-    staleTime: 1000 * 5 * 5,
+    // staleTime: 1000 * 5 * 5,
   });
 };
 
