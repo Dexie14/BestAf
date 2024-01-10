@@ -56,10 +56,8 @@ const SavePass = () => {
 
   const searchParams = useSearchParams();
   const url = `${searchParams}`;
-  // console.log(url)
 
   const tok = url.split("=")[1]
-  // console.log(tok)
 
   const handleOpenModal = () => {
     setIsOpen(true);

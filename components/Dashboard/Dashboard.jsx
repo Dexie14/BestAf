@@ -20,7 +20,6 @@ const { token } = useToken();
 const Dashboard = () => {
   // const { data: dashn, isLoading, isError } = useGetDash();
 
-  // console.log(dashn, "geting transData");
 
   const [isOpen, setIsOpen] = useState(false);
   const [dashload, setDashload] = useState("");
@@ -56,7 +55,6 @@ const Dashboard = () => {
         },
       });
       if (response?.data?.status === "success") {
-        // console.log(response, "getdash");
         setDashload(response?.data?.data)
         return response?.data?.data;
       } else {
@@ -64,7 +62,6 @@ const Dashboard = () => {
       }
       
     } catch (error) {
-      console.log(error, "getdasherror");
       if (error instanceof AxiosError) {
         throw new Error(error?.response?.data?.error?.message);
       } else if (error instanceof Error) {

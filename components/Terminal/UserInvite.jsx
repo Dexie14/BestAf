@@ -21,8 +21,6 @@ const UserInvite = ({ setModalIsOpen, modalIsOpen }) => {
 
   const { data: name,  } = useGetAdminMerch();
   
-  // console.log(name, "geting name");
-
   
 
   return (

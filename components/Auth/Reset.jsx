@@ -52,14 +52,11 @@ const Reset = () => {
     (values) => {
       requestPasswordReset(values, {
         onError: (error) => {
-          console.log(error.message);
           toast.error(error?.message);
         },
         onSuccess: (response) => {
-          console.log(response);
           toast.success(response?.message);
           setIsOpen(true)
-          // router.push("/login");
         },
       });
     },

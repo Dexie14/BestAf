@@ -1,7 +1,5 @@
 import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
-// import { toast } from "react-toastify";
-// import toast from 'react-hot-toast';
 
 export const signUp = async ({ name, email, password }) => {
   try {
@@ -10,10 +8,7 @@ export const signUp = async ({ name, email, password }) => {
       email,
       password,
     });
-    console.log(response, "ressssss");
-    // toast.success(response?.data?.message);
   } catch (error) {
-    console.log(error, "signuperror");
     // toast.error(error?.response?.data?.error || error?.response?.data?.message );
     if (error instanceof AxiosError) {
       throw new Error(error?.data?.message || error?.response?.data?.message);

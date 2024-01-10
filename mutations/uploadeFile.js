@@ -9,9 +9,6 @@ export const createUpload = async ({formData, handleCloseModal}) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/admin/upload/bulk`,formData,
-      // {
-      //   file: selectedFile,
-      // },
       {
         headers: {
          'content-type': 'multipart/form-data',
@@ -21,11 +18,9 @@ export const createUpload = async ({formData, handleCloseModal}) => {
     );
 
     toast.success(response?.data?.message);
-    console.log(response, "newupload");
     handleCloseModal();
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "createuploaderror");
     handleCloseModal();
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);

@@ -4,8 +4,6 @@ import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import { Protected } from "@/components/Auth/protectedRoute";
 
-// import { Inter } from 'next/font/google'
-// const inter = Inter({ subsets: ['latin'] })
 
 const DMSans = DM_Sans({ subsets: ["latin"], display: "swap" });
 

@@ -15,7 +15,6 @@ import Buttons from "../Comps/Button";
 
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 
 import ReactModal from "react-modal";
@@ -63,11 +62,8 @@ const Login = () => {
       loginWithEmail(values, {
         onError: (error) => {
           toast.error(error?.message || "error");
-          // alert(error?.message)
-          console.log(error.message);
           setOpens(true)
           setMsg(error?.message || "error")
-          // toast.error(error?.response?.data?.error);
         },
         onSuccess: (response) => {
           console.log(response?.data);

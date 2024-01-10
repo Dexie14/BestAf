@@ -22,11 +22,9 @@ export const sendAdminInvite = async ({ email, handleCloseModal, merchName }) =>
       }
       );
     toast.success(response?.data?.message);
-    console.log(response, "inviteResponse");
     handleCloseModal()
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message || "Admin already exist");
-    console.log(error, "inviteError");
     handleCloseModal()
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);

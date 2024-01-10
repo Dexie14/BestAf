@@ -8,6 +8,7 @@ import { useToken } from "@/hooks/auth/useToken";
 
 import { toast } from "react-toastify";
 import { Spinner } from "../Spinner";
+import Button from "../Comps/Button";
 const { token } = useToken();
 
 const TransDetails = ({
@@ -30,7 +31,6 @@ const TransDetails = ({
         }
       );
       if (response?.data?.status === "success") {
-        console.log(response, "getTrans");
         return response?.data?.data;
       } else {
         throw new Error(response.data?.data?.message);
@@ -39,7 +39,6 @@ const TransDetails = ({
       if (error?.response?.data?.status === "error") {
         setModalIsOpen(false);
       }
-      console.log(error, "getTranserror");
       toast.error(error?.response?.data?.message);
       if (error instanceof AxiosError) {
         throw new Error(error?.response?.data?.error?.message);
@@ -54,12 +53,10 @@ const TransDetails = ({
     queryFn: () => getSingleTrans(),
   });
 
-  console.log(singleTransaction, "parraa");
-  // console.log(selectedTransactionId, "selectedTransactionId");
-
-  // console.log(selectedTransactionId,"selectedTransactionId")
 
   const data = singleTransaction?.transactionNotification;
+
+
 
   return (
     <div className="py-4 px-6 rounded-[40px] ">
@@ -98,10 +95,13 @@ const TransDetails = ({
           </h3>
           <h3 className="text-[#333] font-semibold text-sm w-1/2">
             Amount:{" "}
-            <span className="text-[#828282] font-medium">₦{data?.amount?.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}</span>
+            <span className="text-[#828282] font-medium">
+              ₦
+              {data?.amount?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </h3>
         </div>
         <div className="flex  flex-wrap justify-between mb-3">
@@ -201,6 +201,14 @@ const TransDetails = ({
           </h3>
         </div>
       </section>
+      <a
+        className="mb-10 flex w-10/12 mx-auto items-center justify-center gap-2 py-2 px-3 border border-primary bg-[#F2F2F2] text-primary rounded-lg"
+        href={`${BASE_URL}/admin/download/transaction/${selectedTransactionId}`}
+        target="_blank"
+        download="filename.pdf"
+      >
+        Download PDF
+      </a>
     </div>
   );
 };

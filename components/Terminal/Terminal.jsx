@@ -48,7 +48,7 @@ const Terminal = () => {
 
   const { data: term, isLoading, isError, refetch } = useGetTerminal();
 
-  console.log(term, "geting term");
+
 
   // const [selectedTerminalId, setSelectedTerminalId] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -110,15 +110,7 @@ const Terminal = () => {
     setSelectedFile(file);
   };
 
-  // const handleUpload = () => {
-  //   // Handle file upload logic using the selectedFile state
-  //   if (selectedFile) {
-  //     console.log('Uploading file:', selectedFile);
-  //     // Add your file upload logic here
-  //   } else {
-  //     console.error('No file selected');
-  //   }
-  // };
+ 
 
   const handleDelete = () => {
     setSelectedFile(null);

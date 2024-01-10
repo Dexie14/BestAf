@@ -43,7 +43,6 @@ const resetCongrats = ({ setModalIsOpen, modalIsOpen }) => {
         </p>
         <button
         onClick={handleCloseModal}
-          // onClick={() => router.push("/verify")}
           className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3"
         >
           Continue

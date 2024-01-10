@@ -19,13 +19,11 @@ export const getAdmin = async () => {
       },
     });
     if (response?.data?.status === "success") {
-      console.log(response, "getAdmin");
       return response?.data?.data;
     } else {
       throw new Error(response.data?.data?.message);
     }
   } catch (error) {
-    console.log(error, "getAdminerror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.error?.message);
     } else if (error instanceof Error) {

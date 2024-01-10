@@ -17,7 +17,6 @@ const Transaction = () => {
 
   const { data: transData, isLoading, isError } = useGetTrans();
 
-  console.log(transData, "geting transData");
 
   const [selectedStatus, setSelectedStatus] = useState("");
   const [inputTerminal, setInputTerminal] = useState("");
@@ -29,7 +28,7 @@ const Transaction = () => {
   const [amount, setAmount] = useState("");
   const [dataToPass, setDataToPass] = useState("");
 
-  // console.log(toDate, "todate");
+
 
   const handleTerminalClick = (id) => {
     setInputTerminal("");
@@ -212,33 +211,7 @@ const Transaction = () => {
             </svg>
           </div>
           {terminal && (
-            // <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
-            //   {selectedTerminalId && (
-            //     <p
-            //       onClick={() => handleTerminalClick("")}
-            //       className={`text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded ${
-            //         !selectedTerminalId ? "bg-gray-300" : ""
-            //       }`}
-            //     >
-            //       Terminal ID
-            //     </p>
-            //   )}
-            //   {transData ? (
-            //     transData?.items?.map((transId) => (
-            //       <p
-            //         onClick={() => handleTerminalClick(transId?.terminalId)}
-            //         key={transId?._id}
-            //         className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded"
-            //       >
-            //         {transId?.terminalId}
-            //       </p>
-            //     ))
-            //   ) : (
-            //     <p className=" text-dark text-sm mx-4 my-2 flex justify-center py-2 border border-border rounded">
-            //       NO ID
-            //     </p>
-            //   )}
-            // </div>
+            
             <div className="bg-white absolute top-[100%] rounded-b-lg border border-border border-t-0 w-full z-[1000]">
               {inputTerminal && (
                 <p

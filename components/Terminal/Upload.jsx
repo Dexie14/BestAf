@@ -9,14 +9,8 @@ const Upload = ({ setModalIsOpen, selectedFile, handleDelete }) => {
       setModalIsOpen(false);
     };
 
-  console.log(selectedFile, "fikee")
   const formData = new FormData();
   formData.append('file', selectedFile);
-  // formData.append('fileName', selectedFile?.name);
-
-  // console.log(URL.createObjectURL(selectedFile), "ll")
-
-  // console.log('FormData:', formData);
 
 
   const { mutate: upload, isPending } = useCreateUploading();

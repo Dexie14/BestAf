@@ -1,7 +1,5 @@
 "use client";
 import { useCallback, useState } from "react";
-// import Image from "next/image";
-// import logo from "@/public/assets/logo.svg";
 
 import ReactModal from "react-modal";
 import OtpCongrats from "./OtpCongrats";
@@ -64,7 +62,6 @@ const Register = () => {
           console.log(response?.data);
           toast.success(response?.data?.message);
           setIsOpen(true)
-          // router.push("/login");
         },
       });
     },

@@ -83,13 +83,11 @@ const TermTable = ({
         },
       });
       if (response?.data?.status === "success") {
-        console.log(response, "getTerm");
         return response?.data?.data;
       } else {
         throw new Error(response.data?.data?.message);
       }
     } catch (error) {
-      console.log(error, "getTermerror");
       if (error instanceof AxiosError) {
         throw new Error(error?.response?.data?.error?.message);
       } else if (error instanceof Error) {
@@ -106,8 +104,6 @@ const TermTable = ({
     queryKey: ["term"],
     queryFn: () => getTerminal(),
   });
-
-  console.log(table, "parraa");
 
   useEffect(() => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
@@ -148,7 +144,6 @@ const TermTable = ({
         }
       );
       if (response?.data?.message.includes("enable")) {
-        console.log(response, "enable");
         toast.success(response?.data?.message);
         // setOption("Disable");
       } else {
@@ -156,7 +151,6 @@ const TermTable = ({
         // setOption("Enable");
       }
     } catch (error) {
-      console.log(error, "optionerror");
       toast.error(
         error?.response?.data?.error || error?.response?.data?.message
       );

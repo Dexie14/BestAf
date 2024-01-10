@@ -13,7 +13,6 @@ const Navbar = () => {
 
   const { data: admin, isLoading, isError, refetch } = useGetAdmin();
 
-  console.log(admin, "admin");
 
   useEffect(() => {
     // Check if this is the first time the component is rendered

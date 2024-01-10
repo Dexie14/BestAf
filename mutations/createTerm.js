@@ -29,11 +29,9 @@ export const createNewTerminal = async ({
       }
     );
     toast.success(response?.data?.message);
-    console.log(response, "newterm");
     handleCloseModal();
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "createtermerror");
     handleCloseModal();
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);

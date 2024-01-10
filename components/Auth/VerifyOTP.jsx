@@ -15,16 +15,12 @@ const VerifyOTP = () => {
   const [otpValues, setOtpValues] = useState("");
   const [countdown, setCountdown] = useState(120);
   const [textColor, setTextColor] = useState("text-primary");
-  // const [showResendButton, setShowResendButton] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prevCountdown) =>
         prevCountdown > 0 ? prevCountdown - 1 : 0
       );
-      // if (countdown === 100) {
-      //   setShowResendButton(true); // Show the resend button when countdown reaches zero
-      // }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -63,12 +59,9 @@ const VerifyOTP = () => {
   const searchParams = useSearchParams();
 
   const url = `${searchParams}`;
-  // console.log(url)
 
   const email = url.split("=")[1];
-  // console.log(email)
   const decodedEmail = decodeURIComponent(email);
-  // console.log(decodedEmail)
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -86,8 +79,6 @@ const VerifyOTP = () => {
 
   const handleResendClick = () => {
     resendVerification();
-    // setCountdown(120);
-    // setShowResendButton(false);
   };
 
   return (

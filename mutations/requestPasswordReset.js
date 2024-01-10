@@ -20,7 +20,6 @@ export const requestPasswordReset = async ({
       throw new Error(response.data.message);
     }
   } catch (error) {
-    console.log(error, "rset");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.error?.message || error?.response?.data?.error || error?.response?.data?.message);
     } else if (error instanceof Error) {
