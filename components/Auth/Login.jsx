@@ -63,8 +63,7 @@ const Login = () => {
       loginWithEmail(values, {
         onError: (error) => {
           toast.error(error?.message || "error");
-          // alert(error?.message)
-          console.log(error.message);
+          // console.log(error.message);
           setOpens(true)
           setMsg(error?.message || "error")
           // toast.error(error?.response?.data?.error);

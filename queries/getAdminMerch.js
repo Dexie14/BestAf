@@ -15,13 +15,11 @@ export const getAdminMerch = async () => {
       },
     });
     if (response?.data?.status === "success") {
-      console.log(response, "getmerch");
       return response?.data?.data;
     } else {
       throw new Error(response.data?.data?.message);
     }
   } catch (error) {
-    console.log(error, "getmesherror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.error?.message);
     } else if (error instanceof Error) {

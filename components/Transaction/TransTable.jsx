@@ -22,7 +22,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
 
   const [selectedTransactionId, setSelectedTransactionId] = useState("");
 
-  // console.log(paramlist, "list");
 
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
@@ -76,13 +75,11 @@ const TransTable = ({ paramlist, download, setDownload }) => {
         },
       });
       if (response?.data?.status === "success") {
-        console.log(response, "getTrans");
         return response?.data?.data;
       } else {
         throw new Error(response.data?.data?.message);
       }
     } catch (error) {
-      console.log(error, "getTranserror");
       if (error instanceof AxiosError) {
         throw new Error(error?.response?.data?.error?.message);
       } else if (error instanceof Error) {
@@ -100,7 +97,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
     queryFn: () => getTransaction(),
   });
 
-  console.log(transactions, "parraa");
 
   useEffect(() => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
@@ -134,7 +130,6 @@ const TransTable = ({ paramlist, download, setDownload }) => {
     );
   };
 
-  // console.log(selected, "tableselected");
 
   return (
     <div>

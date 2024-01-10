@@ -17,7 +17,6 @@ const Transaction = () => {
 
   const { data: transData, isLoading, isError } = useGetTrans();
 
-  console.log(transData, "geting transData");
 
   const [selectedStatus, setSelectedStatus] = useState("");
   const [inputTerminal, setInputTerminal] = useState("");
@@ -29,7 +28,7 @@ const Transaction = () => {
   const [amount, setAmount] = useState("");
   const [dataToPass, setDataToPass] = useState("");
 
-  // console.log(toDate, "todate");
+
 
   const handleTerminalClick = (id) => {
     setInputTerminal("");

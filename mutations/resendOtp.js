@@ -8,7 +8,6 @@ const { token } = useToken();
 export const resendOtp = async ({
   decodedEmail,
   setCountdown,
-//   setShowResendButton,
 }) => {
   try {
     const response = await axios.post(
@@ -23,9 +22,7 @@ export const resendOtp = async ({
       }
     );
     toast.success(response?.data?.message);
-    console.log(response, "resendResponse");
     if (response?.data?.status !== "error") {
-    //   setShowResendButton(false);
       setCountdown(120);
       return { success: true, data: response?.data?.message };
     } else {
@@ -33,8 +30,6 @@ export const resendOtp = async ({
     }
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message || error?.response?.data?.status);
-    console.log(error, "resendrror");
-    // setShowResendButton(false);
     setCountdown(120);
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);

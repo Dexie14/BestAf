@@ -63,12 +63,9 @@ const VerifyOTP = () => {
   const searchParams = useSearchParams();
 
   const url = `${searchParams}`;
-  // console.log(url)
 
   const email = url.split("=")[1];
-  // console.log(email)
   const decodedEmail = decodeURIComponent(email);
-  // console.log(decodedEmail)
 
   const handleOpenModal = () => {
     setIsOpen(true);

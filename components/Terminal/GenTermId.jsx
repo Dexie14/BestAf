@@ -17,7 +17,6 @@ const GenTermId = ({ setModalIsOpen, modalIsOpen, refetch}) => {
 
   const { data: merch, isLoading, isError } = useGetMerch();
 
-  console.log(merch, "geting merchData");
 
   const { mutate: createTerm, isPending } = useCreateTerm();
 

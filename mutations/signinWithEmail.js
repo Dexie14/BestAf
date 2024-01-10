@@ -19,7 +19,6 @@ export const signinWithEmail = async ({
         password,
       }
     );
-    console.log(response, "log");
     if (response?.data?.status !== "error") {
       // localStorage.setItem("token", response?.data?.data);
       Cookies.set("token", response?.data?.data)
@@ -30,7 +29,6 @@ export const signinWithEmail = async ({
   
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message );
-    console.log(error, "logerror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.error || error?.response?.data?.message);
     } else if (error instanceof Error) {

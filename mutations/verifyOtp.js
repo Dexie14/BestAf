@@ -23,7 +23,6 @@ export const verifyOtp = async ({ otpValues, decodedEmail, handleOpenModal }) =>
       }
     );
     toast.success(response?.data?.message);
-    console.log(response, "verifyResponse");
     if (response?.data?.status !== "error") {
       // router.push('/login');
       handleOpenModal();
@@ -33,7 +32,6 @@ export const verifyOtp = async ({ otpValues, decodedEmail, handleOpenModal }) =>
     }
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "verifyrror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);
     } else if (error instanceof Error) {

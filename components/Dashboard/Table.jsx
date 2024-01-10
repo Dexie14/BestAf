@@ -5,7 +5,6 @@ import moment from "moment";
 const Table = () => {
   const { data: transactions, isLoading, isError } = useGetTrans();
 
-  console.log(transactions, "geting transData");
 
   return (
     <div>

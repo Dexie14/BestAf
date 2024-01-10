@@ -22,7 +22,6 @@ const Merchant = () => {
   
     const { data: term, isLoading, isError, refetch } = useGetAdminMerch();
   
-    console.log(term, "geting term");
   
     const [selectedStatus, setSelectedStatus] = useState("");
     const [inputTerminal, setInputTerminal] = useState("");

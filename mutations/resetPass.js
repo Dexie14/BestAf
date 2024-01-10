@@ -23,7 +23,6 @@ export const resetPass = async ({ tok, password, handleOpenModal }) => {
       }
     );
     toast.success(response?.data?.message);
-    console.log(response, "resetResponse");
     if (response?.data?.status !== "error") {
       // router.push('/login');
       handleOpenModal();
@@ -33,7 +32,6 @@ export const resetPass = async ({ tok, password, handleOpenModal }) => {
     }
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "reseterror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);
     } else if (error instanceof Error) {

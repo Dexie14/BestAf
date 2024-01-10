@@ -21,10 +21,8 @@ export const settingRoute = async ({
       }
     );
     toast.success(response?.data?.message?.message);
-    console.log(response, "newSet");
   } catch (error) {
     toast.error(error?.response?.data?.error || error?.response?.data?.message);
-    console.log(error, "createseterror");
     if (error instanceof AxiosError) {
       throw new Error(error?.response?.data?.message);
     } else if (error instanceof Error) {
