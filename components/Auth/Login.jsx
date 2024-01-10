@@ -1,4 +1,6 @@
 "use client";
+
+import * as React from 'react';
 import toast from 'react-hot-toast';
 import { useEmailSignin } from "@/hooks/auth/useEmailSignin";
 import { signInSchema } from "@/models/auth";
@@ -9,7 +11,12 @@ import { useForm } from "react-hook-form";
 // import { toast } from "react-toastify";
 import { Spinner } from "../Spinner";
 import { useRouter } from "next/navigation";
-import Button from "../Comps/Button";
+import Buttons from "../Comps/Button";
+
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+// import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from '@mui/material/Snackbar';
 
 import ReactModal from "react-modal";
 import CreateMerch from "./createMerch";
@@ -37,6 +44,8 @@ const Login = () => {
   const router = useRouter();
   const [active, setActive] = useState("super");
   const [isOpen, setIsOpen] = useState(false);
+  const [opens, setOpens] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const form = useForm({
     defaultValues: {
@@ -53,13 +62,18 @@ const Login = () => {
     (values) => {
       loginWithEmail(values, {
         onError: (error) => {
-          console.log(error.message);
-          // toast.error(error?.response?.data?.error);
           toast.error(error?.message || "error");
+          // alert(error?.message)
+          console.log(error.message);
+          setOpens(true)
+          setMsg(error?.message || "error")
+          // toast.error(error?.response?.data?.error);
         },
         onSuccess: (response) => {
           console.log(response?.data);
           toast.success(response?.data);
+          setOpens(true)
+          setMsg(response?.data)
           router.push("/user");
         },
       });
@@ -73,8 +87,38 @@ const Login = () => {
     register,
   } = form;
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpens(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <div className="pt-10">
+        <Snackbar
+        open={opens}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={msg}
+        action={action}
+      />
       <h3 className="mt-2 flex justify-center text-2xl font-medium">
         Welcome Admin, Log in now
       </h3>
@@ -101,9 +145,9 @@ const Login = () => {
           Users
         </h5>
       </section>
-      <Button    onClick={() => setIsOpen(true)} className="text-white bg-primary flex justify-center px-3 py-1 w-[15%] mx-auto cursor-pointer text-sm">
+      <Buttons    onClick={() => setIsOpen(true)} className="text-white bg-primary flex justify-center px-3 py-1 w-[15%] mx-auto cursor-pointer text-sm">
         Create Merchant
-      </Button>
+      </Buttons>
 
       {active === "user" ? (
         <form

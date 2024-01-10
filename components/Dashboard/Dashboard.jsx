@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ReactModal from "react-modal";
 import UserInvite from "../Terminal/UserInvite";
@@ -10,12 +10,20 @@ import Link from "next/link";
 
 import { useGetAdmin } from "@/hooks/useAdminProfile";
 
-const Dashboard = () => {
-  const { data: dashn, isLoading, isError } = useGetDash();
+import { BASE_URL } from "@/utils/baseUrl";
+import axios, { AxiosError } from "axios";
+import { useToken } from "@/hooks/auth/useToken";
 
-  console.log(dashn, "geting transData");
+import { toast } from "react-toastify";
+const { token } = useToken();
+
+const Dashboard = () => {
+  // const { data: dashn, isLoading, isError } = useGetDash();
+
+  // console.log(dashn, "geting transData");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [dashload, setDashload] = useState("");
 
   const customStyles = {
     overlay: {
@@ -38,6 +46,37 @@ const Dashboard = () => {
   };
 
   const { data: admin } = useGetAdmin();
+
+
+   const getDash = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/admin/dashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.status === "success") {
+        // console.log(response, "getdash");
+        setDashload(response?.data?.data)
+        return response?.data?.data;
+      } else {
+        throw new Error(response.data?.data?.message);
+      }
+      
+    } catch (error) {
+      console.log(error, "getdasherror");
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+
+  useEffect(() => {
+    getDash();
+  }, []);
+  
   return (
     <div>
       <section className="flex justify-between">
@@ -80,7 +119,8 @@ const Dashboard = () => {
           >
             <p className="mb-5 text-sm font-semibold">Total Terminal</p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.terminals || "0"}
+              {dashload?.terminals || "0"}
+              {/* {isLoading ? "00" : dashn?.terminals } */}
             </h5>
           </div>
           <div
@@ -89,7 +129,8 @@ const Dashboard = () => {
           >
             <p className="mb-5 text-sm font-semibold">Total Transaction </p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.transactions || "0"}
+              {/* {dashn?.transactions || "0"} */}
+              {dashload?.transactions || "0"}
             </h5>
           </div>
           <div
@@ -97,7 +138,7 @@ const Dashboard = () => {
             style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
           >
             <p className="mb-5 text-sm  font-semibold">Total User </p>
-            <h5 className="text-primary text-xl mb-3">{dashn?.users || "0"}</h5>
+            <h5 className="text-primary text-xl mb-3">{dashload?.users || "0"}</h5>
           </div>
           <div
             className="bg-white rounded-2xl py-2 px-6 w-1/4"
@@ -109,7 +150,7 @@ const Dashboard = () => {
             <h5 className="text-primary text-xl mb-3">
               {" "}
               ₦
-              {dashn?.transactionAmountForTheDay?.toLocaleString("en-US", {
+              {dashload?.transactionAmountForTheDay?.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               }) || " 0.00"}
@@ -127,7 +168,7 @@ const Dashboard = () => {
             </p>
             <h5 className="text-primary text-xl mb-3">
               ₦
-              {dashn?.approvedTransactionAmountForTheDay?.toLocaleString(
+              {dashload?.approvedTransactionAmountForTheDay?.toLocaleString(
                 "en-US",
                 { minimumFractionDigits: 2, maximumFractionDigits: 2 }
               ) || " 0.00"}
@@ -143,7 +184,7 @@ const Dashboard = () => {
             </p>
             <h5 className="text-primary text-xl mb-3">
               ₦
-              {dashn?.declinedTransactionAmountForTheDay?.toLocaleString(
+              {dashload?.declinedTransactionAmountForTheDay?.toLocaleString(
                 "en-US",
                 { minimumFractionDigits: 2, maximumFractionDigits: 2 }
               ) || " 0.00"}
@@ -158,7 +199,7 @@ const Dashboard = () => {
               Approved Transaction Count/Day{" "}
             </p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.approvedTransactionCountForTheDay || "0"}
+              {dashload?.approvedTransactionCountForTheDay || "0"}
             </h5>
           </div>
           <div
@@ -170,7 +211,7 @@ const Dashboard = () => {
               Declined Transaction Count/Day{" "}
             </p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.declinedTransactionCountForTheDay || "0"}
+              {dashload?.declinedTransactionCountForTheDay || "0"}
             </h5>
           </div>
         </section>
