@@ -10,7 +10,6 @@ const { token } = useToken();
 export const getDash = async () => {
   try {
 
-    // const { token } = await useToken();
 
     const response = await axios.get(`${BASE_URL}/admin/dashboard`, {
       headers: {

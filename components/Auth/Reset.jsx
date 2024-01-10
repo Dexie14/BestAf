@@ -57,7 +57,6 @@ const Reset = () => {
         onSuccess: (response) => {
           toast.success(response?.message);
           setIsOpen(true)
-          // router.push("/login");
         },
       });
     },

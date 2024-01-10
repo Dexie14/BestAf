@@ -9,9 +9,6 @@ export const createUpload = async ({formData, handleCloseModal}) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/admin/upload/bulk`,formData,
-      // {
-      //   file: selectedFile,
-      // },
       {
         headers: {
          'content-type': 'multipart/form-data',

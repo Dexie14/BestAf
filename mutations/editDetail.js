@@ -26,8 +26,6 @@ export const editingDetails = async ({
         address: address,
         accountSelection: acc,
         isEnabled: enabling,
-        // numberOfReciepts: receiptNum,
-        // printReciept: print,
       },
       {
         headers: {

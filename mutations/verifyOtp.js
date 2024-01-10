@@ -24,7 +24,6 @@ export const verifyOtp = async ({ otpValues, decodedEmail, handleOpenModal }) =>
     );
     toast.success(response?.data?.message);
     if (response?.data?.status !== "error") {
-      // router.push('/login');
       handleOpenModal();
       return { success: true, data: response?.data?.message };
     } else {

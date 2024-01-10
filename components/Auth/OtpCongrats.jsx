@@ -4,9 +4,7 @@ import success from "@/public/assets/auth/success.svg";
 import { useRouter } from "next/navigation";
 
 const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
-  // const handleButtonClick = () => {
-  //   router.push('/verify');
-  // };
+  
   const router = useRouter();
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -47,7 +45,6 @@ const OtpCongrats = ({ setModalIsOpen, modalIsOpen }) => {
         </p>
         <button
         onClick={handleCloseModal}
-          // onClick={() => router.push("/verify")}
           className="bg-primary text-white flex justify-center items-center w-10/12 mx-auto rounded-lg px-3 py-3"
         >
           Continue
