@@ -2,13 +2,14 @@ import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
-import { toast } from "react-toastify";
 // const { token } = useToken();
+import Cookies from "js-cookie";
 
 export const getTrans = async () => {
   try {
 
-    const { token } = await useToken();
+    // const { token } = await useToken();
+    const token = Cookies.get("token");
 
     const response = await axios.get(`${BASE_URL}/transaction`, {
       headers: {

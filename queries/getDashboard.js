@@ -1,16 +1,13 @@
 import { BASE_URL } from "@/utils/baseUrl";
 import axios, { AxiosError } from "axios";
-import { useToken } from "@/hooks/auth/useToken";
+// import { useToken } from "@/hooks/auth/useToken";
+import Cookies from "js-cookie";
 
-import { toast } from "react-toastify";
-const { token } = useToken();
-
-
-
+// const { token } = useToken();
 export const getDash = async () => {
   try {
 
-
+    const token = Cookies.get("token");
     const response = await axios.get(`${BASE_URL}/admin/dashboard`, {
       headers: {
         Authorization: `Bearer ${token}`,

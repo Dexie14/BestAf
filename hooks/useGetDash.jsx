@@ -1,13 +1,17 @@
 import { getDash } from "@/queries/getDashboard"; 
 import { useQuery } from "@tanstack/react-query";
 
+import { useToken } from "@/hooks/auth/useToken";
+
+const { token } = useToken();
+
 
 export const useGetDash = () => {
   return useQuery({
-      queryKey: ["dash"],
-      refetchInterval: 1000,
+      queryKey: ["admin/dashboard", token],
       queryFn: () => getDash(),
-    // staleTime: 1000 * 5 * 5,
+    cacheTime: 0,
+    staleTime: 0,
   });
 };
 
