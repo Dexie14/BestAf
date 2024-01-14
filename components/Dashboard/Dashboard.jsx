@@ -118,8 +118,8 @@ const Dashboard = () => {
           >
             <p className="mb-5 text-sm font-semibold">Total Terminal</p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.terminals || "0"}
-              {/* {isLoading ? "00" : dashn?.terminals } */}
+              {/* {dashn?.terminals || "0"} */}
+              {isLoading ? "00" : dashn?.terminals || 0 }
             </h5>
           </div>
           <div
@@ -129,7 +129,7 @@ const Dashboard = () => {
             <p className="mb-5 text-sm font-semibold">Total Transaction </p>
             <h5 className="text-primary text-xl mb-3">
               {/* {dashn?.transactions || "0"} */}
-              {dashn?.transactions || "0"}
+              {isLoading ? "00" : dashn?.transactions || "0"}
             </h5>
           </div>
           <div
@@ -137,7 +137,7 @@ const Dashboard = () => {
             style={{ boxShadow: " 0px 2px 4px 0px rgba(0, 0, 0, 0.10);" }}
           >
             <p className="mb-5 text-sm  font-semibold">Total User </p>
-            <h5 className="text-primary text-xl mb-3">{dashn?.users || "0"}</h5>
+            <h5 className="text-primary text-xl mb-3">{isLoading ? "00" : dashn?.users || "0"}</h5>
           </div>
           <div
             className="bg-white rounded-2xl py-2 px-6 w-1/4"
@@ -149,7 +149,7 @@ const Dashboard = () => {
             <h5 className="text-primary text-xl mb-3">
               {" "}
               ₦
-              {dashn?.transactionAmountForTheDay?.toLocaleString("en-US", {
+              {isLoading ? "00" : dashn?.transactionAmountForTheDay?.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               }) || " 0.00"}
@@ -167,7 +167,7 @@ const Dashboard = () => {
             </p>
             <h5 className="text-primary text-xl mb-3">
               ₦
-              {dashn?.approvedTransactionAmountForTheDay?.toLocaleString(
+              {isLoading ? "00" : dashn?.approvedTransactionAmountForTheDay?.toLocaleString(
                 "en-US",
                 { minimumFractionDigits: 2, maximumFractionDigits: 2 }
               ) || " 0.00"}
@@ -183,7 +183,7 @@ const Dashboard = () => {
             </p>
             <h5 className="text-primary text-xl mb-3">
               ₦
-              {dashn?.declinedTransactionAmountForTheDay?.toLocaleString(
+              {isLoading ? "00" : dashn?.declinedTransactionAmountForTheDay?.toLocaleString(
                 "en-US",
                 { minimumFractionDigits: 2, maximumFractionDigits: 2 }
               ) || " 0.00"}
@@ -198,7 +198,7 @@ const Dashboard = () => {
               Approved Transaction Count/Day{" "}
             </p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.approvedTransactionCountForTheDay || "0"}
+              {isLoading ? "00" : dashn?.approvedTransactionCountForTheDay || "0"}
             </h5>
           </div>
           <div
@@ -210,7 +210,7 @@ const Dashboard = () => {
               Declined Transaction Count/Day{" "}
             </p>
             <h5 className="text-primary text-xl mb-3">
-              {dashn?.declinedTransactionCountForTheDay || "0"}
+              {isLoading ? "00" : dashn?.declinedTransactionCountForTheDay || "0"}
             </h5>
           </div>
         </section>
