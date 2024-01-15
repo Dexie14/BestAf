@@ -94,7 +94,7 @@ const MerchTable = ({ paramlist }) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["term"],
+    queryKey: ["merch"],
     queryFn: () => getMerchant(),
     cacheTime: 0,
     staleTime: 0,
@@ -109,24 +109,6 @@ const MerchTable = ({ paramlist }) => {
 
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
-  const [selected, setSelected] = useState([]);
-
-  // Function to handle the click event on the checkbox
-  const handleCheckboxClick = (item) => {
-    // Check if the item is already in the selected array
-    const isSelected = selected.some(
-      (selectedItem) => selectedItem._id === item._id
-    );
-
-    // If it's selected, remove it; otherwise, add it to the array
-    setSelected((prevSelected) =>
-      isSelected
-        ? prevSelected.filter((selectedItem) => selectedItem._id !== item._id)
-        : [...prevSelected, item]
-    );
-  };
-
-  // const [option, setOption] = useState("Enable");
 
   const enabling = async (TID) => {
     try {
