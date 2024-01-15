@@ -5,6 +5,8 @@ import moment from "moment";
 import axios, { AxiosError } from "axios";
 import { useToken } from "@/hooks/auth/useToken";
 
+import { useGetAdmin } from "@/hooks/useAdminProfile";
+
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -13,6 +15,7 @@ import Download from "./Download";
 import Button from "../Comps/Button";
 import EditTerm from "./EditTerm";
 import GenTermId from "./GenTermId";
+import DeleteTerm from "./DeleteTerm";
 const { token } = useToken();
 
 const customStyles = {
@@ -44,6 +47,7 @@ const TermTable = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevData, setPrevData] = useState();
+  const [isDelete, setIsDelete] = useState(false);
   const [popups, setPopups] = useState({});
 
   const handleTogglePopup = (id) => {
@@ -103,6 +107,8 @@ const TermTable = ({
   } = useQuery({
     queryKey: ["term"],
     queryFn: () => getTerminal(),
+    cacheTime: 0,
+    staleTime: 0,
   });
 
   useEffect(() => {
@@ -163,6 +169,8 @@ const TermTable = ({
 
     refetch();
   };
+
+  const { data: admin } = useGetAdmin();
 
   return (
     <div className="">
@@ -254,7 +262,7 @@ const TermTable = ({
                     </svg>
 
                     {popups[item?._id] && (
-                      <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
+                      <div className="absolute top-[-15%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
                         <Button
                           onClick={() => {
                             setIsOpen(!isOpen);
@@ -264,12 +272,23 @@ const TermTable = ({
                         >
                           Edit
                         </Button>
+
                         <Button
-                          className="w-full"
+                          className="w-full mb-2"
                           onClick={() => enabling(item?.terminalId)}
                         >
                           {item?.isEnabled === true ? "Disable" : "Enable"}
                         </Button>
+                        {admin?.role === "superadmin" && (
+                          <Button
+                            onClick={() => {
+                              setIsDelete(!isDelete);
+                            }}
+                            className="w-full mb-2 bg-red-600"
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     )}
                   </td>
@@ -325,31 +344,7 @@ const TermTable = ({
           </p>
         )}
       </section>
-      {/* <div className="flex justify-between items-center cursor-pointer mb-20">
-        <p className="text-xs text-[#4B5563] font-bold">
-          10/50 <span className="font-normal">results</span>
-        </p>
-        <section className="flex gap-2 items-center">
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4]  bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg">
-            Previous
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            1
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            2
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            3
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#E0E0E0]  bg-[#fff] w-fit py-2 px-4 justify-center items-center rounded-2xl">
-            4
-          </p>
-          <p className="flex text-sm font-normal text-[#4B5563] border border-[#F0F2F4]  bg-[#fff] w-fit py-2 px-2 justify-center items-center rounded-lg">
-            Next
-          </p>
-        </section>
-      </div> */}
+
       <ReactModal
         isOpen={download}
         onRequestClose={() => setDownload(false)}
@@ -378,6 +373,20 @@ const TermTable = ({
           setModalIsOpen={setIsOpen}
           modalIsOpen={isOpen}
           prevData={prevData}
+          refetch={refetch}
+        />
+      </ReactModal>
+      <ReactModal
+        isOpen={isDelete}
+        onRequestClose={() => setIsDelete(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <DeleteTerm
+          setModalIsOpen={setIsDelete}
+          modalIsOpen={isDelete}
           refetch={refetch}
         />
       </ReactModal>

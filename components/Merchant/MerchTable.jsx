@@ -9,12 +9,36 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Spinner } from "../Spinner";
 import Button from "../Comps/Button";
+import ReactModal from "react-modal";
+import DeleteMerch from "./DeleteMerch";
 const { token } = useToken();
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    opacity: "10",
+  },
+  content: {
+    height: "65vh",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    margin: "auto",
+    borderRadius: "30px",
+    width: "50%",
+  },
+};
 
 
 
 const MerchTable = ({ paramlist }) => {
   const [popups, setPopups] = useState({});
+  
+  const [isDelete, setIsDelete] = useState(false);
 
   const handleTogglePopup = (id) => {
     setPopups((prevPopups) => ({
@@ -43,7 +67,7 @@ const MerchTable = ({ paramlist }) => {
     enable: false,
   };
 
-  const getTerminal = async () => {
+  const getMerchant = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/admin/merchants`, {
         params: param,
@@ -71,7 +95,9 @@ const MerchTable = ({ paramlist }) => {
     refetch,
   } = useQuery({
     queryKey: ["term"],
-    queryFn: () => getTerminal(),
+    queryFn: () => getMerchant(),
+    cacheTime: 0,
+    staleTime: 0,
   });
 
 
@@ -226,11 +252,19 @@ const MerchTable = ({ paramlist }) => {
                     {popups[item?._id] && (
                       <div className="absolute top-[-10%] right-[100%] rounded bg-white p-2 w-[100px] border border-border z-[100]">
                         <Button
-                          className="w-full"
+                          className="w-full mb-2"
                           onClick={() => enabling(item?.merchantId)}
                         >
                           {item?.isEnabled === true ? "Disable" : "Enable"}
                         </Button>
+                        <Button
+                            onClick={() => {
+                              setIsDelete(!isDelete);
+                            }}
+                            className="w-full mb-2 bg-red-600"
+                          >
+                            Delete
+                          </Button>
                       </div>
                     )}
                   </td>
@@ -286,6 +320,20 @@ const MerchTable = ({ paramlist }) => {
           </p>
         )}
       </section>
+      <ReactModal
+        isOpen={isDelete}
+        onRequestClose={() => setIsDelete(false)}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName={"h-full left-0 bg-[#0000009b] z-[99999]"}
+        style={customStyles}
+      >
+        <DeleteMerch
+          setModalIsOpen={setIsDelete}
+          modalIsOpen={isDelete}
+          refetch={refetch}
+        />
+      </ReactModal>
     </div>
   );
 };
