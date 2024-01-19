@@ -8,6 +8,7 @@ const NextDownload = ({ setModalIsOpen, modalIsOpen, fullData }) => {
   };
 
 
+  // console.log(fullData?.items, "tooo")
  
 
   return (

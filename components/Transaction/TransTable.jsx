@@ -66,6 +66,18 @@ const TransTable = ({ paramlist, download, setDownload }) => {
     enable: false,
   };
 
+  const para = {
+    terminalId: paramlist?.inputTerminal,
+    merchantId: paramlist?.inputMerchId,
+    transactionId: paramlist?.inputTrans,
+    responsemessage: paramlist?.selectedStatus,
+    amount: paramlist?.amount,
+    from: paramlist?.fromDate,
+    to: paramlist?.toDate,
+    download: true,
+    enable: false,
+  };
+
   const getTransaction = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/transaction`, {
@@ -97,19 +109,52 @@ const TransTable = ({ paramlist, download, setDownload }) => {
     queryFn: () => getTransaction(),
   });
 
+  const getDown = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/transaction`, {
+        params: para,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.status === "success") {
+        return response?.data?.data;
+      } else {
+        throw new Error(response.data?.data?.message);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+  const {
+    data: downL,
+    refetch: mutate,
+  } = useQuery({
+    queryKey: ["TAB"],
+    queryFn: () => getDown(),
+    cacheTime: 0,
+    staleTime: 0,
+  });
+
 
   useEffect(() => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
       refetch();
+      mutate();
     }
-  }, [paramlist, pageSize, page, refetch]);
+  }, [paramlist, pageSize, page, refetch, mutate]);
 
   useEffect(() => {
     if (page >= 1) {
       setPage(page);
       refetch();
+      mutate();
     }
-  }, [pageSize, page, refetch]);
+  }, [pageSize, page, refetch, mutate]);
 
   const totalPages = Math.ceil(transactions?.totalCount / pageSize);
 
@@ -119,13 +164,13 @@ const TransTable = ({ paramlist, download, setDownload }) => {
   const handleCheckboxClick = (item) => {
     // Check if the item is already in the selected array
     const isSelected = selected.some(
-      (selectedItem) => selectedItem._id === item._id
+      (selectedItem) => selectedItem.transactionId === item.transactionId
     );
 
     // If it's selected, remove it; otherwise, add it to the array
     setSelected((prevSelected) =>
       isSelected
-        ? prevSelected.filter((selectedItem) => selectedItem._id !== item._id)
+        ? prevSelected.filter((selectedItem) => selectedItem.transactionId !== item.transactionId)
         : [...prevSelected, item]
     );
   };
@@ -182,7 +227,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
                     <input
                       type="checkbox"
                       checked={selected.some(
-                        (selectedItem) => selectedItem._id === item._id
+                        (selectedItem) => selectedItem.transactionId === item.transactionId
                       )}
                       onChange={() => handleCheckboxClick(item)}
                     />
@@ -401,7 +446,7 @@ const TransTable = ({ paramlist, download, setDownload }) => {
           modalIsOpen={download}
           setSelected={setSelected}
           selected={selected}
-          fullData={transactions}
+          fullData={downL}
         />
       </ReactModal>
     </div>

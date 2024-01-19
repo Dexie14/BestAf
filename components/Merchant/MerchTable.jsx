@@ -107,6 +107,13 @@ const MerchTable = ({ paramlist }) => {
     }
   }, [paramlist, pageSize, page, refetch]);
 
+  useEffect(() => {
+    if (page >= 1) {
+      setPage(page);
+      refetch();
+    }
+  }, [pageSize, page, refetch]);
+
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
 
