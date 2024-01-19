@@ -77,6 +77,15 @@ const TermTable = ({
     page: page,
     enable: false,
   };
+  const para = {
+    terminalId: paramlist?.inputTerminal,
+    merchantId: paramlist?.inputMerchId,
+    merchantName: paramlist?.selectedName,
+    from: paramlist?.fromDate,
+    to: paramlist?.toDate,
+    download: true,
+    enable: false,
+  };
 
   const getTerminal = async () => {
     try {
@@ -111,11 +120,51 @@ const TermTable = ({
     staleTime: 0,
   });
 
+  const getDown = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/admin/terminals`, {
+        params: para,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data?.status === "success") {
+        return response?.data?.data;
+      } else {
+        throw new Error(response.data?.data?.message);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error?.response?.data?.error?.message);
+      } else if (error instanceof Error) {
+        throw error;
+      } else throw new Error("Error occurred");
+    }
+  };
+  const {
+    data: downL,
+    refetch: mutate,
+  } = useQuery({
+    queryKey: ["TAB"],
+    queryFn: () => getDown(),
+    cacheTime: 0,
+    staleTime: 0,
+  });
+
   useEffect(() => {
     if (paramlist && Object.keys(paramlist).length !== 0) {
       refetch();
+      mutate();
     }
-  }, [paramlist, pageSize, page, refetch]);
+  }, [paramlist, pageSize, page, refetch, mutate]);
+
+  useEffect(() => {
+    if (page >= 1) {
+      setPage(page);
+      refetch();
+      mutate();
+    }
+  }, [pageSize, page, refetch, mutate]);
 
   const totalPages = Math.ceil(table?.totalCount / pageSize);
 
@@ -169,6 +218,8 @@ const TermTable = ({
 
     refetch();
   };
+
+
 
   const { data: admin } = useGetAdmin();
 
@@ -358,7 +409,7 @@ const TermTable = ({
           modalIsOpen={download}
           setSelected={setSelected}
           selected={selected}
-          fullData={table}
+          fullData={downL}
         />
       </ReactModal>
       <ReactModal
