@@ -63,7 +63,7 @@ const Health = () => {
             <th className=" text-sm font-semibold text-[#333333]">
               Terminal Type
             </th>
-            <th className=" text-sm font-semibold text-[#333333]">Paper Level</th>
+            <th className=" text-sm font-semibold text-[#333333]">Printer Status </th>
             <th className=" text-sm font-semibold text-[#333333]">Battery Level</th>
             <th className=" text-sm font-semibold text-[#333333]">
               Date Time
@@ -97,7 +97,7 @@ const Health = () => {
                     {item?.terminalType}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {item?.paperLevel}
+                    {item?.printerStatus}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
                     {item?.batteryLevel}
