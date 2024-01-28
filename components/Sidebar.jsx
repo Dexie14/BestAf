@@ -341,8 +341,82 @@ const Sidebar = () => {
               </div>
             </Link>
           )}
+          {admin?.role === "superadmin" && (
+            <Link href={`/user/health_report`} className="">
+              <div
+                className="flex gap-4 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
+                style={{
+                  background: title === "health_report" ? "#FFEAEF" : "",
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="6"
+                  viewBox="0 0 18 6"
+                  fill="none"
+                  className="group"
+                >
+                  <path
+                    d="M0 0H18V2H0V0ZM0 4H14V6H0V4Z"
+                    fill="#4B5563"
+                    className="group-hover:fill-primary"
+                    style={{
+                      fill: title === "health_report" ? "#941D3A" : "",
+                    }}
+                  />
+                </svg>
+
+                <h5
+                  className="text-dark group-hover:text-primary text-sm"
+                  style={{
+                    color: title === "health_report" ? "#941D3A" : "",
+                  }}
+                >
+                  HealthReport
+                </h5>
+              </div>
+            </Link>
+          )}
+          {admin?.role === "superadmin" && (
+            <Link href={`/user/transaction_report`} className="">
+              <div
+                className="flex gap-4 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
+                style={{
+                  background: title === "transaction_report" ? "#FFEAEF" : "",
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="6"
+                  viewBox="0 0 18 6"
+                  fill="none"
+                  className="group"
+                >
+                  <path
+                    d="M0 0H18V2H0V0ZM0 4H14V6H0V4Z"
+                    fill="#4B5563"
+                    className="group-hover:fill-primary"
+                    style={{
+                      fill: title === "transaction_report" ? "#941D3A" : "",
+                    }}
+                  />
+                </svg>
+
+                <h5
+                  className="text-dark group-hover:text-primary text-sm"
+                  style={{
+                    color: title === "transaction_report" ? "#941D3A" : "",
+                  }}
+                >
+                  TransactionReport
+                </h5>
+              </div>
+            </Link>
+          )}
         </section>
-        <section className="bottom-0 flex items-end">
+        <section className="absolute bottom-5 flex items-end">
           <div
             className="flex gap-3 hover:bg-secondary group rounded-lg px-5 py-2 items-center cursor-pointer mb-[25px]"
             onClick={handleLogout}
