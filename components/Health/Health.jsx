@@ -66,7 +66,7 @@ const Health = () => {
             <th className=" text-sm font-semibold text-[#333333]">Paper Level</th>
             <th className=" text-sm font-semibold text-[#333333]">Battery Level</th>
             <th className=" text-sm font-semibold text-[#333333]">
-              Created Date
+              Date Time
             </th>
           </tr>
         </thead>
