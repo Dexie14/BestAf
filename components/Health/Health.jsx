@@ -103,7 +103,8 @@ const Health = () => {
                     {item?.batteryLevel}
                   </td>
                   <td className="text-sm font-normal text-[#333333]">
-                    {moment(item?.dateTime).format("MMMM Do YYYY, h:mm a")}
+                    {/* {moment(item?.dateTime).format("MMMM Do YYYY, h:mm a")} */}
+                    {item?.dateTime}
                   </td>
                 </tr>
               ))
