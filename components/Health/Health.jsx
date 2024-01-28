@@ -15,31 +15,37 @@ const Health = () => {
         </h1>
       </section>
 
-      {health &&
-        health?.map((item) => {
-          return (
-            <div
-              key={item?._id}
-              className="border px-7 py-4 bg-white rounded-sm mt-10"
-            >
-              <ul>
-                <li className="text-xl mb-4 list-disc">
-                  App Version: {item?.appVersion}
-                </li>
-                <li className="text-xl mb-4 list-disc">
-                  Paper Level: {item?.paperLevel}
-                </li>
-                <li className="text-xl mb-4 list-disc">
-                  Terminal Type: {item?.terminalType}
-                </li>
-                <li className="text-xl mb-4 list-disc">
-                  Battery Level: {item?.batteryLevel}
-                </li>
-                <li className="text-xl mb-4 list-disc">Location: {item?.location}</li>
-              </ul>
-            </div>
-          );
-        })}
+      <div className="border border-primary px-7 py-4 bg-white rounded-lg mt-10">
+        <h1 className="text-dark mb-5 text-2xl">The health information is provided below</h1>
+        {health &&
+          health?.map((item) => {
+            return (
+              <div key={item?._id}>
+                <ul>
+                  <li className="text-xl mb-4 mr-3 list-disc">
+                    App Version: <span className="text-base text-dark">{item?.appVersion}</span>
+                  </li>
+                  <hr className="border border-primary mb-4"/>
+                  <li className="text-xl mb-4 mr-3 list-disc">
+                    Paper Level: <span className="text-base text-dark">{item?.paperLevel}</span>
+                  </li>
+                  <hr className="border border-primary mb-4"/>
+                  <li className="text-xl mb-4 mr-3 list-disc">
+                    Terminal Type: <span className="text-base text-dark">{item?.terminalType}</span>
+                  </li>
+                  <hr className="border border-primary mb-4"/>
+                  <li className="text-xl mb-4 mr-3 list-disc">
+                    Battery Level: <span className="text-base text-dark">{item?.batteryLevel}</span>
+                  </li>
+                  <hr className="border border-primary mb-4"/>
+                  <li className="text-xl mb-4  mr-3 list-disc">
+                    Location: <span className="text-base text-dark">{item?.location}</span>
+                  </li>
+                </ul>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };
