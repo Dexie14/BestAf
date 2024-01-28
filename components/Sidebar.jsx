@@ -373,7 +373,7 @@ const Sidebar = () => {
                     color: title === "health_report" ? "#941D3A" : "",
                   }}
                 >
-                  HealthReport
+                  Health Report
                 </h5>
               </div>
             </Link>
@@ -410,7 +410,7 @@ const Sidebar = () => {
                     color: title === "transaction_report" ? "#941D3A" : "",
                   }}
                 >
-                  TransactionReport
+                  Transaction Report
                 </h5>
               </div>
             </Link>
